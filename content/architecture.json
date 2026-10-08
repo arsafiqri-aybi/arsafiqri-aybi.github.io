@@ -1,0 +1,121 @@
+{
+  "hey": [
+    [
+      "Android interface",
+      "Owner pairing, browser access and human takeover are presented in the Android app.",
+      "https://github.com/arsafiqri-aybi/hey-android"
+    ],
+    [
+      "Gateway & MCP",
+      "The remote gateway handles authenticated tasks, device binding and receipts.",
+      "https://github.com/arsafiqri-aybi/hey-mcp"
+    ],
+    [
+      "Browser runtime",
+      "An Android WebView session executes supported browser actions and reports observations.",
+      "https://github.com/arsafiqri-aybi/hey-android/blob/main/app/src/main/java/id/ars/hey/BrowserRuntime.java"
+    ]
+  ],
+  "personal-browser-operator": [
+    [
+      "MCP interface",
+      "Structured tools accept goals and requests with explicit boundaries.",
+      "https://github.com/arsafiqri-aybi/personal-browser-operator"
+    ],
+    [
+      "Browser runtime",
+      "Persistent Playwright Chromium observes state and performs permitted actions.",
+      "https://github.com/arsafiqri-aybi/personal-browser-operator/tree/main/packages/operator-runtime"
+    ],
+    [
+      "Verification",
+      "Postconditions and stale-reference handling determine what can be reported as passed.",
+      "https://github.com/arsafiqri-aybi/personal-browser-operator/blob/main/evaluation/evidence/RUN-0001-real-browser-ci.md"
+    ]
+  ],
+  "scale-governor": [
+    [
+      "Scale",
+      "Defines execution structure, dependencies and required quality gates.",
+      "https://github.com/arsafiqri-aybi/scale"
+    ],
+    [
+      "Execution contract",
+      "Connects the planned route to limits and verification requirements.",
+      "https://github.com/arsafiqri-aybi/scale/blob/main/assets/execution-contract.json"
+    ],
+    [
+      "Governor",
+      "Adapts context, retrieval, effort and stopping within protected boundaries.",
+      "https://github.com/arsafiqri-aybi/governor"
+    ]
+  ],
+  "motion": [
+    [
+      "Motion knowledge",
+      "Code-driven motion principles, models and application tracks.",
+      "https://github.com/arsafiqri-aybi/motion"
+    ],
+    [
+      "Render implementation",
+      "Example scenes, temporal sampling and encoded audiovisual outputs.",
+      "https://github.com/arsafiqri-aybi/motion-render-video/tree/main/runtime"
+    ],
+    [
+      "Media verification",
+      "Reports verify scoped video and audio properties, not subjective comfort.",
+      "https://github.com/arsafiqri-aybi/motion-render-video/tree/main/evidence"
+    ]
+  ],
+  "skill-builder": [
+    [
+      "Specification",
+      "Trigger conditions, scope, inputs, outputs and failure boundaries.",
+      "https://github.com/arsafiqri-aybi/skill-builder"
+    ],
+    [
+      "Skill package",
+      "Runtime instructions, selective references and reusable scaffolding.",
+      "https://github.com/arsafiqri-aybi/skill-builder/tree/main/scripts"
+    ],
+    [
+      "Validation",
+      "Audits and regression tests for package structure and tooling.",
+      "https://github.com/arsafiqri-aybi/skill-builder/blob/main/evaluation/STATUS.md"
+    ]
+  ],
+  "copywriting": [
+    [
+      "Context & value",
+      "Audience, claims and evidence form the basis of the message.",
+      "https://github.com/arsafiqri-aybi/copywriting-intelligence-system"
+    ],
+    [
+      "Reasoning system",
+      "Research and mechanism models support bounded writing decisions.",
+      "https://github.com/arsafiqri-aybi/copywriting-intelligence-system/tree/main/reasoning"
+    ],
+    [
+      "Evaluation",
+      "Quality gates document evidence limits and measured checks within the release scope.",
+      "https://github.com/arsafiqri-aybi/copywriting-intelligence-system/blob/main/release/QUALITY_GATES.json"
+    ]
+  ],
+  "website-builder": [
+    [
+      "User goals",
+      "Requirements and content define what the website must accomplish.",
+      "https://github.com/arsafiqri-aybi/website-builder"
+    ],
+    [
+      "Design & engineering",
+      "Reusable guidance links interface design, accessibility and frontend decisions.",
+      "https://github.com/arsafiqri-aybi/website-builder/blob/main/BASE_KNOWLEDGE_MAP.md"
+    ],
+    [
+      "Verification",
+      "Portfolio Web provides checks and acceptance criteria for scoped examples.",
+      "https://github.com/arsafiqri-aybi/portofolio-web/blob/main/quality/VERIFICATION.md"
+    ]
+  ]
+}

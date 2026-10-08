@@ -1,142 +1,25 @@
-/* Native routes remain the source of truth. No router, scroll hijacking or perpetual loops. */
-(() => {
-  'use strict';
-  let dispose = () => {};
-  function initialize() {
-    dispose();
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const fine = matchMedia('(hover: hover) and (pointer: fine)');
-    const activeAnimations = new Set();
-    let observer;
-    let frame = 0;
-    let visibleHero = true;
-    const hero = document.querySelector('.hero-object');
-    const heroSection = document.querySelector('.hero');
-    const animate = (element, keyframes, options) => {
-      if (reduced.matches || document.hidden || !element.animate) return;
-      const animation = element.animate(keyframes, options);
-      activeAnimations.add(animation);
-      animation.finished.then(() => activeAnimations.delete(animation), () => activeAnimations.delete(animation));
-      return animation;
-    };
-    const cancelMotion = () => {
-      activeAnimations.forEach(animation => animation.cancel());
-      activeAnimations.clear();
-      cancelAnimationFrame(frame);
-      frame = 0;
-      if (hero) {
-        hero.style.removeProperty('--pointer-x');
-        hero.style.removeProperty('--pointer-y');
-        hero.style.removeProperty('--object-angle');
-      }
-    };
-    const choices = [...document.querySelectorAll('.work-choice')];
-    const panels = [...document.querySelectorAll('.work-panel')];
-    const selector = document.querySelector('.selector-scroll');
-    const counter = document.querySelector('.selector-count');
-    let current = 0;
-    let previewAnimation;
-    function select(index, feedback = true, bringIntoView = false) {
-      current = (index + choices.length) % choices.length;
-      previewAnimation?.cancel();
-      choices.forEach((choice, i) => choice.setAttribute('aria-pressed', String(i === current)));
-      panels.forEach((panel, i) => {
-        panel.hidden = i !== current;
-        panel.toggleAttribute('data-active', i === current);
-      });
-      if (counter) counter.textContent = `${String(current + 1).padStart(2, '0')} / ${String(choices.length).padStart(2, '0')}`;
-      try { sessionStorage.setItem('ars-selected-work', choices[current].dataset.project); } catch { /* storage is optional */ }
-      if (bringIntoView && selector) {
-        const itemRect = choices[current].getBoundingClientRect();
-        const listRect = selector.getBoundingClientRect();
-        selector.scrollTo({top: selector.scrollTop + itemRect.top - listRect.top - 80, behavior: reduced.matches ? 'instant' : 'smooth'});
-      }
-      if (feedback) previewAnimation = animate(panels[current], [{opacity: .6, transform: 'translateY(12px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 420, easing: 'cubic-bezier(.22,1,.36,1)'});
-    }
-    if (choices.length && choices.length === panels.length) {
-      let stored;
-      try { stored = sessionStorage.getItem('ars-selected-work'); } catch { /* storage is optional */ }
-      const storedIndex = choices.findIndex(choice => choice.dataset.project === stored);
-      select(storedIndex >= 0 ? storedIndex : 0, false);
-      choices.forEach((choice, index) => {
-        choice.addEventListener('click', () => select(index), {signal});
-        choice.addEventListener('keydown', event => {
-          if (!['ArrowDown','ArrowUp','Home','End'].includes(event.key)) return;
-          event.preventDefault();
-          const next = event.key === 'Home' ? 0 : event.key === 'End' ? choices.length - 1 : index + (event.key === 'ArrowDown' ? 1 : -1);
-          select(next, true, true);
-          choices[current].focus({preventScroll:true});
-        }, {signal});
-      });
-      document.querySelectorAll('[data-step]').forEach(button => button.addEventListener('click', () => select(current + Number(button.dataset.step), true, true), {signal}));
-      document.documentElement.classList.add('is-enhanced');
-      if (storedIndex > 2) select(storedIndex, false, true);
-    }
-    const caseId = document.body.dataset.case;
-    if (caseId) {
-      try { sessionStorage.setItem('ars-selected-work', caseId); } catch { /* storage is optional */ }
-    }
-    const syncHero = () => {
-      frame = 0;
-      if (!hero || !heroSection || reduced.matches || document.hidden || !visibleHero) return;
-      const rect = heroSection.getBoundingClientRect();
-      const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height)));
-      hero.style.setProperty('--object-angle', `${-progress * 9}deg`);
-    };
-    const scheduleHero = () => {
-      if (!frame && visibleHero && !document.hidden && !reduced.matches) frame = requestAnimationFrame(syncHero);
-    };
-    if (hero && heroSection) {
-      window.addEventListener('scroll', scheduleHero, {passive:true,signal});
-      window.addEventListener('resize', scheduleHero, {passive:true,signal});
-      hero.addEventListener('pointermove', event => {
-        if (!fine.matches || reduced.matches || document.hidden) return;
-        const rect = hero.getBoundingClientRect();
-        hero.style.setProperty('--pointer-x', `${((event.clientX - rect.left) / rect.width - .5) * 12}px`);
-        hero.style.setProperty('--pointer-y', `${((event.clientY - rect.top) / rect.height - .5) * 12}px`);
-      }, {passive:true,signal});
-      hero.addEventListener('pointerleave', () => {
-        hero.style.removeProperty('--pointer-x'); hero.style.removeProperty('--pointer-y');
-      }, {signal});
-      animate(hero.querySelector('.core-object'), [{opacity:.6,transform:'translateY(24px) rotate(-4deg)'},{opacity:1,transform:'translateY(0) rotate(0deg)'}], {duration:1100,easing:'cubic-bezier(.22,1,.36,1)'});
-      syncHero();
-    }
-    if ('IntersectionObserver' in window) {
-      observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.target === heroSection) {
-            visibleHero = entry.isIntersecting;
-            if (visibleHero) scheduleHero();
-            else if (frame) {cancelAnimationFrame(frame); frame = 0;}
-          } else if (entry.isIntersecting) {
-            animate(entry.target, [{transform:'translateY(14px)'},{transform:'translateY(0)'}], {duration:600,easing:'cubic-bezier(.22,1,.36,1)'});
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {threshold: .08});
-      if (heroSection) observer.observe(heroSection);
-      document.querySelectorAll('[data-reveal]').forEach(element => observer.observe(element));
-    }
-    reduced.addEventListener('change', () => {
-      if (reduced.matches) {
-        cancelMotion();
-        document.getAnimations().forEach(animation => animation.cancel());
-      } else scheduleHero();
-    }, {signal});
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) cancelMotion();
-      else scheduleHero();
-    }, {signal});
-    dispose = () => { controller.abort(); observer?.disconnect(); cancelMotion(); };
-  }
-  try { initialize(); } catch (error) {
-    dispose();
-    document.documentElement.classList.remove('is-enhanced');
-    document.querySelectorAll('.work-panel').forEach(panel => {panel.hidden=false;});
-    console.error('Portfolio enhancement unavailable; static content remains available.', error);
-  }
-  window.addEventListener('pagehide', () => dispose());
-  window.addEventListener('pageshow', event => { if (event.persisted) initialize(); });
+
+(()=>{'use strict';
+const root=document.documentElement, body=document.body;
+const themes=['contextual','dark','light'];
+let theme='contextual';
+try {const stored=localStorage.getItem('ars-theme');if(themes.includes(stored))theme=stored;}catch{}
+function applyTheme(){root.dataset.theme=theme;document.querySelectorAll('[data-theme-label]').forEach(el=>el.textContent=theme[0].toUpperCase()+theme.slice(1));document.querySelectorAll('[data-theme-switch]').forEach(el=>el.setAttribute('aria-label','Appearance: '+theme+'. Activate to change theme.'));}
+applyTheme();
+document.querySelectorAll('[data-theme-switch]').forEach(b=>b.addEventListener('click',()=>{theme=themes[(themes.indexOf(theme)+1)%themes.length];try{localStorage.setItem('ars-theme',theme);}catch{}applyTheme();}));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const names=['home','work','expertise','approach','about','connect'];
+const choices=[...document.querySelectorAll('[data-rail]')],previews=[...document.querySelectorAll('[data-preview]')];
+const explorer=document.querySelector('[data-explorer]');
+const pages=[...document.querySelectorAll('[data-page]')];
+let selected=0,scrollCooldown=0;
+function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){target.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});if(moveFocus)target.focus({preventScroll:true});}document.querySelectorAll('[data-rail-step]').forEach(b=>b.disabled=selected===0&&b.dataset.railStep==='-1'||selected===5&&b.dataset.railStep==='1');}
+function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else delete p.dataset.visible;});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose(i));b.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=choices.length-1;else n=i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1);choose(n,true);});});document.querySelectorAll('[data-rail-step]').forEach(b=>b.addEventListener('click',()=>choose(selected+Number(b.dataset.railStep),true)));const rail=document.querySelector('.rail-window');rail?.addEventListener('wheel',e=>{if(innerWidth<681||Math.abs(e.deltaY)<5)return;const direction=Math.sign(e.deltaY);if((selected===0&&direction<0)||(selected===choices.length-1&&direction>0))return;e.preventDefault();const now=performance.now();if(now-scrollCooldown<135)return;scrollCooldown=now;choose(selected+direction);},{passive:false});root.classList.add('is-enhanced');showFromLocation();window.addEventListener('hashchange',showFromLocation);window.addEventListener('popstate',showFromLocation);document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();}));document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();}));}else{root.dataset.context='dark';}
+const reader=document.querySelector('[data-reader]');
+if(reader){const storyNav=[...document.querySelectorAll('.story-nav a')];const sections=[...document.querySelectorAll('.reading-section')];let requested=false;
+const refresh=()=>{requested=false;const reading=reader.getBoundingClientRect().top<=125;root.classList.toggle('reading',reading);root.dataset.context=reading?'light':'dark';let active=sections[0]?.id;for(const s of sections)if(s.getBoundingClientRect().top<180)active=s.id;storyNav.forEach(a=>a.setAttribute('aria-current',String(a.hash==='#'+active)));};const schedule=()=>{if(!requested){requested=true;requestAnimationFrame(refresh)}};window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh();
+}
+document.querySelectorAll('.architecture-explorer').forEach(exp=>{const buttons=[...exp.querySelectorAll('[data-node]')],title=exp.querySelector('[data-node-name]'),role=exp.querySelector('[data-node-role]'),link=exp.querySelector('[data-node-link]');buttons.forEach(button=>button.addEventListener('click',()=>{buttons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));title.textContent=button.textContent;role.textContent=button.dataset.role;link.href=button.dataset.source;}));});
+if(reduced.matches)root.classList.add('no-motion');
 })();
