@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "intent": "Owner-authorized public presentation of six portfolio concepts and documented work, 2026-10-09. Public placeholders are not case-study or media release approvals.",
+  "items": [
+    {
+      "id": "tari-cookies",
+      "name": "Tari Cookies",
+      "display": "placeholder",
+      "variant": "primary",
+      "category": "Customer Research · UX Design · Digital Experience",
+      "headline": "Designing a clearer ordering journey.",
+      "description": "A collaborative academic UX project exploring how customer research can inform a clearer hampers ordering experience. Design assets and team attribution are still being prepared for publication.",
+      "status": "Academic Team Project · 2026",
+      "visualLabel": "UX case visuals in preparation"
+    },
+    {
+      "id": "hey",
+      "name": "Hey by Ars",
+      "display": "released",
+      "variant": "feature",
+      "category": "Android · AI Systems · Product Design",
+      "headline": "One browser. Two modes of control.",
+      "description": "An Android and MCP-based project exploring AI-driven browser actions, shared browser interaction, and explicit human takeover. Implementation and scoped tests are documented, with physical-device validation still in progress.",
+      "status": "In Development · 2026"
+    },
+    {
+      "id": "waai-id",
+      "name": "waai.id",
+      "display": "placeholder",
+      "variant": "feature",
+      "category": "Content Strategy · Creative Direction · Audience Insights",
+      "headline": "Stories shaped by human understanding.",
+      "description": "An editorial storytelling initiative connecting audience insights, writing, creative direction, publishing, and performance review. Original video is not reproduced here while cross-site usage is reviewed.",
+      "status": "Published Creative Work · 2026",
+      "visualLabel": "Storytelling visuals in preparation"
+    },
+    {
+      "id": "personal-browser-operator",
+      "name": "Personal Browser Operator",
+      "display": "released",
+      "variant": "editorial",
+      "category": "Browser Automation · MCP · Verification",
+      "headline": "Automation that verifies its actions.",
+      "description": "A Playwright-based browser operator built around semantic observation, bounded interactions, stale-reference rejection, and postcondition verification, with real Chromium and container tests covering a defined development scope.",
+      "status": "CI-Verified Development Slice · 2026"
+    },
+    {
+      "id": "sarafcare",
+      "name": "SarafCare",
+      "display": "placeholder",
+      "variant": "editorial",
+      "category": "Campaign Strategy · Meta Ads · Customer Journey",
+      "headline": "From paid attention to real conversations.",
+      "description": "A local-service campaign experiment connecting offer messaging, geographic targeting, and a WhatsApp-led enquiry journey. Campaign materials and reported outcomes are withheld pending verification.",
+      "status": "Historical Experiment · 2026",
+      "visualLabel": "Campaign case visuals in preparation"
+    },
+    {
+      "id": "motion",
+      "name": "Motion Render Video",
+      "display": "released",
+      "variant": "primary",
+      "category": "Motion Design · Rendering · Creative Engineering",
+      "headline": "Exploring motion through code.",
+      "description": "A code-rendered audiovisual study of form, timing, and movement, supported by an original six-second 2D video, sampled frames, and scoped technical verification.",
+      "status": "Rendered Study · 2026"
+    }
+  ]
+}

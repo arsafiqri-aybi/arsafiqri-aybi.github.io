@@ -109,3 +109,32 @@ html.motion-enhanced .motion-play-cover[hidden]{display:none}
 
 /* CP07C: accessible no-JavaScript preview fallback */
 html:not(.is-enhanced) .section-preview:not(.is-selected){display:none}
+
+/* ARS curated six — media-free public presentation of unapproved case previews. */
+.curated--placeholder{cursor:default}
+.curated--placeholder:hover .curated-media{transform:none;box-shadow:none}
+.curated--placeholder .curated-explore{color:var(--sub);font-weight:500}
+.curated-media--pending{position:relative;min-height:260px;aspect-ratio:1.42;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border-radius:5px;padding:clamp(22px,3vw,44px);background:#e7dfd0;color:#4e463a;isolation:isolate}
+.pending-index{position:relative;z-index:1;font-size:12px;font-weight:650;letter-spacing:.15em}
+.pending-label{position:relative;z-index:1;display:block;font-weight:600;letter-spacing:-.055em;font-size:clamp(36px,5.2vw,72px);line-height:.98;max-width:85%;overflow-wrap:anywhere}
+.pending-visual-caption{position:relative;z-index:1;display:block;font-size:11px;letter-spacing:.035em;line-height:1.5;opacity:.8}
+.pending-art{position:absolute;inset:0;pointer-events:none;opacity:.3}
+.pending-art i{position:absolute;display:block;border:1px solid currentColor;border-radius:3px}
+.pending--tari-cookies .pending-art i:nth-child(1){width:43%;height:51%;right:14%;top:16%;transform:rotate(-8deg)}
+.pending--tari-cookies .pending-art i:nth-child(2){width:43%;height:51%;right:18%;top:19%;transform:rotate(5deg)}
+.pending--tari-cookies .pending-art i:nth-child(3){width:43%;height:51%;right:22%;top:22%;transform:rotate(16deg)}
+.pending--waai-id{background:#282724;color:#f3e8d8}
+.pending--waai-id .pending-art i:nth-child(1){width:42%;aspect-ratio:1;right:7%;top:8%;border-radius:50%}
+.pending--waai-id .pending-art i:nth-child(2){width:27%;aspect-ratio:1;right:15%;top:22%;border-radius:50%}
+.pending--waai-id .pending-art i:nth-child(3){width:13%;aspect-ratio:1;right:22%;top:33%;border-radius:50%}
+.pending--sarafcare{background:#25353b;color:#e5e7df}
+.pending--sarafcare .pending-art i:nth-child(1){left:37%;right:8%;top:30%;height:1px;border:none;border-top:1px solid currentColor;transform:rotate(-14deg)}
+.pending--sarafcare .pending-art i:nth-child(2){left:37%;right:8%;top:44%;height:1px;border:none;border-top:1px solid currentColor;transform:rotate(-14deg)}
+.pending--sarafcare .pending-art i:nth-child(3){left:37%;right:8%;top:58%;height:1px;border:none;border-top:1px solid currentColor;transform:rotate(-14deg)}
+.curated--primary .curated-media--pending{aspect-ratio:1.52}
+.curated--editorial .curated-media--pending{aspect-ratio:1.1}
+@media(max-width:1023px){.curated-media--pending{min-height:220px}.pending-label{font-size:clamp(30px,4vw,54px)}}
+@media(max-width:680px){.curated-media--pending,.curated--primary .curated-media--pending,.curated--editorial .curated-media--pending{aspect-ratio:1.36;min-height:210px;padding:24px}.pending-label{font-size:clamp(34px,9vw,54px)}.curated--placeholder .curated-copy{padding-top:27px}}
+@media(prefers-reduced-motion:reduce){.curated-media--pending{animation:none!important;transition:none!important}}
+/* Keep the SarafCare display wordmark intact inside the narrower editorial card. */
+.pending--sarafcare .pending-label{font-size:clamp(28px,3.5vw,48px);letter-spacing:-.065em;white-space:nowrap;overflow-wrap:normal}
