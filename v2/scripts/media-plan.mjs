@@ -25,7 +25,7 @@ export function validateMediaRegistry(registry){
   if(!(safeHash(item.sha256)||(item.id==='motion-original-contact-sheet'&&/^[a-f0-9]{40}$/.test(item.sourceGitBlobSha)))||!required(item.source)||!required(item.alt))issues.push('INVALID_PROVENANCE:'+item.id);
   if(!Number.isInteger(item.width)||item.width<=0||!Number.isInteger(item.height)||item.height<=0)issues.push('INVALID_DIMENSIONS:'+item.id);
   if(item.id==='ars-portrait'){
-   if(item.kind!=='image'||!imagePath.test(item.path)||item.url!==undefined||!Number.isInteger(item.bytes)||item.bytes<=0)issues.push('INVALID_PORTRAIT:'+item.id);
+   if(item.kind!=='image'||item.path!=='assets/ars-portrait-800.webp'||item.url!==undefined||item.width!==800||item.height!==800||item.bytes!==9888||item.sha256!=='d2578b49531b52d247eedb83064cb43b4bb0a84d65932e1abe410f3c03daf0b8'||item.gitBlobSha!=='4a46765f2a93d57fdf30b23498b656b0aebc8113')issues.push('INVALID_PORTRAIT:'+item.id);
   }else if(item.id==='motion-original-contact-sheet'){
    if(item.kind!=='image'||item.path!=='assets/motion-original-contact-sheet.png'||item.bytes!==76029||item.sourceGitBlobSha!=='1b259487f736970eeb8db34b05642ab48cac0ddb'||item.sourceCommit!=='ac73856a159587db1aa936409fd718bd5115ae5b')issues.push('INVALID_POSTER_SOURCE:'+item.id);
   }else if(item.id==='motion-original-demo'){

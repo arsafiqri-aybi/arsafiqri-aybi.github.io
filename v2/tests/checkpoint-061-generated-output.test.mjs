@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 const file=p=>readFileSync(resolve(root,p),'utf8');
 const home=file('index.html'),motion=file('work/motion/index.html'),social=file('social.svg');
+import {createHash} from 'node:crypto';
 const media=JSON.parse(file('v2/content/approved-media.json'));
 const legacy=['hey','personal-browser-operator','scale-governor','motion','skill-builder','copywriting','website-builder'];
 test('generated Home reflects approved identity, not old Home',()=>{
@@ -13,8 +14,8 @@ test('generated Home reflects approved identity, not old Home',()=>{
  assert.doesNotMatch(home,/Integrated Digital Builder|Featured: Hey by Ars/);
 });
 test('portrait is referenced only by Home/About composition',()=>{
- assert.equal((home.match(/src="\.\/assets\/ars-portrait\.webp"/g)||[]).length,2);
- for(const id of legacy)assert.doesNotMatch(file('work/'+id+'/index.html'),/ars-portrait\.webp/);
+ assert.equal((home.match(/src="\.\/assets\/ars-portrait-800\.webp"/g)||[]).length,2);
+ for(const id of legacy)assert.doesNotMatch(file('work/'+id+'/index.html'),/ars-portrait-800\.webp/);
 });
 test('portrait usage scopes exclude social and project galleries',()=>{
  const portrait=media.items.find(x=>x.id==='ars-portrait');
@@ -44,6 +45,15 @@ test('all seven legacy case studies retain deep link anchors and return navigati
  }
 });
 test('all local media references exist in current branch checkout',()=>{
- assert.equal(existsSync(resolve(root,'assets/ars-portrait.webp')),true);
+ assert.equal(existsSync(resolve(root,'assets/ars-portrait-800.webp')),true);
  assert.equal(existsSync(resolve(root,'assets/motion-original-contact-sheet.png')),true);
+});
+
+test('portrait 800 binary matches declared provenance',()=>{
+ const p=media.items.find(x=>x.id==='ars-portrait');
+ const bytes=readFileSync(resolve(root,p.path));
+ assert.equal(bytes.length,9888);
+ assert.equal(p.width,800);assert.equal(p.height,800);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),'d2578b49531b52d247eedb83064cb43b4bb0a84d65932e1abe410f3c03daf0b8');
+ assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex'),'4a46765f2a93d57fdf30b23498b656b0aebc8113');
 });

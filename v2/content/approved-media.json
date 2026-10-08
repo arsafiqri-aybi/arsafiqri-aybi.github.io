@@ -10,13 +10,14 @@
         "home",
         "about"
       ],
-      "path": "assets/ars-portrait.webp",
+      "path": "assets/ars-portrait-800.webp",
       "alt": "Portrait of Arsafiqri Ummati Aybi against a dark navy background.",
-      "width": 360,
-      "height": 360,
-      "bytes": 3936,
-      "sha256": "f702926df8aec4ce7865493f422aa24348cb2bddeb6b85359b165151d04a8467",
-      "licenseReview": "confirmed-owner-approval"
+      "width": 800,
+      "height": 800,
+      "bytes": 9888,
+      "sha256": "d2578b49531b52d247eedb83064cb43b4bb0a84d65932e1abe410f3c03daf0b8",
+      "licenseReview": "confirmed-owner-approval",
+      "gitBlobSha": "4a46765f2a93d57fdf30b23498b656b0aebc8113"
     },
     {
       "id": "motion-original-demo",

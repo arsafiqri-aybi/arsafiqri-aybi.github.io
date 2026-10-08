@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {validateMediaRegistry,resolveApprovedMedia} from '../scripts/media-plan.mjs';
@@ -9,7 +10,7 @@ const real=JSON.parse(readFileSync(resolve(root,'v2/content/approved-media.json'
 const copy=()=>structuredClone(real);
 const bad=fn=>{const c=copy();fn(c);return validateMediaRegistry(c)};
 test('registry structurally valid',()=>assert.deepEqual(validateMediaRegistry(real),[]));
-test('portrait is HOME-scoped',()=>assert.equal(resolveApprovedMedia(real,'ars-portrait','home').path,'assets/ars-portrait.webp'));
+test('portrait is HOME-scoped',()=>assert.equal(resolveApprovedMedia(real,'ars-portrait','home').path,'assets/ars-portrait-800.webp'));
 test('portrait is ABOUT-scoped',()=>assert.equal(resolveApprovedMedia(real,'ars-portrait','about').scope.length,2));
 test('portrait NOT for social or OG',()=>assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','og'),/SLOT_NOT_APPROVED/));
 test('portrait NOT for case study',()=>assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','motion-case'),/SLOT_NOT_APPROVED/));
@@ -27,3 +28,16 @@ test('missing hash blocked',()=>assert.match(bad(x=>x.items[0].sha256='').join('
 test('duplicate media id rejected',()=>assert.match(bad(x=>x.items.push(structuredClone(x.items[0]))).join(','),/DUPLICATE_ID/));
 test('missing media id rejected',()=>assert.match(bad(x=>x.items.pop()).join(','),/MISSING_ASSET/));
 test('media plan returns independent copy',()=>{const x=resolveApprovedMedia(real,'ars-portrait','home');x.scope.push('og');assert.deepEqual(real.items[0].scope,['home','about'])});
+
+test('800 px portrait has byte-verified SHA-256 and Git object SHA',()=>{
+ const p=real.items.find(x=>x.id==='ars-portrait');
+ const bytes=readFileSync(resolve(root,p.path));
+ assert.equal(bytes.length,9888);
+ assert.equal(p.width,800);assert.equal(p.height,800);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),p.sha256);
+ assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex'),p.gitBlobSha);
+});
+test('old low-resolution or altered portrait registry must fail closed',()=>{
+ assert.match(bad(x=>{x.items[0].width=360;x.items[0].height=360}).join(','),/INVALID_PORTRAIT/);
+ assert.match(bad(x=>{x.items[0].gitBlobSha='0'.repeat(40)}).join(','),/INVALID_PORTRAIT/);
+});
