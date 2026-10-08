@@ -6,6 +6,116 @@ let theme='contextual';
 try {const stored=localStorage.getItem('ars-theme');if(themes.includes(stored))theme=stored;}catch{}
 function applyTheme(){root.dataset.theme=theme;document.querySelectorAll('[data-theme-label]').forEach(el=>el.textContent=theme[0].toUpperCase()+theme.slice(1));document.querySelectorAll('[data-theme-switch]').forEach(el=>el.setAttribute('aria-label','Appearance: '+theme+'. Activate to change theme.'));}
 applyTheme();
+
+ // Grid review is opt-in: ?grid=1. Normal public portfolio stays unchanged.
+ if(new URLSearchParams(location.search).get('grid')==='1'){
+   const definitions=[
+     ['.topbar','H0 / HEADER','frame'],
+     ['.topbar .brand','H1 / LOGO ARS','detail'],
+     ['.explorer','01 / EXPLORER CANVAS','frame'],
+     ['.explore-layout','02 / TWO-COLUMN GRID','frame'],
+     ['.section-rail','02A / NAVBAR','area'],
+     ['.rail-window','02A.1 / NAV SCROLL AREA','detail'],
+     ['.preview-stage','02B / PREVIEW AREA','area'],
+     ['[data-preview="home"] .home-composition','HOME / COLUMN GRID','area'],
+     ['[data-preview="home"] .identity-copy','HOME A / TEXT','detail'],
+     ['[data-preview="home"] .ars-portrait-stage','HOME B / PORTRAIT','detail'],
+     ['[data-preview="work"] .work-composition','WORK / COLUMN GRID','area'],
+     ['[data-preview="work"] .work-art-focus','WORK A / PROJECT VISUAL','detail'],
+     ['[data-preview="work"] .preview-copy','WORK B / TEXT','detail'],
+     ['[data-preview="expertise"] .type-composition','EXPERTISE / PREVIEW','area'],
+     ['[data-preview="expertise"] .preview-capabilities','EXPERTISE / SKILL LIST','detail'],
+     ['[data-preview="approach"] .type-composition','APPROACH / PREVIEW','area'],
+     ['[data-preview="about"] .type-composition','ABOUT / PREVIEW','area'],
+     ['[data-preview="connect"] .type-composition','CONNECT / PREVIEW','area'],
+     ['.quiet-action','CTA / ARROW LINK','action'],
+     ['.page','FULL PAGE','frame'],
+     ['.page-inside','PAGE / CONTENT FRAME','area'],
+     ['.page-heading','PAGE / HEADING','detail'],
+     ['.editorial-gallery','WORK / GALLERY','area'],
+     ['.curated-work','WORK / PROJECT ROW','area'],
+     ['.curated-media','PROJECT / VISUAL','detail'],
+     ['.curated-copy','PROJECT / DESCRIPTION','detail'],
+     ['.editorial-stack','EXPERTISE / BLOCK LIST','area'],
+     ['.capability','EXPERTISE / ITEM','area'],
+     ['.capability-note','EXPERTISE / KEYWORDS','detail'],
+     ['.capability-media','EXPERTISE / VISUAL','detail'],
+     ['.principles','APPROACH / STEPS','area'],
+     ['.principles article','APPROACH / STEP','detail'],
+     ['.about-layout','ABOUT / TWO-COLUMN GRID','area'],
+     ['.about-story','ABOUT / TEXT','detail'],
+     ['.about-portrait','ABOUT / PHOTO','detail'],
+     ['.contact-simple','CONTACT / MAIN COPY','area'],
+     ['.contact-actions','CONTACT / LINKS','detail'],
+     ['.showcase','CASE STUDY / HERO','frame'],
+     ['.showcase-inside','CASE STUDY / HERO FRAME','area'],
+     ['.showcase-title','CASE STUDY / TITLE','detail'],
+     ['.showcase-art','CASE STUDY / VISUAL','detail'],
+     ['.reader','CASE STUDY / READER','frame'],
+     ['.story-nav','CASE STUDY / NAV','area'],
+     ['.reading-section','CASE STUDY / SECTION','area'],
+     ['.editorial-width','CASE STUDY / CONTENT','detail'],
+     ['.context-grid','CASE STUDY / CONTEXT','detail'],
+     ['.evidence-pair','CASE STUDY / EVIDENCE','detail'],
+     ['.architecture-explorer','CASE STUDY / SYSTEM MAP','detail'],
+     ['.next-work','CASE STUDY / NEXT','area']
+   ];
+   definitions.forEach(([selector,title,level])=>{
+     const nodes=[...document.querySelectorAll(selector)];
+     nodes.forEach((node,i)=>{
+       node.classList.add('grid-inspect');
+       node.dataset.gridLevel=level;
+       const label=document.createElement('span');
+       label.className='grid-box-label';
+       label.setAttribute('aria-hidden','true');
+       const identifier=node.dataset.page||node.dataset.preview||'';
+       label.textContent=title+(identifier?' / '+identifier.toUpperCase():'')+(nodes.length>1?' '+String(i+1).padStart(2,'0'):'');
+       node.appendChild(label);
+     });
+   });
+   // Keep inspection mode when moving into individual project routes.
+   document.querySelectorAll('a[href]').forEach(a=>{
+     const source=a.getAttribute('href');
+     if(!source||source.startsWith('#')||source.startsWith('mailto:')||source.startsWith('tel:'))return;
+     try{
+       const url=new URL(source,location.href);
+       if(url.origin!==location.origin)return;
+       url.searchParams.set('grid','1');
+       a.href=url.pathname+url.search+url.hash;
+     }catch{}
+   });
+   const controls=document.createElement('aside');
+   controls.className='grid-review-controls';
+   controls.setAttribute('aria-label','Grid review controls');
+   const heading=document.createElement('strong');
+   heading.className='grid-review-heading';
+   heading.textContent='GRID REVIEW / Struktur';
+   const description=document.createElement('span');
+   description.className='grid-review-legend';
+   description.textContent='Biru = area utama · Hijau = komponen · Ungu = tombol';
+   const actions=document.createElement('div');
+   actions.className='grid-review-actions';
+   const toggle=document.createElement('button');
+   toggle.type='button';
+   toggle.className='grid-review-toggle';
+   toggle.textContent='Sembunyikan garis';
+   toggle.setAttribute('aria-pressed','true');
+   toggle.addEventListener('click',()=>{
+     const enabled=document.documentElement.classList.toggle('grid-review');
+     toggle.textContent=enabled?'Sembunyikan garis':'Tampilkan garis';
+     toggle.setAttribute('aria-pressed',String(enabled));
+   });
+   const normal=document.createElement('a');
+   const cleanUrl=new URL(location.href);
+   cleanUrl.searchParams.delete('grid');
+   normal.href=cleanUrl.pathname+cleanUrl.search+cleanUrl.hash;
+   normal.textContent='Mode normal ↗';
+   actions.append(toggle,normal);
+   controls.append(heading,description,actions);
+   document.body.appendChild(controls);
+   document.documentElement.classList.add('grid-review');
+ }
+
 document.querySelectorAll('[data-theme-switch]').forEach(b=>b.addEventListener('click',()=>{theme=themes[(themes.indexOf(theme)+1)%themes.length];try{localStorage.setItem('ars-theme',theme);}catch{}applyTheme();}));
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const names=['home','work','expertise','approach','about','connect'];
@@ -91,9 +201,9 @@ root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();
 window.addEventListener('hashchange',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
 window.addEventListener('popstate',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
 window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});
-document.querySelectorAll('.brand').forEach(a=>a.addEventListener('click',e=>{if(!choices.length||e.button!==0||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState(null,'',location.pathname+'#home');showFromLocation();focusLocationTarget();}));
- document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
-document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();focusLocationTarget();}));}else{root.dataset.context='dark';}
+document.querySelectorAll('.brand').forEach(a=>a.addEventListener('click',e=>{if(!choices.length||e.button!==0||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState(null,'',location.pathname+location.search+'#home');showFromLocation();focusLocationTarget();}));
+ document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname+location.search);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
+document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname+location.search);showFromLocation();focusLocationTarget();}));}else{root.dataset.context='dark';}
 const reader=document.querySelector('[data-reader]');
 if(reader){const storyNav=[...document.querySelectorAll('.story-nav a')];const sections=[...document.querySelectorAll('.reading-section')];let requested=false;
 const refresh=()=>{requested=false;const reading=reader.getBoundingClientRect().top<=125;root.classList.toggle('reading',reading);root.dataset.context=reading?'light':'dark';let active=sections[0]?.id;for(const s of sections)if(s.getBoundingClientRect().top<180)active=s.id;storyNav.forEach(a=>a.setAttribute('aria-current',String(a.hash==='#'+active)));};const schedule=()=>{if(!requested){requested=true;requestAnimationFrame(refresh)}};window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh();
