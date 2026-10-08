@@ -350,3 +350,21 @@ html[data-ars-view="section"] .home-site .topbar{
 @media(prefers-reduced-motion:reduce){
   .home-site .topbar .brand{transition:none;will-change:auto}
 }
+
+
+/* ARS wordmark static review 03 — fixed within the space above the Home/preview grid.
+   The wordmark does not animate or react to wheel selection. */
+.home-site .topbar{
+  justify-content:center;
+}
+.home-site .topbar .brand{
+  position:absolute;
+  left:50%;
+  top:var(--ars-logo-top,calc(50% - 13px));
+  transform:translateX(-50%);
+  transition:none;
+  will-change:auto;
+}
+@media(max-width:680px){
+  .home-site .topbar .brand{transform:translateX(-50%)}
+}

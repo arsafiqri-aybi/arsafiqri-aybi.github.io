@@ -125,26 +125,18 @@ const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
 function positionBrand(){
  const topbar=document.querySelector('.home-site .topbar');
- if(!topbar||!explorer)return;
- const away=explorer.classList.contains('is-away');
- const mode=away?'page':selected===0?'home':'section';
- root.dataset.arsView=mode;
- let offset=0;
- if(mode==='section'&&window.innerWidth>680){
-   const composition=explorer.querySelector('.explore-layout');
-   const brand=topbar.querySelector('.brand');
-   if(composition&&brand){
-     const top=composition.getBoundingClientRect().top;
-     const bar=topbar.getBoundingClientRect();
-     const naturalBottom=bar.top+(bar.height+brand.offsetHeight)/2;
-     // Keep a clear gap above the two-column layout at short viewports.
-     offset=Math.max(0,Math.min(100,Math.round(top-naturalBottom-18)));
-   }
- }
- root.style.setProperty('--ars-brand-drop',offset+'px');
+ const layout=explorer?.querySelector('.explore-layout');
+ const brand=topbar?.querySelector('.brand');
+ // The wordmark is stationary: calculate the midpoint between the header's
+ // upper grid boundary and the preview grid once, not on navigation/wheel.
+ if(!topbar||!layout||!brand||explorer.classList.contains('is-away'))return;
+ const frame=topbar.getBoundingClientRect(),grid=layout.getBoundingClientRect();
+ const halfGap=(grid.top-frame.top)/2;
+ const brandTop=halfGap-brand.offsetHeight/2;
+ if(Number.isFinite(brandTop))topbar.style.setProperty('--ars-logo-top',brandTop.toFixed(2)+'px');
 }
-function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,viewport.scrollLeft+itemRect.left-viewRect.left-(viewRect.width-itemRect.width)/2),behavior:'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}positionBrand();}
-function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});positionBrand();}}
+function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,viewport.scrollLeft+itemRect.left-viewRect.left-(viewRect.width-itemRect.width)/2),behavior:'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}}
+function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(positionBrand);}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
