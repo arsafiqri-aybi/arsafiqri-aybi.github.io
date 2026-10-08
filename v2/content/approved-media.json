@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "ars-portrait",
+      "kind": "image",
+      "source": "owner-supplied",
+      "rights": "OWNER_APPROVED_HOME_ABOUT",
+      "scope": [
+        "home",
+        "about"
+      ],
+      "path": "assets/ars-portrait.webp",
+      "alt": "Portrait of Arsafiqri Ummati Aybi against a dark navy background.",
+      "width": 360,
+      "height": 360,
+      "bytes": 3936,
+      "sha256": "f702926df8aec4ce7865493f422aa24348cb2bddeb6b85359b165151d04a8467",
+      "licenseReview": "confirmed-owner-approval"
+    },
+    {
+      "id": "motion-original-demo",
+      "kind": "video",
+      "source": "owner-project-repository",
+      "rights": "PUBLIC_REPOSITORY_ORIGINAL_WITH_SCOPED_USAGE",
+      "scope": [
+        "motion-case"
+      ],
+      "url": "https://raw.githubusercontent.com/arsafiqri-aybi/motion-render-video/ac73856a159587db1aa936409fd718bd5115ae5b/examples/rendered/demo.mp4",
+      "alt": "Six-second original code-rendered motion study.",
+      "width": 640,
+      "height": 360,
+      "durationSeconds": 6,
+      "sha256": "8464f3295c7ec284b0f9470a8bf9051a4b7b4f2e81779353a1469f4df1722c31",
+      "verification": "Decoded format and timing only; NOT accessibility or comfort certification."
+    }
+  ]
+}
