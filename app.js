@@ -15,6 +15,42 @@ const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
 function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){target.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});if(moveFocus)target.focus({preventScroll:true});}}
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else delete p.dataset.visible;});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+// ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
+const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
+function storeWorkOrigin(a,e){
+ if(e&&((e.button!==undefined&&e.button!==0)||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey))return;
+ const id=a.getAttribute('data-gallery-project');
+ if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id??''))return;
+ try{sessionStorage.setItem(workOriginKey,JSON.stringify({path:location.pathname,id,scrollY:window.scrollY}));}catch{}
+}
+document.querySelectorAll('a[data-gallery-project]').forEach(a=>a.addEventListener('click',e=>storeWorkOrigin(a,e)));
+document.querySelectorAll('a[data-return-to-work]').forEach(a=>a.addEventListener('click',e=>{
+ if((e.button!==undefined&&e.button!==0)||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;
+ try{sessionStorage.setItem(workReturnKey,'1');}catch{}
+}));
+let pendingWorkRestore=false;
+function restoreWorkContext(){
+ if(!choices.length||location.hash!=='#work'||pendingWorkRestore)return;
+ let recorded,requested=false;
+ try{
+  const navType=performance.getEntriesByType('navigation')[0]?.type;
+  requested=sessionStorage.getItem(workReturnKey)==='1'||navType==='back_forward';
+  recorded=JSON.parse(sessionStorage.getItem(workOriginKey)||'null');
+ }catch{return;}
+ if(!requested||!recorded||recorded.path!==location.pathname||
+    typeof recorded.id!=='string'||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(recorded.id)||
+    !Number.isFinite(recorded.scrollY)||recorded.scrollY<0)return;
+ pendingWorkRestore=true;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  pendingWorkRestore=false;
+  if(location.hash!=='#work')return;
+  const maxY=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+  window.scrollTo({top:Math.min(recorded.scrollY,maxY),behavior:'instant'});
+  const target=[...document.querySelectorAll('a[data-gallery-project]')].find(a=>a.getAttribute('data-gallery-project')===recorded.id);
+  target?.focus({preventScroll:true});
+  try{sessionStorage.removeItem(workReturnKey)}catch{}
+ }));
+}
 if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose(i));b.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=choices.length-1;else n=i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1);choose(n,true);});});const rail=document.querySelector('.rail-window');
 const previewStage=explorer?.querySelector('.preview-stage');
 let wheelDistance=0, wheelLastAt=0, wheelLockUntil=0;
@@ -40,7 +76,7 @@ const selectWithWheel=e=>{
   wheelLockUntil=now+240;
   choose(selected+direction);
 };
-for(const surface of [rail,previewStage])surface?.addEventListener('wheel',selectWithWheel,{passive:false});root.classList.add('is-enhanced');showFromLocation();window.addEventListener('hashchange',showFromLocation);window.addEventListener('popstate',showFromLocation);document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();}));document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();}));}else{root.dataset.context='dark';}
+for(const surface of [rail,previewStage])surface?.addEventListener('wheel',selectWithWheel,{passive:false});root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();window.addEventListener('hashchange',()=>{showFromLocation();restoreWorkContext()});window.addEventListener('popstate',()=>{showFromLocation();restoreWorkContext()});window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();}));document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();}));}else{root.dataset.context='dark';}
 const reader=document.querySelector('[data-reader]');
 if(reader){const storyNav=[...document.querySelectorAll('.story-nav a')];const sections=[...document.querySelectorAll('.reading-section')];let requested=false;
 const refresh=()=>{requested=false;const reading=reader.getBoundingClientRect().top<=125;root.classList.toggle('reading',reading);root.dataset.context=reading?'light':'dark';let active=sections[0]?.id;for(const s of sections)if(s.getBoundingClientRect().top<180)active=s.id;storyNav.forEach(a=>a.setAttribute('aria-current',String(a.hash==='#'+active)));};const schedule=()=>{if(!requested){requested=true;requestAnimationFrame(refresh)}};window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh();
