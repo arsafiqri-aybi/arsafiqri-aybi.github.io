@@ -18,6 +18,6 @@ Artifact: full portfolio replacement. Engine: headless Chromium 153, controlled 
 | Screen reader / real users | NOT_RUN | Not available in this session |
 | Hardware / field performance | NOT_RUN | Local browser evidence does not establish performance on all devices |
 | Complete WCAG conformance | NOT_RUN | No claim of certification from scoped checks |
-| Production deployment | PENDING | Updated after Pages build and public read-back |
+| Production deployment | PASS | GitHub Pages built commit 82d00732b6e7907a8f4319ca2abc474d237bacf0; live browser confirmed new title, hero → work → Hey detail → home navigation and actual rendering |
 
 Font licenses and source are included. Native scrolling, actual HTML routes, and native links remain the foundation. Social preview artwork is SVG; some social platforms may omit the image while keeping title and description.
