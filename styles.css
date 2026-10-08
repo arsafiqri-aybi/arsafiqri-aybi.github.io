@@ -73,3 +73,15 @@ html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:80px}*{box-s
 .story-nav a:focus-visible,.source-ref:focus-visible,.back-action:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .evidence-real video:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:680px){.case-type-creative-editorial .evidence-pair,.case-type-business-campaign .evidence-pair,.case-type-research-ux .evidence-pair{grid-template-columns:1fr}.case-text-evidence{margin-top:27px}}
+
+
+/* ARS v2: authentic, owner-approved portrait used ONLY on Home and About. */
+.ars-portrait-stage{width:min(100%,390px);justify-self:center;align-self:center;margin:0;min-width:0;position:relative}
+.ars-portrait-stage img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center;border-radius:6px;box-shadow:0 18px 60px rgba(5,15,30,.18);background:#192637}
+.ars-portrait-caption{margin-top:13px;color:var(--sub);font-size:12px;line-height:1.5;letter-spacing:.025em}
+.about-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(210px,.8fr);gap:clamp(32px,5vw,80px);align-items:start}
+.about-layout .about-story{min-width:0}
+.about-portrait{width:100%;max-width:355px;margin:8px 0 0}
+.about-portrait img{width:100%;height:auto;display:block;aspect-ratio:1;object-fit:cover;border-radius:6px;background:#192637}
+.about-portrait figcaption{margin-top:11px;color:var(--sub);font-size:12px;line-height:1.5}
+@media(max-width:680px){.ars-portrait-stage{width:min(100%,340px);margin:0}.about-layout{grid-template-columns:1fr;gap:38px}.about-portrait{max-width:330px}}
