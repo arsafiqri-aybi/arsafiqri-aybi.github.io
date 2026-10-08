@@ -21,7 +21,8 @@ function storeWorkOrigin(a,e){
  if(e&&((e.button!==undefined&&e.button!==0)||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey))return;
  const id=a.getAttribute('data-gallery-project');
  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id??''))return;
- try{sessionStorage.setItem(workOriginKey,JSON.stringify({path:location.pathname,id,scrollY:window.scrollY}));}catch{}
+ const linkIndex=[...document.querySelectorAll('a[data-gallery-project]')].indexOf(a);
+ try{sessionStorage.setItem(workOriginKey,JSON.stringify({path:location.pathname,id,linkIndex,scrollY:window.scrollY}));}catch{}
 }
 document.querySelectorAll('a[data-gallery-project]').forEach(a=>a.addEventListener('click',e=>storeWorkOrigin(a,e)));
 document.querySelectorAll('a[data-return-to-work]').forEach(a=>a.addEventListener('click',e=>{
@@ -46,7 +47,9 @@ function restoreWorkContext(){
   if(location.hash!=='#work')return;
   const maxY=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
   window.scrollTo({top:Math.min(recorded.scrollY,maxY),behavior:'instant'});
-  const target=[...document.querySelectorAll('a[data-gallery-project]')].find(a=>a.getAttribute('data-gallery-project')===recorded.id);
+  const candidates=[...document.querySelectorAll('a[data-gallery-project]')];
+  const exact=Number.isSafeInteger(recorded.linkIndex)&&recorded.linkIndex>=0?candidates[recorded.linkIndex]:null;
+  const target=exact?.getAttribute('data-gallery-project')===recorded.id?exact:candidates.find(a=>a.getAttribute('data-gallery-project')===recorded.id);
   target?.focus({preventScroll:true});
   try{sessionStorage.removeItem(workReturnKey)}catch{}
  }));
@@ -76,7 +79,20 @@ const selectWithWheel=e=>{
   wheelLockUntil=now+240;
   choose(selected+direction);
 };
-for(const surface of [rail,previewStage])surface?.addEventListener('wheel',selectWithWheel,{passive:false});root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();window.addEventListener('hashchange',()=>{showFromLocation();restoreWorkContext()});window.addEventListener('popstate',()=>{showFromLocation();restoreWorkContext()});window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();}));document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();}));}else{root.dataset.context='dark';}
+for(const surface of [rail,previewStage])surface?.addEventListener('wheel',selectWithWheel,{passive:false});// Move focus to the newly shown destination, never leave it on a hidden preview link.
+function focusLocationTarget(){
+ const section=location.hash.replace('#','').toLowerCase();
+ if(names.includes(section)&&section!=='home'){
+  const h=pages.find(p=>p.dataset.page===section)?.querySelector('h1');
+  if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}
+ }else choices[selected]?.focus({preventScroll:true});
+}
+root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();
+window.addEventListener('hashchange',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
+window.addEventListener('popstate',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
+window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});
+document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
+document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname);showFromLocation();focusLocationTarget();}));}else{root.dataset.context='dark';}
 const reader=document.querySelector('[data-reader]');
 if(reader){const storyNav=[...document.querySelectorAll('.story-nav a')];const sections=[...document.querySelectorAll('.reading-section')];let requested=false;
 const refresh=()=>{requested=false;const reading=reader.getBoundingClientRect().top<=125;root.classList.toggle('reading',reading);root.dataset.context=reading?'light':'dark';let active=sections[0]?.id;for(const s of sections)if(s.getBoundingClientRect().top<180)active=s.id;storyNav.forEach(a=>a.setAttribute('aria-current',String(a.hash==='#'+active)));};const schedule=()=>{if(!requested){requested=true;requestAnimationFrame(refresh)}};window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh();
