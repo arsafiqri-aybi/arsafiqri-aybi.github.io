@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://github.com/arsafiqri-aybi/copywriting-intelligence-system",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/copywriting-intelligence-system/blob/main/release/QUALITY_GATES.json",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/copywriting-intelligence-system/tree/main/reasoning",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/governor",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/governor/blob/main/evaluation/STATUS.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/hey-android",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/hey-android/blob/main/app/src/main/java/id/ars/hey/BrowserRuntime.java",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/hey-mcp",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/hey-mcp/blob/main/docs/HEY_STRESS_TEST_LOG.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/motion",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/motion-render-video",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/motion-render-video/blob/main/examples/README.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/motion-render-video/tree/main/evidence",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/motion-render-video/tree/main/runtime",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/personal-browser-operator",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/personal-browser-operator/blob/main/evaluation/evidence/RUN-0001-real-browser-ci.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/personal-browser-operator/blob/main/evaluation/evidence/RUN-0005-container-regression-ci.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/personal-browser-operator/tree/main/packages/operator-runtime",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/portofolio-web",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/portofolio-web/blob/main/quality/VERIFICATION.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/scale",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/scale/blob/main/assets/execution-contract.json",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/skill-builder",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/skill-builder/blob/main/evaluation/STATUS.md",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/skill-builder/tree/main/scripts",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/website-builder",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/arsafiqri-aybi/website-builder/blob/main/BASE_KNOWLEDGE_MAP.md",
+    "status": 200
+  }
+]

@@ -1,0 +1,464 @@
+{
+  "date": "2026-10-08T21:15:00.198Z",
+  "scope": "Local HTTP origin, actual static output, Chromium",
+  "checks": [
+    {
+      "name": "Responsive six-section journeys and all seven case routes",
+      "status": "PASS",
+      "evidence": "Seven widths, landscape, 91 route renders; decoded owner portrait."
+    },
+    {
+      "name": "All local links, anchors, metadata and held-route exclusion",
+      "status": "PASS",
+      "evidence": "No broken local route or fragment; video controls separate from case links; three unpublished cases absent."
+    },
+    {
+      "name": "Gallery case navigation, Back, Forward and exact focus restoration",
+      "status": "PASS",
+      "evidence": "Browser history and explicit return restore recorded gallery scroll and focus; case footer Home returns to root."
+    },
+    {
+      "name": "Rail keyboard, edge scroll, section focus and theme controls",
+      "status": "PASS",
+      "evidence": "Keyboard selection and heading focus work; browser zoom gesture remains native; three appearance modes."
+    },
+    {
+      "name": "No-JavaScript fallback with six native destinations and direct cases",
+      "status": "PASS",
+      "evidence": "Native anchors, original poster, video controls, and seven static case pages work without JS."
+    },
+    {
+      "name": "Original film manual playback, pause, seek, audio, replay, and navigation pause",
+      "status": "PASS",
+      "evidence": "Actual hash-verified H.264/AAC source decoded (640\u00d7360, 6s). Local playback uses pinned-source bytes; external delivery checked separately."
+    },
+    {
+      "name": "Film error keeps the authentic poster and an accessible fallback",
+      "status": "PASS",
+      "evidence": "Error feedback and source references retained; native video poster remains."
+    },
+    {
+      "name": "Automated accessibility sample in all sections, cases and themes",
+      "status": "PASS",
+      "evidence": "42 automated samples; this is not full WCAG or screen-reader certification."
+    },
+    {
+      "name": "Initial-load size, rendering time and layout stability (local lab)",
+      "status": "PASS",
+      "evidence": {
+        "lcp": 44,
+        "cls": 0.041826594472271515,
+        "bytes": 193583,
+        "videoRequests": 0
+      }
+    },
+    {
+      "name": "Reduced motion and zero runtime errors",
+      "status": "PASS",
+      "evidence": "No running decorative animations under reduced motion; no page errors."
+    }
+  ],
+  "accessibility": [
+    {
+      "route": "/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#work",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#expertise",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#approach",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#about",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#connect",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/hey/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/personal-browser-operator/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/scale-governor/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/motion/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/skill-builder/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/copywriting/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/website-builder/",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/404.html",
+      "theme": "contextual",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#work",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#expertise",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#approach",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#about",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#connect",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/hey/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/personal-browser-operator/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/scale-governor/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/motion/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/skill-builder/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/copywriting/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/website-builder/",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/404.html",
+      "theme": "dark",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#work",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#expertise",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#approach",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#about",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/#connect",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/hey/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/personal-browser-operator/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/scale-governor/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/motion/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/skill-builder/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/copywriting/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/work/website-builder/",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "/404.html",
+      "theme": "light",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    }
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 375,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 430,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 680,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 768,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 1024,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "sections": 6,
+      "cases": 7
+    }
+  ],
+  "errors": [],
+  "performance": {
+    "environment": "Local HTTP, Chromium, 375\u00d7844, unthrottled; not field CWV",
+    "budgets": {
+      "bytes": 400000,
+      "lcpMs": 2500,
+      "cls": 0.1
+    },
+    "observed": {
+      "lcp": 44,
+      "cls": 0.041826594472271515,
+      "bytes": 193583,
+      "videoRequests": 0
+    }
+  },
+  "status": "PASS",
+  "limitations": [
+    "No physical-device tests or screen-reader session.",
+    "No field Core Web Vitals measurements.",
+    "Local playback verifies original bytes, not the external host."
+  ]
+}

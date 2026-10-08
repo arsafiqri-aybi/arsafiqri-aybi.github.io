@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "candidateId": "ARS-V2-FINAL-20261009",
+  "baseRevision": "a50c1a0d68cf143c01c34419825b35de9916f802",
+  "authorization": "Latest direct owner instruction: selesaikan semuanya ya aku mau menunggu hasil deploy nya. Implements and publishes the supplied specification with previously approved rights-safe placeholders.",
+  "target": "https://arsafiqri-aybi.github.io/",
+  "publicationSource": {
+    "branch": "main",
+    "path": "/"
+  },
+  "homeVariant": "IDENTITY_FIRST_APPROVED_PORTRAIT",
+  "selectedOrder": [
+    "tari-cookies",
+    "hey",
+    "waai-id",
+    "personal-browser-operator",
+    "sarafcare",
+    "motion"
+  ],
+  "placeholders": [
+    "tari-cookies",
+    "waai-id",
+    "sarafcare"
+  ],
+  "caseRoutes": [
+    "/work/hey/",
+    "/work/personal-browser-operator/",
+    "/work/scale-governor/",
+    "/work/motion/",
+    "/work/skill-builder/",
+    "/work/copywriting/",
+    "/work/website-builder/"
+  ],
+  "media": [
+    {
+      "id": "ars-portrait",
+      "scope": [
+        "home",
+        "about"
+      ],
+      "sha256": "d2578b49531b52d247eedb83064cb43b4bb0a84d65932e1abe410f3c03daf0b8",
+      "sourceCommit": null
+    },
+    {
+      "id": "motion-original-demo",
+      "scope": [
+        "motion-case",
+        "motion-gallery"
+      ],
+      "sha256": "8464f3295c7ec284b0f9470a8bf9051a4b7b4f2e81779353a1469f4df1722c31",
+      "sourceCommit": null
+    },
+    {
+      "id": "motion-original-contact-sheet",
+      "scope": [
+        "motion-case"
+      ],
+      "sha256": null,
+      "sourceCommit": "ac73856a159587db1aa936409fd718bd5115ae5b"
+    },
+    {
+      "id": "motion-original-poster",
+      "scope": [
+        "motion-case",
+        "motion-gallery"
+      ],
+      "sha256": "2abf4bfd10cc5c9d83fc76ff8a326f3e6f59242c352302ddcd27c7ded7c0beea",
+      "sourceCommit": "ac73856a159587db1aa936409fd718bd5115ae5b"
+    }
+  ],
+  "localGate": "BUILD_VERIFIED",
+  "productionGate": "NOT_RUN_AT_COMMIT_CREATION",
+  "rollbackReference": "a50c1a0d68cf143c01c34419825b35de9916f802",
+  "files": {
+    "index.html": "49d931a16425138ae24ba3d6f3cb1b420ca6b04ac91e10dab948c81a4b0d7f10",
+    "404.html": "689587c08cb264d8cea111575abf707a063c6bf6ef83c2d097f5db0653772679",
+    "app.js": "5f5b198330d2c37d550e72e513c60dc639f0d271eb94b05f2b22d5591f3ac505",
+    "styles.css": "1780d0c98b1f14071ed831dd7977042b2917b726bd22e33857de35f7905d238c",
+    "assets/motion-captions.vtt": "fcb6bdb1de4ce8fae53f29a73d0ee82e3de0f7dbe14903d26f723d41c5ecfb0e",
+    "sitemap.xml": "d07b92290bc3c996aa8a4c9b30cc47306df94fa854993b89d0e940881c3a3229",
+    "robots.txt": "00c7d2d2e9786c8e6abb8cef578d615f9ca54ffda436a75491e587391ec44da1",
+    "work/scale-governor/index.html": "5f79830b955552b8ebcab7752993e78042eee68b310c071f3e2911a35053d657",
+    "work/website-builder/index.html": "ce66bd4276f5185df38f3a2567f31b3aabd546c1c74f9692aceb122ecfee022b",
+    "work/copywriting/index.html": "8182b67008f55e4933c6fac7625cc5491ee94ca65d1ef89712738fa02ab35abb",
+    "work/motion/index.html": "d7049cf825e4cd057f12c8c859d84fa1fe2ea388d841bdfe5adf768bdc7437ca",
+    "work/skill-builder/index.html": "d3ea0f869907c49c264438716567b6a82116afc6b2fdda118ffddb7353855b44",
+    "work/personal-browser-operator/index.html": "7b6bcad76d259cec417f476d419010794f5842810b5b0cb40c7e9c9d82e9b187",
+    "work/hey/index.html": "4e2d033efb0405bd0fb93e21d0705f2a24ea5cf2e594b5828f4f0a59ace51526"
+  }
+}

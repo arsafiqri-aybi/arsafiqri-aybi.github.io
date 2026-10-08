@@ -14,7 +14,7 @@ const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
 function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){target.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});if(moveFocus)target.focus({preventScroll:true});}}
-function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else delete p.dataset.visible;});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
@@ -111,6 +111,10 @@ document.querySelectorAll('[data-motion-player]').forEach(stage=>{
    });
   }else{cover.hidden=true}
  });
+ video.addEventListener('play',()=>document.querySelectorAll('video').forEach(other=>{if(other!==video)other.pause()}));
+ const mediaFailed=()=>{cover.hidden=true;if(error)error.textContent='Playback unavailable here. Use the project source link to view the original file.';};
+ video.addEventListener('error',mediaFailed);
+ video.querySelectorAll('source').forEach(source=>source.addEventListener('error',mediaFailed));
  root.classList.add('motion-enhanced');
 });
 if(reduced.matches)root.classList.add('no-motion');

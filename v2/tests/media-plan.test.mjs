@@ -41,3 +41,11 @@ test('old low-resolution or altered portrait registry must fail closed',()=>{
  assert.match(bad(x=>{x.items[0].width=360;x.items[0].height=360}).join(','),/INVALID_PORTRAIT/);
  assert.match(bad(x=>{x.items[0].gitBlobSha='0'.repeat(40)}).join(','),/INVALID_PORTRAIT/);
 });
+
+test('original motion supports the approved gallery placement without portrait scope expansion',()=>{
+ assert.equal(resolveApprovedMedia(real,'motion-original-demo','motion-gallery').durationSeconds,6);
+ assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','motion-gallery'),/SLOT_NOT_APPROVED/);
+});
+test('changing embedded poster bytes fails closed even when claimed metadata is unchanged',()=>{
+ assert.match(bad(x=>{const p=x.items.find(i=>i.id==='motion-original-poster');p.dataUrl='data:image/webp;base64,ZmFrZQ=='}).join(','),/POSTER_BYTES_MISMATCH/);
+});
