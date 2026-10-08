@@ -406,3 +406,79 @@ html[data-ars-view="section"] .home-site .topbar{
   .preview-stage{min-height:0}
   .preview-stage>.section-preview{padding-top:0;padding-bottom:0}
 }
+
+
+/* ARS preview typography and portrait elevation, refinement 06.
+   No decorative plates, grids, shapes, or pseudo-element backdrops. */
+.home-composition .ars-portrait-stage{
+  position:relative;
+  isolation:isolate;
+  background:none;
+  border:0;
+  border-radius:10px;
+  box-shadow:none;
+}
+.home-composition .ars-portrait-stage::before,
+.home-composition .ars-portrait-stage::after{
+  content:none!important;
+}
+.home-composition .ars-portrait-stage img{
+  display:block;
+  background:none;
+  border:0;
+  border-radius:10px;
+  box-shadow:0 32px 68px -17px rgba(0,0,0,.46),
+             0 10px 25px -12px rgba(0,0,0,.29),
+             0 2px 5px rgba(0,0,0,.13);
+  transition:box-shadow .35s var(--ease),transform .35s var(--ease);
+  transform:translateZ(0);
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .home-composition .ars-portrait-stage:hover img{
+    box-shadow:0 40px 82px -18px rgba(0,0,0,.5),
+               0 14px 30px -12px rgba(0,0,0,.31);
+  }
+}
+/* Smaller, restrained Expertise hierarchy; one-line desktop headline. */
+[data-preview="expertise"] .type-composition{width:100%;max-width:none}
+[data-preview="expertise"] .type-composition h2{
+  font-size:clamp(18px,2.6vw,34px);
+  line-height:1.22;
+  letter-spacing:-.055em;
+  max-width:none;
+  white-space:nowrap;
+  text-wrap:nowrap;
+}
+[data-preview="expertise"] .preview-capabilities{
+  margin-top:clamp(24px,3.4vw,42px);
+  gap:clamp(12px,1.8vw,22px) clamp(22px,3.6vw,50px);
+}
+[data-preview="expertise"] .preview-capabilities p{
+  font-size:clamp(14px,1.35vw,18px);
+  line-height:1.4;
+  font-weight:500;
+  letter-spacing:-.025em;
+  padding-top:12px;
+}
+[data-preview="work"] .art-label{
+  margin-top:13px;
+  font-weight:650;
+  font-size:13px;
+  line-height:1.45;
+}
+@media(max-width:680px){
+  [data-preview="expertise"] .type-composition h2{
+    font-size:clamp(16px,4.7vw,22px);
+  }
+  [data-preview="expertise"] .preview-capabilities{
+    gap:16px 18px;
+    margin-top:25px;
+  }
+  [data-preview="expertise"] .preview-capabilities p{
+    font-size:clamp(13px,3.45vw,16px);
+    padding-top:10px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .home-composition .ars-portrait-stage img{transition:none}
+}
