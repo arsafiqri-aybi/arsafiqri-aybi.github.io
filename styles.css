@@ -567,3 +567,81 @@ html[data-ars-view="section"] .home-site .topbar{
     text-wrap:balance;
   }
 }
+
+
+/* ARS Navigation 08: active item advances toward the preview and zooms in.
+   Three slim, closely spaced visible items; scroll still exposes all six. */
+@media(min-width:681px){
+  .section-rail{
+    width:142px;
+    max-width:100%;
+    height:162px;
+    gap:0;
+  }
+  .rail-window{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    height:162px;
+    overflow-x:hidden;
+    overflow-y:auto;
+  }
+  .rail-list{width:100%}
+  .rail-choice{
+    width:calc(100% - 19px);
+    min-height:54px;
+    height:54px;
+    margin-left:7px;
+    padding:8px 0;
+    font-size:19px;
+    line-height:1.25;
+    font-weight:450;
+    white-space:nowrap;
+    text-align:left;
+    transform-origin:left center;
+    transform:translateX(-6px) scale(1);
+    transition:transform .38s var(--ease),
+               color .3s ease,
+               opacity .3s ease;
+  }
+  .rail-choice[aria-current=true]{
+    font-weight:760;
+    transform:translateX(11px) scale(1.1);
+    animation:ars-rail-focus-in .46s var(--ease) both;
+  }
+  @keyframes ars-rail-focus-in{
+    0%{opacity:.68;transform:translateX(3px) scale(.88)}
+    63%{opacity:1;transform:translateX(13px) scale(1.15)}
+    100%{opacity:1;transform:translateX(11px) scale(1.1)}
+  }
+}
+/* Mobile stays horizontally scrollable; selection remains visible and bold. */
+@media(max-width:680px){
+  .rail-choice{
+    transform:none;
+    transform-origin:center;
+    transition:color .24s ease,font-weight .24s ease;
+  }
+  .rail-choice[aria-current=true]{
+    font-weight:750;
+    transform:none;
+  }
+}
+/* Keep the four small Expertise terms slightly inset, not stretched across the preview. */
+[data-preview="expertise"] .preview-capabilities{
+  margin-left:clamp(17px,2.1vw,26px);
+  max-width:calc(100% - 26px);
+}
+@media(max-width:680px){
+  [data-preview="expertise"] .preview-capabilities{
+    margin-left:14px;
+    width:calc(100% - 14px);
+    max-width:calc(100% - 14px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .rail-choice,.rail-choice[aria-current=true]{
+    animation:none!important;
+    transition:none!important;
+  }
+}
