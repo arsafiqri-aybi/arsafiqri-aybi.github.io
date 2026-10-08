@@ -127,14 +127,12 @@ function positionBrand(){
  const topbar=document.querySelector('.home-site .topbar');
  const preview=explorer?.querySelector('.preview-stage');
  const brand=topbar?.querySelector('.brand');
- // The reference line is the top edge of PREVIEW AREA, not the outer
- // two-column grid. Place the logo's center halfway from page top to it.
- // This is a static layout measurement, not an animation on rail scroll.
+ // Align the wordmark directly above the Preview Area's upper boundary.
+ // Stationary across rail scroll: only compute on initial layout or resize.
  if(!topbar||!preview||!brand||explorer.classList.contains('is-away'))return;
  const previewTop=window.scrollY+preview.getBoundingClientRect().top;
  const headerTop=window.scrollY+topbar.getBoundingClientRect().top;
- const midpoint=previewTop/2;
- const logoTop=midpoint-headerTop-brand.offsetHeight/2;
+ const logoTop=previewTop-headerTop-brand.offsetHeight-10;
  if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',logoTop.toFixed(2)+'px');
 }
 function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,viewport.scrollLeft+itemRect.left-viewRect.left-(viewRect.width-itemRect.width)/2),behavior:'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}}

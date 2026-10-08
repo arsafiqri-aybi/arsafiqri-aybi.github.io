@@ -388,3 +388,21 @@ html[data-ars-view="section"] .home-site .topbar{
  .home-composition .ars-portrait-stage{width:min(100%,375px);max-width:375px;justify-self:center}
  .home-composition .identity-copy h1{font-size:clamp(39px,10vw,50px)}
 }
+
+
+/* ARS grid review alignment 05: two-column bounds hug Preview Area,
+   ARS stays directly above the preview top line (without motion). */
+@media(min-width:681px){
+  .explore-layout{min-height:0}
+  .preview-stage{
+    display:block;
+    min-height:0;
+    align-self:center;
+  }
+  .section-preview{width:100%}
+}
+@media(max-width:680px){
+  /* Preserve the horizontal mobile rail and remove unused preview padding. */
+  .preview-stage{min-height:0}
+  .preview-stage>.section-preview{padding-top:0;padding-bottom:0}
+}
