@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://arsafiqri-aybi.github.io/sitemap.xml
