@@ -1,0 +1,80 @@
+[
+  {
+    "id": "hey", "name": "Hey by Ars", "short": "Hey", "category": "Android × AI", "status": "Dalam pengembangan", "year": "2026", "tone": "sage", "visual": "hey",
+    "headline": "AI bertindak. Kamu tetap memegang kendali.",
+    "summary": "Ruang browser pribadi yang menghubungkan AI dengan perangkat Android, dengan kendali yang bisa kembali ke pemiliknya.",
+    "role": "Konsep produk, perancangan alur, dan pengembangan berbantuan AI.",
+    "intro": "Hey menyatukan aplikasi Android dan gateway MCP untuk menjalankan tugas di browser pribadi. Fokusnya adalah hubungan yang jelas antara perintah, hasil yang diamati, dan kendali pemilik perangkat.",
+    "problem": "Menjalankan perintah belum berarti tugas selesai. Browser, status koneksi, dan hasil pengamatan harus menunjuk ke keadaan yang sama; pemilik juga perlu bisa mengambil alih saat diperlukan.",
+    "decision": "Satu browser yang dibagikan antara manusia dan agen, status dari sumber yang sama, serta hasil tindakan yang diperiksa sebelum disebut berhasil. Antarmuka menempatkan koneksi, kesiapan browser, dan pengambilalihan di depan.",
+    "contribution": ["Merumuskan pengalaman browser pribadi dan pembagian kendali manusia–agen.", "Mengembangkan aplikasi Android dan gateway MCP bersama alat AI.", "Mencatat pengujian perangkat dan mengarahkan perbaikan berdasarkan kegagalan yang diamati."],
+    "result": "Source aplikasi, gateway, build Android, dan laporan pengujian tersedia. Log perangkat mencatat navigasi dan pengambilalihan yang bekerja, sekaligus kegagalan visual, audio, serta siklus service yang memerlukan perbaikan dan pengujian ulang.",
+    "limitation": "Proyek ini masih dikembangkan. Pemulihan service versi 0.2.1 perlu pengujian ulang di perangkat fisik; gesture scroll saat pengambilalihan masih memiliki catatan masalah. Wake berbasis FCM belum terkonfigurasi.",
+    "links": [{"label": "Source Android", "url": "https://github.com/arsafiqri-aybi/hey-android"}, {"label": "Gateway & MCP", "url": "https://github.com/arsafiqri-aybi/hey-mcp"}, {"label": "Catatan uji perangkat", "url": "https://github.com/arsafiqri-aybi/hey-mcp/blob/main/docs/HEY_STRESS_TEST_LOG.md"}]
+  },
+  {
+    "id": "scale-governor", "name": "Scale & Governor", "short": "Scale / Governor", "category": "Arsitektur AI", "status": "Skill & arsitektur", "year": "2026", "tone": "copper", "visual": "system",
+    "headline": "Pekerjaan rumit, arah yang tetap jelas.",
+    "summary": "Dua sistem yang saling melengkapi: Scale merancang jalur kerja, Governor mengatur sumber daya tanpa menurunkan tujuan.",
+    "role": "Perancangan arsitektur, kontrak eksekusi, dan pengembangan berbantuan AI.",
+    "intro": "Scale dan Governor memisahkan dua keputusan yang sering tercampur: bagaimana pekerjaan disusun, dan bagaimana sumber daya digunakan selama pekerjaan berlangsung.",
+    "problem": "Tugas panjang mudah kehilangan tujuan, mengulang pekerjaan, atau menganggap hasil selesai sebelum diverifikasi. Sebaliknya, tugas kecil bisa menjadi terlalu rumit karena orkestrasi yang tidak diperlukan.",
+    "decision": "Scale menetapkan dependensi, keluaran, verifikasi, dan batas adaptasi. Governor bekerja di dalam kontrak itu: menyesuaikan konteks, pencarian, dan strategi, lalu meminta perencanaan ulang ketika batasnya tercapai.",
+    "contribution": ["Menyusun pembagian tanggung jawab dan batas adaptasi kedua sistem.", "Mengembangkan kontrak eksekusi, panduan kegagalan, dan mekanisme serah terima.", "Menyertakan validator serta audit statis untuk memeriksa struktur dan konsistensi."],
+    "result": "Kedua repositori menyediakan runtime skill, referensi, contoh kontrak, validator, serta laporan cakupan verifikasi. Struktur pekerjaan dan status hasil dapat dicatat secara eksplisit.",
+    "limitation": "Validasi statis tidak membuktikan pemanggilan otomatis, perpindahan model, atau penghematan biaya di semua host. Manfaat pada pekerjaan nyata tetap memerlukan pengukuran yang sebanding.",
+    "links": [{"label": "Source Scale", "url": "https://github.com/arsafiqri-aybi/scale"}, {"label": "Source Governor", "url": "https://github.com/arsafiqri-aybi/governor"}, {"label": "Cakupan verifikasi", "url": "https://github.com/arsafiqri-aybi/governor/blob/main/evaluation/STATUS.md"}]
+  },
+  {
+    "id": "motion", "name": "Motion", "short": "Motion", "category": "Gerak berbasis kode", "status": "Knowledge base & demo", "year": "2026", "tone": "violet", "visual": "motion",
+    "headline": "Bentuk, waktu, dan cerita dalam satu gerak.",
+    "summary": "Pengetahuan motion berbasis kode dan manifestasi visualnya: dari timing serta state sampai typography, kamera, dan render video.",
+    "role": "Perancangan knowledge base dan pengembangan demonstrasi berbantuan AI.",
+    "intro": "Dua pustaka saling terhubung: Motion membahas fondasi gerak berbasis kode, sementara Motion Render Video berangkat dari bentuk visual yang akhirnya dilihat penonton.",
+    "problem": "Memilih library animasi saja belum menjelaskan bagaimana gerak membantu menyampaikan informasi. Timing, ruang, state, dan kualitas hasil perlu dipahami sebagai satu sistem.",
+    "decision": "Memisahkan prinsip dari alat implementasi. Domain pengetahuan dihubungkan melalui graf dan jalur penerapan; contoh render mencatat konfigurasi, keluaran, metode pemeriksaan, serta batas buktinya.",
+    "contribution": ["Menyusun peta domain dan hubungan antarkonsep untuk motion berbasis kode.", "Mengembangkan pengetahuan manifestasi visual: bentuk, typography, kamera, editing, dan waktu.", "Menghasilkan demonstrasi render 2D dan 3D CPU beserta laporan pemeriksaannya."],
+    "result": "Motion memuat 40 domain dan jalur penerapan. Motion Render Video memuat 22 induk dengan contoh video yang benar-benar dirender, termasuk demo 2D dan demo 3D CPU.",
+    "limitation": "Demo menguji mekanisme tertentu; ia bukan bukti seluruh domain telah dikuasai atau diuji. Validasi browser, GPU, serta kenyamanan manusia tidak otomatis mengikuti hasil tes numerik atau render CPU.",
+    "links": [{"label": "Source Motion", "url": "https://github.com/arsafiqri-aybi/motion"}, {"label": "Motion Render Video", "url": "https://github.com/arsafiqri-aybi/motion-render-video"}, {"label": "Demo yang dirender", "url": "https://github.com/arsafiqri-aybi/motion-render-video/blob/main/examples/README.md"}]
+  },
+  {
+    "id": "skill-builder", "name": "Skill Builder", "short": "Skill Builder", "category": "Perkakas AI", "status": "Skill & tooling", "year": "2026", "tone": "blue", "visual": "skill",
+    "headline": "Kebutuhan nyata menjadi kemampuan yang bisa dipakai ulang.",
+    "summary": "Sistem untuk merancang, membangun, memeriksa, dan mengembangkan skill AI dengan pemicu, batas, serta keluaran yang jelas.",
+    "role": "Perancangan workflow, knowledge base, dan tooling berbantuan AI.",
+    "intro": "Skill Builder mengubah kebutuhan pengguna menjadi paket kemampuan yang punya tujuan dan batas. Instruksi runtime dijaga ringkas; pengetahuan yang lebih dalam dimuat ketika diperlukan.",
+    "problem": "Instruksi yang panjang belum tentu menjadi skill yang andal. Pemicu, batas, sumber kebenaran, penanganan kegagalan, dan bentuk keluaran perlu dapat diperiksa.",
+    "decision": "Memisahkan instruksi runtime, referensi, knowledge base, tooling, dan evaluasi. Perubahan skill yang sudah ada dibuat terarah agar identitas dan perilaku lain tetap terjaga.",
+    "contribution": ["Menyusun alur dari kebutuhan pengguna ke spesifikasi skill.", "Mengembangkan scaffold, metadata, validator, dan auditor statis.", "Memisahkan pemeriksaan struktur dari evaluasi perilaku dan verifikasi pemasangan."],
+    "result": "Repositori menyediakan skrip inisialisasi, pembentukan metadata, validasi, audit, serta tes regresi. Paket skill dapat diperiksa sebelum dipakai di lingkungan tujuan.",
+    "limitation": "Paket yang valid secara statis belum membuktikan perilaku yang benar atau pemasangan permanen di semua host. Instalasi dan pemanggilan perlu diverifikasi di lingkungan masing-masing.",
+    "links": [{"label": "Source Skill Builder", "url": "https://github.com/arsafiqri-aybi/skill-builder"}, {"label": "Cakupan verifikasi", "url": "https://github.com/arsafiqri-aybi/skill-builder/blob/main/evaluation/STATUS.md"}]
+  },
+  {
+    "id": "copywriting", "name": "Copywriting Intelligence", "short": "Copywriting", "category": "Komunikasi & penalaran", "status": "Sistem & knowledge base", "year": "2026", "tone": "paper", "visual": "copy",
+    "headline": "Pesan yang jelas, klaim yang punya pijakan.",
+    "summary": "Arsitektur penalaran untuk memahami konteks, memilih pesan, menulis, mengkritik, dan belajar dari bukti.",
+    "role": "Perancangan sistem pengetahuan dan workflow berbantuan AI.",
+    "intro": "Copywriting Intelligence memulai pekerjaan dari konteks nyata: siapa pembacanya, nilai yang ditawarkan, keberatan, dan bukti yang tersedia. Pola copy menjadi pilihan, bukan aturan wajib.",
+    "problem": "Copy yang terdengar meyakinkan dapat menyembunyikan asumsi. Formula yang diterapkan tanpa konteks juga bisa membuat pesan kehilangan relevansi atau menambahkan klaim yang tidak didukung.",
+    "decision": "Menghubungkan konteks pasar, mekanisme komunikasi, batas klaim, dan proses kritik. Catatan kontradiksi dan ketidakpastian dipertahankan agar riset tidak berubah menjadi jaminan hasil.",
+    "contribution": ["Menyusun tujuh inti pengetahuan beserta lapisan konteks dan bukti.", "Merancang alur penalaran, penyusunan pesan, kritik, dan feedback.", "Menyiapkan evaluasi serta pencatatan batas klaim dan rilis."],
+    "result": "Rilis v1.0.0 menyediakan runtime skill, modul pengetahuan, register sumber, klaim atomik, serta evaluasi dalam cakupan repositori yang dinyatakan.",
+    "limitation": "Evaluasi rilis dibuat dan dinilai oleh agen pembangun, bukan evaluator independen. Hasil ini tidak membuktikan peningkatan konversi, instalasi di semua host, atau kejenuhan ilmiah.",
+    "links": [{"label": "Source sistem", "url": "https://github.com/arsafiqri-aybi/copywriting-intelligence-system"}, {"label": "Gerbang rilis", "url": "https://github.com/arsafiqri-aybi/copywriting-intelligence-system/blob/main/release/QUALITY_GATES.json"}]
+  },
+  {
+    "id": "website-builder", "name": "Website Builder", "short": "Website Builder", "category": "Design × engineering", "status": "Skill & knowledge base", "year": "2026", "tone": "rose", "visual": "web",
+    "headline": "Desain dan engineering bertemu di pengalaman pengguna.",
+    "summary": "Panduan pembangunan website yang menghubungkan tujuan, isi, arah visual, aksesibilitas, performa, dan verifikasi.",
+    "role": "Perancangan metode dan knowledge base berbantuan AI.",
+    "intro": "Website Builder menempatkan kebutuhan pengguna dan kualitas hasil di jalur yang sama dengan kode. Tampilan, perilaku, dan pemeriksaan dirancang bersama sejak awal.",
+    "problem": "Website dapat terlihat menarik tetapi gagal menjelaskan tujuannya, sulit dipakai, atau terlalu berat. Keberhasilan build belum menunjukkan kualitas pengalaman yang sesungguhnya.",
+    "decision": "Menggunakan alur tujuan → hambatan → hipotesis desain → perilaku → verifikasi. Prinsip persepsi digunakan secara kontekstual, lalu diwujudkan dalam komposisi, state, serta fallback yang dapat diuji.",
+    "contribution": ["Menyatukan UX, identitas visual, frontend, aksesibilitas, dan performa.", "Menyusun referensi domain dan gerbang penerimaan berbasis bukti.", "Menghubungkannya dengan Portofolio Web untuk penerapan frontend statis."],
+    "result": "Runtime skill dan referensi tersedia di repositori. Portofolio Web melengkapinya dengan 32 modul, playbook, contoh, serta matriks pemeriksaan untuk website portfolio.",
+    "limitation": "Panduan bukan sertifikasi kualitas setiap website yang menggunakannya. Klaim psikologi adalah hipotesis yang perlu konteks; hasil aksesibilitas, performa, dan deployment harus diperiksa pada implementasi aktual.",
+    "links": [{"label": "Source Website Builder", "url": "https://github.com/arsafiqri-aybi/website-builder"}, {"label": "Portofolio Web", "url": "https://github.com/arsafiqri-aybi/portofolio-web"}]
+  }
+]

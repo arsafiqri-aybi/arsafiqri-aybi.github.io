@@ -1,0 +1,463 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "ars-immersive-portfolio",
+  "revision": 1,
+  "goal": "Rebuild the Ars portfolio as an original cinematic interactive experience.",
+  "deliverable": "Static GitHub Pages website with six case studies, original art, navigation/motion, QA evidence and GitHub source.",
+  "status": "RUNNING",
+  "protected_constraints": [
+    {
+      "id": "identity",
+      "value": "Personal portfolio for Ars; evidence-supported copy; no fabricated achievements.",
+      "source": "Supplied master prompt"
+    },
+    {
+      "id": "static",
+      "value": "Static GitHub Pages; frontend first; no paid service or backend.",
+      "source": "Supplied master prompt"
+    },
+    {
+      "id": "quality",
+      "value": "Fallback, keyboard, reduced motion, native scroll and direct project URLs.",
+      "source": "Supplied master prompt"
+    },
+    {
+      "id": "scope",
+      "value": "Only the website repo may change; preserve history and inspect expected head.",
+      "source": "Supplied master prompt"
+    },
+    {
+      "id": "authorization",
+      "value": "Prepare reviewable result before any newly required production approval.",
+      "source": "Supplied master prompt"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "property": "Content integrity",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G02",
+      "property": "Visitor journey",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G03",
+      "property": "Static foundation",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G04",
+      "property": "Responsive",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G05",
+      "property": "Keyboard and focus",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G06",
+      "property": "Media accessibility",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G07",
+      "property": "Motion reliability",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G08",
+      "property": "Performance budgets",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G09",
+      "property": "Security and privacy",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G10",
+      "property": "Visual system",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    },
+    {
+      "id": "G11",
+      "property": "Production",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": null
+    },
+    {
+      "id": "G12",
+      "property": "Handoff",
+      "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
+      "required": true,
+      "status": "PASS",
+      "evidence": "docs/QA-MATRIX.md and corresponding raw/source record"
+    }
+  ],
+  "required_outputs": [
+    {
+      "id": "site",
+      "status": "PRESENT",
+      "evidence": "index.html, work/*/index.html, styles.css, app.js"
+    },
+    {
+      "id": "source_evidence",
+      "status": "PRESENT",
+      "evidence": "docs/CONTENT-EVIDENCE.md and SOURCE-VERSIONS.json"
+    },
+    {
+      "id": "motion_design",
+      "status": "PRESENT",
+      "evidence": "docs/MOTION-SPEC.md and ART-DIRECTION.md"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "hey-mcp",
+      "required": true,
+      "status": "READY",
+      "expected_version": "a702fcfedc989dba9b5609c0c38624fcc3832b94",
+      "observed_version": "a702fcfedc989dba9b5609c0c38624fcc3832b94"
+    },
+    {
+      "id": "portofolio-base",
+      "required": true,
+      "status": "READY",
+      "expected_version": "7a1c62e8b31b5dad74eacf50903316d1f8789ec7",
+      "observed_version": "7a1c62e8b31b5dad74eacf50903316d1f8789ec7"
+    },
+    {
+      "id": "governor",
+      "required": true,
+      "status": "READY",
+      "expected_version": "b10ab98f651318337db817b34c3c6ebecad3ade7",
+      "observed_version": "b10ab98f651318337db817b34c3c6ebecad3ade7"
+    },
+    {
+      "id": "cv",
+      "required": true,
+      "status": "READY",
+      "expected_version": "4352920967ea0afbade0922dc6b95bfe57dd80af",
+      "observed_version": "4352920967ea0afbade0922dc6b95bfe57dd80af"
+    },
+    {
+      "id": "portofolio-web",
+      "required": true,
+      "status": "READY",
+      "expected_version": "3d08dc43b47a5b9c87d46afc18507cb94402b7ff",
+      "observed_version": "3d08dc43b47a5b9c87d46afc18507cb94402b7ff"
+    },
+    {
+      "id": "motion-render-video",
+      "required": true,
+      "status": "READY",
+      "expected_version": "ac73856a159587db1aa936409fd718bd5115ae5b",
+      "observed_version": "ac73856a159587db1aa936409fd718bd5115ae5b"
+    },
+    {
+      "id": "website-builder",
+      "required": true,
+      "status": "READY",
+      "expected_version": "5e581cb36dc48ad478741660939991e3349601c5",
+      "observed_version": "5e581cb36dc48ad478741660939991e3349601c5"
+    },
+    {
+      "id": "prompting",
+      "required": true,
+      "status": "READY",
+      "expected_version": "f60a2918067ef4657544b7f0c7216a8d8ef67069",
+      "observed_version": "f60a2918067ef4657544b7f0c7216a8d8ef67069"
+    },
+    {
+      "id": "social-media-growth",
+      "required": true,
+      "status": "READY",
+      "expected_version": "51bc60a6c04fb96b2c06a1e49b3168e73372f224",
+      "observed_version": "51bc60a6c04fb96b2c06a1e49b3168e73372f224"
+    },
+    {
+      "id": "scale",
+      "required": true,
+      "status": "READY",
+      "expected_version": "02f2593fd1da65c82d7f418f37731e946f95c9ab",
+      "observed_version": "02f2593fd1da65c82d7f418f37731e946f95c9ab"
+    },
+    {
+      "id": "motion",
+      "required": true,
+      "status": "READY",
+      "expected_version": "f14e2fd22fe6f61354b04681885d9a74ac084e66",
+      "observed_version": "f14e2fd22fe6f61354b04681885d9a74ac084e66"
+    },
+    {
+      "id": "hey-android",
+      "required": true,
+      "status": "READY",
+      "expected_version": "68784667762cd6ccbae9d4c788f4b6feb49f1463",
+      "observed_version": "68784667762cd6ccbae9d4c788f4b6feb49f1463"
+    },
+    {
+      "id": "skill-builder",
+      "required": true,
+      "status": "READY",
+      "expected_version": "a61bb23bb15b660c319a5b35963f4a651c25928d",
+      "observed_version": "a61bb23bb15b660c319a5b35963f4a651c25928d"
+    },
+    {
+      "id": "copywriting-intelligence-system",
+      "required": true,
+      "status": "READY",
+      "expected_version": "cc61b7be75454ab4c78cf630e74d5610ab7af9de",
+      "observed_version": "cc61b7be75454ab4c78cf630e74d5610ab7af9de"
+    }
+  ],
+  "effects": [
+    {
+      "id": "github_source",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": null
+    },
+    {
+      "id": "production",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": null
+    }
+  ],
+  "route": {
+    "surface": "current-session",
+    "requested_model": null,
+    "observed_model": null,
+    "identity_source": "CURRENT_HOST_SESSION",
+    "effort": "high",
+    "allowed_efforts": [
+      "high"
+    ],
+    "actuation": "CURRENT_UNCHANGED"
+  },
+  "budget": {
+    "limits": {
+      "initial_html_css_js_gzip_bytes": 153600,
+      "initial_js_gzip_bytes": 51200,
+      "first_viewport_media_raw_bytes": 409600,
+      "fonts_raw_bytes": 102400
+    },
+    "exhausted": false,
+    "evidence": "Artifact byte measurements; no monetary or token quota invented."
+  },
+  "adaptation_envelope": [
+    "Targeted retrieval",
+    "Single-agent sequential dependent stages",
+    "Independent tool reads in parallel",
+    "Native CSS/WAAPI/SVG instead of unnecessary runtime dependencies"
+  ],
+  "state_ref": "docs/PROJECT-STATE.md",
+  "next_action": "Commit reviewed source branch, inspect diff, merge via existing Pages path and verify production.",
+  "nodes": [
+    {
+      "id": "S0",
+      "depends_on": [],
+      "output": "Repository/source discovery",
+      "criticality": "high",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S1",
+      "depends_on": [
+        "S0"
+      ],
+      "output": "Evidence model",
+      "criticality": "high",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S2",
+      "depends_on": [
+        "S1"
+      ],
+      "output": "Art direction",
+      "criticality": "medium",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S3",
+      "depends_on": [
+        "S2"
+      ],
+      "output": "Navigation prototype",
+      "criticality": "medium",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S4",
+      "depends_on": [
+        "S3"
+      ],
+      "output": "Static pages",
+      "criticality": "medium",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S5",
+      "depends_on": [
+        "S4"
+      ],
+      "output": "Motion lifecycle",
+      "criticality": "high",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S6",
+      "depends_on": [
+        "S5"
+      ],
+      "output": "Six complete case studies",
+      "criticality": "medium",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S7",
+      "depends_on": [
+        "S6"
+      ],
+      "output": "Browser/visual/performance QA",
+      "criticality": "high",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S8",
+      "depends_on": [
+        "S7"
+      ],
+      "output": "Release candidate",
+      "criticality": "medium",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    },
+    {
+      "id": "S9",
+      "depends_on": [
+        "S8"
+      ],
+      "output": "Production verification",
+      "criticality": "high",
+      "capability_floor": "Evidence-aware frontend implementation and browser verification",
+      "tools": "Read-only knowledge; local source edits; GitHub writes restricted to target website",
+      "effort_range": [
+        "high"
+      ],
+      "verifier": "QA-MATRIX.md and release report",
+      "pass_condition": "Required output exists with evidence; no critical unresolved failure",
+      "failure_trigger": "Missing source, false claim, failed browser behavior or uncertain write",
+      "recovery": "Inspect actual state, repair specific fault, invalidate affected downstream checks"
+    }
+  ]
+}
