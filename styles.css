@@ -106,3 +106,6 @@ html.motion-enhanced .motion-play-cover[hidden]{display:none}
 
 /* CP07B: mobile horizontal rail scroll stays inside viewport */
 @media(max-width:680px){.explore-layout,.section-rail,.rail-window,.preview-stage{min-width:0;max-width:100%}.rail-window{width:100%}.rail-list{width:max-content}}
+
+/* CP07C: accessible no-JavaScript preview fallback */
+html:not(.is-enhanced) .section-preview:not(.is-selected){display:none}
