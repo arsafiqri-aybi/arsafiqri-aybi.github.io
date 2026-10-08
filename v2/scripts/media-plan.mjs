@@ -7,8 +7,8 @@ const required=(v)=>typeof v==='string'&&v.trim().length>0;
 const fail=code=>{throw new Error('ARS_V2_MEDIA:'+code)};
 const imagePath=/^assets\/[a-z0-9-]+\.webp$/;
 const motionURL=/^https:\/\/raw\.githubusercontent\.com\/arsafiqri-aybi\/motion-render-video\/[a-f0-9]{40}\/examples\/rendered\/demo\.mp4$/;
-const scopeMap=Object.freeze({'ars-portrait':['home','about'],'motion-original-demo':['motion-case']});
-const rightsMap=Object.freeze({'ars-portrait':'OWNER_APPROVED_HOME_ABOUT','motion-original-demo':'PUBLIC_REPOSITORY_ORIGINAL_WITH_SCOPED_USAGE'});
+const scopeMap=Object.freeze({'ars-portrait':['home','about'],'motion-original-demo':['motion-case'],'motion-original-contact-sheet':['motion-case']});
+const rightsMap=Object.freeze({'ars-portrait':'OWNER_APPROVED_HOME_ABOUT','motion-original-demo':'PUBLIC_REPOSITORY_ORIGINAL_WITH_SCOPED_USAGE','motion-original-contact-sheet':'PUBLIC_REPOSITORY_ORIGINAL_WITH_SCOPED_USAGE'});
 const safeHash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 
 export function validateMediaRegistry(registry){
@@ -22,10 +22,12 @@ export function validateMediaRegistry(registry){
   if(!Object.prototype.hasOwnProperty.call(scopeMap,item.id)){issues.push('UNREGISTERED_ASSET:'+item.id);continue}
   if(!Array.isArray(item.scope)||item.scope.length!==scopeMap[item.id].length||!scopeMap[item.id].every(slot=>item.scope.includes(slot)))issues.push('INVALID_SCOPE:'+item.id);
   if(item.rights!==rightsMap[item.id])issues.push('RIGHTS_SCOPE_MISMATCH:'+item.id);
-  if(!safeHash(item.sha256)||!required(item.source)||!required(item.alt))issues.push('INVALID_PROVENANCE:'+item.id);
+  if(!(safeHash(item.sha256)||(item.id==='motion-original-contact-sheet'&&/^[a-f0-9]{40}$/.test(item.sourceGitBlobSha)))||!required(item.source)||!required(item.alt))issues.push('INVALID_PROVENANCE:'+item.id);
   if(!Number.isInteger(item.width)||item.width<=0||!Number.isInteger(item.height)||item.height<=0)issues.push('INVALID_DIMENSIONS:'+item.id);
   if(item.id==='ars-portrait'){
    if(item.kind!=='image'||!imagePath.test(item.path)||item.url!==undefined||!Number.isInteger(item.bytes)||item.bytes<=0)issues.push('INVALID_PORTRAIT:'+item.id);
+  }else if(item.id==='motion-original-contact-sheet'){
+   if(item.kind!=='image'||item.path!=='assets/motion-original-contact-sheet.png'||item.bytes!==76029||item.sourceGitBlobSha!=='1b259487f736970eeb8db34b05642ab48cac0ddb'||item.sourceCommit!=='ac73856a159587db1aa936409fd718bd5115ae5b')issues.push('INVALID_POSTER_SOURCE:'+item.id);
   }else if(item.id==='motion-original-demo'){
    if(item.kind!=='video'||!motionURL.test(item.url)||item.path!==undefined||item.durationSeconds!==6)issues.push('INVALID_MOTION:'+item.id);
   }

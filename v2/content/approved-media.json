@@ -33,6 +33,23 @@
       "durationSeconds": 6,
       "sha256": "8464f3295c7ec284b0f9470a8bf9051a4b7b4f2e81779353a1469f4df1722c31",
       "verification": "Decoded format and timing only; NOT accessibility or comfort certification."
+    },
+    {
+      "id": "motion-original-contact-sheet",
+      "kind": "image",
+      "source": "original-owner-project-repository",
+      "rights": "PUBLIC_REPOSITORY_ORIGINAL_WITH_SCOPED_USAGE",
+      "scope": [
+        "motion-case"
+      ],
+      "path": "assets/motion-original-contact-sheet.png",
+      "alt": "Original motion contact sheet containing six sampled frames; the final frame is used as a preview.",
+      "width": 1920,
+      "height": 720,
+      "bytes": 76029,
+      "sourceGitBlobSha": "1b259487f736970eeb8db34b05642ab48cac0ddb",
+      "sourceCommit": "ac73856a159587db1aa936409fd718bd5115ae5b",
+      "frameSelection": "last of six sampled frames, source index 179 (approximately 00:05.97)"
     }
   ]
 }
