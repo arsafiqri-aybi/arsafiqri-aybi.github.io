@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#090a0c" />
-  <meta name="description" content="Interactive portfolio prototype — synchronized preview and navigation." />
-  <title>ARS — Portfolio Prototype</title>
+  <meta name="description" content="ARS — frontend, motion, systems, and selected work." />
+  <title>ARS — Portfolio</title>
   <style>
 :root {
   --bg: #090a0c;
@@ -345,6 +345,298 @@ a { color: inherit; }
 
   </style>
 
+
+<style id="public-portfolio-revision">
+:root{
+  --bg:#07090d;
+  --ink:#f5f7fb;
+  --muted:rgba(237,242,250,.50);
+  --line:rgba(255,255,255,.12);
+  --line-strong:rgba(255,255,255,.22);
+  --accent:#c7ff57;
+  --radius:32px;
+  --side:clamp(18px,3vw,48px);
+}
+html,body{background:#07090d;}
+body{
+  background:
+    radial-gradient(70vw 70vw at 14% 20%,rgba(91,124,255,.12),transparent 58%),
+    radial-gradient(56vw 56vw at 82% 75%,rgba(166,107,255,.09),transparent 62%),
+    linear-gradient(145deg,#090b11 0%,#05070a 60%,#090b10 100%);
+}
+.ambient__orb--a{background:#6f8cff;left:-18vw;top:-20vw;opacity:.12;filter:blur(120px)}
+.ambient__orb--b{background:#b278ff;right:-18vw;bottom:-24vw;opacity:.09;filter:blur(130px)}
+.ambient__grid{opacity:.45;background-size:40px 40px;mask-image:radial-gradient(circle at 50% 48%,#000,transparent 72%)}
+.chrome{
+  padding:20px clamp(22px,3vw,46px);
+}
+.chrome__meta{opacity:.72}
+.story{min-height:600svh}
+.stage{
+  width:min(94vw,1480px);
+  height:100svh;
+  margin-inline:auto;
+  padding:8.5svh 0 7svh;
+  grid-template-columns:minmax(0,1.92fr) minmax(285px,.63fr);
+  gap:clamp(22px,3vw,52px);
+  align-items:stretch;
+}
+.preview-shell{
+  position:relative;
+  perspective:1600px;
+}
+.preview-frame{
+  --tilt-x:0deg;
+  --tilt-y:0deg;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.15);
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.028) 48%,rgba(255,255,255,.055)),
+    rgba(13,17,24,.30);
+  -webkit-backdrop-filter:blur(28px) saturate(135%);
+  backdrop-filter:blur(28px) saturate(135%);
+  box-shadow:
+    0 44px 120px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(255,255,255,.04);
+  overflow:hidden;
+  transform:perspective(1600px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+}
+.preview-frame::before{
+  content:"";
+  position:absolute;
+  z-index:8;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.17),transparent 18% 72%,rgba(255,255,255,.035)),
+    radial-gradient(70% 90% at 8% 8%,rgba(255,255,255,.07),transparent 55%);
+  mix-blend-mode:screen;
+}
+.preview-window{border-radius:inherit}
+.preview-topline{color:rgba(255,255,255,.46);padding:20px 22px}
+.scene{
+  color:#f6f8fb;
+  background:transparent!important;
+  padding:clamp(58px,6.5vw,96px) clamp(28px,4.5vw,72px) clamp(32px,4vw,58px);
+}
+.scene::after{
+  border:0;
+  border-radius:0;
+  background:
+    radial-gradient(68% 85% at 82% 18%,rgba(255,255,255,.055),transparent 62%),
+    linear-gradient(180deg,rgba(255,255,255,.015),rgba(255,255,255,0));
+}
+.scene--intro{background:linear-gradient(135deg,rgba(118,145,255,.10),transparent 52%)!important}
+.scene--work{background:linear-gradient(135deg,rgba(120,103,255,.11),transparent 58%)!important}
+.scene--process{background:linear-gradient(135deg,rgba(232,168,113,.08),transparent 58%)!important}
+.scene--capabilities{background:linear-gradient(135deg,rgba(169,255,113,.075),transparent 58%)!important}
+.scene--about{background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 55%)!important}
+.scene--contact{background:linear-gradient(135deg,rgba(176,140,255,.11),transparent 62%)!important}
+.scene--intro::before{
+  border-color:rgba(255,255,255,.13);
+  box-shadow:0 0 0 44px rgba(255,255,255,.018),0 0 0 88px rgba(255,255,255,.012);
+}
+.scene__meta,.eyebrow,.scene__lead{color:rgba(245,248,252,.52)}
+.scene__lead{color:rgba(245,248,252,.64)}
+.scene h1,.scene h2{color:#f7f8fb;text-shadow:0 2px 26px rgba(0,0,0,.16)}
+.scene h1 em,.scene h2 em{color:rgba(255,255,255,.82)}
+.scene__footer{color:rgba(255,255,255,.36)}
+.scene__footer-line{background:rgba(255,255,255,.13)}
+.identity-card{
+  background:rgba(6,9,14,.54);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:0 30px 70px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.07);
+}
+.identity-card__label,.identity-card__foot{color:rgba(255,255,255,.42)}
+.project-tile{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.project-tile small,.project-tile__index{color:rgba(255,255,255,.44)}
+.project-tile--dark{background:rgba(3,5,8,.48);color:#fff}
+.project-tile--dark small,.project-tile--dark .project-tile__index{color:rgba(255,255,255,.42)}
+.project-tile__mesh{
+  opacity:.24;
+  background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px)
+}
+.process-line{color:rgba(255,255,255,.58)}
+.process-line b{border-color:rgba(255,255,255,.22)}
+.process-line i{background:rgba(255,255,255,.14)}
+.decision-card{
+  border-color:rgba(255,255,255,.11);
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+.decision-card__label,.decision-card__stats{color:rgba(255,255,255,.42)}
+.decision-card__stats span{border-color:rgba(255,255,255,.10)}
+.decision-card__stats b{color:#fff}
+.capability-stack,.capability-row,.timeline,.timeline__item{border-color:rgba(255,255,255,.13)}
+.capability-row>span,.capability-row small,.timeline__item span,.timeline__item small{color:rgba(255,255,255,.42)}
+.tool-strip span{border-color:rgba(255,255,255,.14)}
+.proof-strip span{background:rgba(255,255,255,.08);color:#f7f8fb;border:1px solid rgba(255,255,255,.10)}
+.contact-button{
+  text-decoration:none;
+  background:rgba(255,255,255,.92);
+  color:#090b10;
+  box-shadow:0 18px 50px rgba(0,0,0,.26);
+}
+.contact-button:hover{background:#fff;transform:translateY(-3px)}
+.contact-mark{color:rgba(255,255,255,.035)}
+.preview-progress{background:rgba(255,255,255,.06)}
+.preview-progress span{background:rgba(255,255,255,.58)}
+
+.nav-shell{
+  display:flex;
+  align-items:stretch;
+  perspective:1500px;
+  perspective-origin:0 50%;
+  overflow:visible;
+}
+.nav-panel{
+  position:relative;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  width:100%;
+  padding:clamp(24px,3vw,46px) clamp(14px,1.6vw,26px);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:32px;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.30),rgba(255,255,255,.018) 30%,rgba(255,255,255,.045)),
+    rgba(10,13,19,.58);
+  -webkit-backdrop-filter:blur(22px) saturate(115%);
+  backdrop-filter:blur(22px) saturate(115%);
+  box-shadow:
+    -22px 38px 90px rgba(0,0,0,.38),
+    inset 20px 0 38px rgba(0,0,0,.22),
+    inset -1px 0 rgba(255,255,255,.08),
+    inset 0 1px rgba(255,255,255,.08);
+  transform-style:preserve-3d;
+  transform-origin:50% 50%;
+  transform:rotateY(-11deg);
+}
+.nav-panel::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:25px;
+  pointer-events:none;
+  border:1px solid rgba(255,255,255,.025);
+  box-shadow:inset 26px 0 40px rgba(0,0,0,.18);
+}
+.nav-panel__head,.nav-panel__foot{
+  color:rgba(255,255,255,.34);
+  transform:translateZ(8px);
+}
+.nav-panel__head{margin-bottom:24px}
+.nav-panel__foot{margin-top:24px}
+.nav-panel__hint:empty{display:none}
+.nav-panel__foot:has(.nav-panel__hint:empty){justify-content:flex-end}
+.chapter-nav{
+  display:grid;
+  gap:8px;
+  transform-style:preserve-3d;
+}
+.chapter{
+  --push-x:0px;
+  position:relative;
+  border:1px solid transparent;
+  border-radius:18px;
+  color:rgba(238,242,249,.36);
+  padding:15px 14px;
+  transform-style:preserve-3d;
+  transform:translate3d(var(--push-x),0,-14px);
+  transition:
+    transform .48s cubic-bezier(.2,.8,.2,1),
+    background .35s ease,
+    color .35s ease,
+    border-color .35s ease,
+    opacity .35s ease;
+}
+.chapter::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:13px;
+  background:linear-gradient(90deg,rgba(255,255,255,.02),transparent);
+  opacity:0;
+  transition:opacity .3s ease;
+  pointer-events:none;
+}
+.chapter:hover{
+  color:rgba(255,255,255,.86);
+  background:rgba(255,255,255,.025);
+  transform:translate3d(calc(var(--push-x) - 5px),0,18px);
+}
+.chapter:hover::before{opacity:1}
+.chapter.is-active{
+  color:#fff;
+  background:linear-gradient(90deg,rgba(255,255,255,.085),rgba(255,255,255,.025));
+  border-color:rgba(255,255,255,.105);
+  transform:translate3d(-10px,0,38px);
+  box-shadow:0 18px 30px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.07);
+}
+.chapter__number{color:rgba(255,255,255,.28)}
+.chapter.is-active .chapter__number{color:var(--accent)}
+.chapter__copy strong{font-weight:560;letter-spacing:-.035em}
+.chapter__copy small{color:rgba(255,255,255,.27)}
+.chapter.is-active .chapter__copy small{color:rgba(255,255,255,.48)}
+.chapter__arrow{color:rgba(255,255,255,.66)}
+.nav-panel__state{color:rgba(255,255,255,.72)}
+.page-end{
+  min-height:20svh;
+  width:min(94vw,1480px);
+  margin:auto;
+  padding:38px 0;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.no-js{color:#f5f7fb}
+
+@media(max-width:880px){
+  .stage{
+    width:100%;
+    height:100svh;
+    padding:64px 10px 12px;
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,1fr) auto;
+    gap:10px;
+  }
+  .preview-frame{border-radius:25px}
+  .nav-shell{display:block;perspective:none}
+  .nav-panel{
+    transform:none;
+    border-radius:18px;
+    padding:7px;
+    background:rgba(10,13,19,.66);
+    box-shadow:0 18px 45px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07);
+  }
+  .nav-panel::before{display:none}
+  .chapter-nav{display:flex;gap:5px}
+  .chapter{
+    transform:none!important;
+    border-radius:13px;
+    padding:11px 13px;
+  }
+  .chapter.is-active{background:rgba(255,255,255,.08)}
+  .scene{padding:50px 22px 26px}
+  .scene__lead{font-size:13px}
+  .identity-card{background:rgba(4,7,11,.56)}
+  .page-end{width:calc(100% - 28px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-panel,.chapter{transform:none!important}
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#portfolio-navigation">Skip to portfolio navigation</a>
@@ -388,12 +680,12 @@ a { color: inherit; }
                     <div class="intro-copy">
                       <p class="eyebrow">Creative technologist / prototype</p>
                       <h1 id="scene-title-0">Build clear things.<br><em>Make them move.</em></h1>
-                      <p class="scene__lead">A compact opening for identity, positioning, and the value you bring—without turning the first screen into a résumé.</p>
+                      <p class="scene__lead">I design and build digital experiences where structure, motion, and systems work as one.</p>
                     </div>
                     <div class="identity-card" aria-hidden="true">
                       <span class="identity-card__label">CURRENT FOCUS</span>
                       <strong>Frontend<br>+ Motion<br>+ Systems</strong>
-                      <span class="identity-card__foot">Location · Placeholder</span>
+                      <span class="identity-card__foot">Independent · Digital</span>
                     </div>
                   </div>
                   <div class="scene__footer">
@@ -409,7 +701,7 @@ a { color: inherit; }
                     <span>WORK + CONTRIBUTION</span>
                   </div>
                   <div class="work-heading">
-                    <p class="eyebrow">Selected work, not a project dump</p>
+                    <p class="eyebrow">Selected work</p>
                     <h2 id="scene-title-1">Proof lives in the work.</h2>
                   </div>
                   <div class="project-grid" aria-label="Placeholder projects">
@@ -417,19 +709,19 @@ a { color: inherit; }
                       <span class="project-tile__index">A—01</span>
                       <div class="project-tile__orb"></div>
                       <strong>Interface / Motion System</strong>
-                      <small>Independent prototype · Placeholder</small>
+                      <small>Interface direction · Motion</small>
                     </div>
                     <div class="project-tile">
                       <span class="project-tile__index">A—02</span>
                       <div class="project-tile__mesh"></div>
                       <strong>Digital Product Study</strong>
-                      <small>UX → frontend · Placeholder</small>
+                      <small>Product thinking · Frontend</small>
                     </div>
                     <div class="project-tile project-tile--dark">
                       <span class="project-tile__index">A—03</span>
                       <div class="project-tile__rings"></div>
                       <strong>Code-driven Visual</strong>
-                      <small>Generative experiment · Placeholder</small>
+                      <small>Code · Visual systems</small>
                     </div>
                   </div>
                 </article>
@@ -440,7 +732,7 @@ a { color: inherit; }
                     <span>THINKING / OUTCOME</span>
                   </div>
                   <div class="process-wrap">
-                    <p class="eyebrow">The case study layer</p>
+                    <p class="eyebrow">From problem to decision</p>
                     <h2 id="scene-title-2">A decision is only useful when its reason is visible.</h2>
                     <div class="process-line" aria-label="Placeholder process">
                       <span><b>01</b> Observe</span>
@@ -452,12 +744,12 @@ a { color: inherit; }
                       <span><b>04</b> Verify</span>
                     </div>
                     <div class="decision-card">
-                      <span class="decision-card__label">DECISION / EXAMPLE</span>
-                      <p>Reduce the number of competing actions, then let motion explain the relationship between the selected item and its preview.</p>
+                      <span class="decision-card__label">DESIGN DECISION</span>
+                      <p>Reduce competing actions, then use motion to make the relationship between navigation and content immediately legible.</p>
                       <div class="decision-card__stats">
                         <span><b>Constraint</b> small viewport</span>
                         <span><b>Trade-off</b> less simultaneous content</span>
-                        <span><b>Evidence</b> prototype review</span>
+                        <span><b>Signal</b> interaction clarity</span>
                       </div>
                     </div>
                   </div>
@@ -470,7 +762,7 @@ a { color: inherit; }
                   </div>
                   <div class="capability-layout">
                     <div>
-                      <p class="eyebrow">Competency before tool logos</p>
+                      <p class="eyebrow">Core disciplines</p>
                       <h2 id="scene-title-3">Capabilities,<br>grouped by what they do.</h2>
                     </div>
                     <div class="capability-stack">
@@ -492,14 +784,14 @@ a { color: inherit; }
                   </div>
                   <div class="about-layout">
                     <div class="about-copy">
-                      <p class="eyebrow">A human layer, still grounded in work</p>
+                      <p class="eyebrow">Background</p>
                       <h2 id="scene-title-4">The path explains the pattern.</h2>
-                      <p class="scene__lead">Background, working style, direction, and credibility can live together when they support the same story.</p>
+                      <p class="scene__lead">A practice shaped by building, testing, documenting, and connecting design with engineering.</p>
                     </div>
                     <div class="timeline" aria-label="Placeholder journey">
-                      <div class="timeline__item"><span>Phase 01</span><strong>Started building independently</strong><small>learning through shipped experiments</small></div>
-                      <div class="timeline__item"><span>Phase 02</span><strong>Connected design + engineering</strong><small>systems, interaction, documentation</small></div>
-                      <div class="timeline__item"><span>Phase 03</span><strong>Focused on code-driven motion</strong><small>performance, evidence, repeatable craft</small></div>
+                      <div class="timeline__item"><span>Phase 01</span><strong>Started building independently</strong><small>learning through independent builds</small></div>
+                      <div class="timeline__item"><span>Phase 02</span><strong>Connected design + engineering</strong><small>systems · interaction · documentation</small></div>
+                      <div class="timeline__item"><span>Phase 03</span><strong>Focused on code-driven motion</strong><small>performance · motion · repeatable craft</small></div>
                     </div>
                   </div>
                   <div class="proof-strip">
@@ -513,14 +805,13 @@ a { color: inherit; }
                     <span>NEXT STEP</span>
                   </div>
                   <div class="contact-layout">
-                    <p class="eyebrow">End with one clear route</p>
+                    <p class="eyebrow">Let’s connect</p>
                     <h2 id="scene-title-5">Make something<br><em>clear, useful, alive.</em></h2>
-                    <p class="scene__lead">This is placeholder copy for the future contact path. The final version should state what opportunities fit and how to start the conversation.</p>
-                    <button class="contact-button" type="button" data-placeholder-action>
-                      <span>Start a conversation</span>
+                    <p class="scene__lead">Open to thoughtful products, ambitious interfaces, and work that rewards clarity.</p>
+                    <a class="contact-button" href="https://github.com/arsafiqri-aybi" target="_blank" rel="noreferrer">
+                      <span>Explore GitHub</span>
                       <span aria-hidden="true">↗</span>
-                    </button>
-                    <p class="contact-note" id="contact-note" role="status">Prototype only — no message will be sent.</p>
+                    </a>
                   </div>
                   <div class="contact-mark" aria-hidden="true">A</div>
                 </article>
@@ -572,7 +863,7 @@ a { color: inherit; }
             </nav>
 
             <div class="nav-panel__foot">
-              <span class="nav-panel__hint">Scroll either side · hover to peek · click to lock</span>
+              <span class="nav-panel__hint"></span>
               <span class="nav-panel__state" id="nav-state">INTRO</span>
             </div>
           </div>
@@ -590,25 +881,16 @@ a { color: inherit; }
     </section>
 
     <noscript>
-      <section class="no-js" aria-label="Portfolio content fallback">
-        <p class="eyebrow">Static fallback · JavaScript is off</p>
-        <h2>Portfolio prototype chapters</h2>
-        <p>This prototype keeps its core information readable without motion: Intro, Work, Process, Capabilities, About + Proof, and Contact.</p>
-        <ol>
-          <li><strong>Intro</strong> — identity, positioning, and value.</li>
-          <li><strong>Work</strong> — selected work, context, contribution, and outcome.</li>
-          <li><strong>Process</strong> — problem, decisions, trade-offs, and verification.</li>
-          <li><strong>Capabilities</strong> — applied expertise and supporting tools.</li>
-          <li><strong>About + Proof</strong> — journey, working principles, and evidence.</li>
-          <li><strong>Contact</strong> — opportunity fit and a clear next step.</li>
-        </ol>
+      <section class="no-js" aria-label="Portfolio overview">
+        <h2>ARS — Portfolio</h2>
+        <p>Frontend systems, motion engineering, product thinking, selected work, and contact.</p>
       </section>
     </noscript>
   </main>
 
-  <footer class="page-end" aria-label="Prototype footer">
-    <span>END OF ROUGH PROTOTYPE</span>
-    <a href="#intro" data-jump="0">Back to start ↑</a>
+  <footer class="page-end" aria-label="Portfolio footer">
+    <span>ARS — PORTFOLIO</span>
+    <a href="#intro" data-jump="0">Back to top ↑</a>
   </footer>
   <script>
 (() => {
@@ -773,7 +1055,7 @@ a { color: inherit; }
 
   document.querySelector('[data-placeholder-action]')?.addEventListener('click', () => {
     const note = document.getElementById('contact-note');
-    note.textContent = 'Prototype only — contact details will be wired in the real portfolio.';
+    note.textContent = '';
   });
 
   window.addEventListener('scroll', onScroll, {passive: true});
