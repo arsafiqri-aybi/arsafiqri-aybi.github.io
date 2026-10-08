@@ -1,6 +1,6 @@
 # Reference deconstruction
 
-Source: supplied `ssstik.io_@webloved_1791424043094.mp4`, 16.37 seconds, 576 × 1024, 30 fps. Inspected frames at one-second intervals, then selected local sequences. The recording films a laptop; it is not a direct browser capture.
+Source: supplied `ssstik.io_@webloved_1791424043094.mp4`, 16.37 seconds, 576 × 1024, 30 fps. Inspected frames at one-second intervals, then 0.3-second beats across 0.4–3.7s and 13.8–15.3s to examine rotation, type/image handoff, and rapidly cut late scenes. The recording films a laptop; it is not a direct browser capture.
 
 | Interval | Visible evidence | Translation to Ars |
 | --- | --- | --- |

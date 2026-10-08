@@ -14,7 +14,7 @@
 | G08 Performance | PASS | Project asset budgets met; throttled mobile lab below selected 2.5s LCP / 0.1 CLS targets. Detailed readings below; lab only |
 | G09 Security/privacy | PASS | Credential-pattern scan, safe static generation, no tracking/backend/dependencies shipped, same-origin assets; existing font licenses retained |
 | G10 Visual system | PASS | Actual homepage desktop/phone and all six case-study renders reviewed; original source sculpture and delivery image preserve composition; contrast corrections applied |
-| G11 Production | NOT_RUN | Candidate not yet merged; verify final GitHub Pages build and live route/assets after publication |
+| G11 Production | PASS | GitHub Pages build for 70220b67e4bdc7b1630ce0f2c0f3aec609fa8ec6 built successfully; 16 public HTTPS route/asset/404 checks match verified local bytes. Actual public phone-viewport browser journey passes with no uncaught error or overflow. See production-verification.json and production-browser.json |
 | G12 Handoff | PASS | Regenerable source, design/motion specs, source versions, raw QA, README and recovery baseline |
 
 ## Lab performance

@@ -1,4 +1,4 @@
-# Release candidate — Ars immersive portfolio
+# Released — Ars immersive portfolio
 
 Target repository: `arsafiqri-aybi/arsafiqri-aybi.github.io`; isolated branch `feat/immersive-portfolio`; pre-change baseline `a8b002eba7b540c9600ac34d9b7d405761786c46`.
 
@@ -12,9 +12,15 @@ Full static homepage and six case studies; original editorial / copper identity;
 
 ## Release / recovery
 
-Candidate ready for source review and publication through the existing GitHub Pages mechanism. No workflow or Pages configuration change is needed. Inspect the protected expected branch head before committing; use ordinary non-force merge. Then verify HTTPS, all seven page routes, custom 404, same-origin assets, metadata and Pages build status. Production status is NOT_RUN until that inspection succeeds.
+Live URL: https://arsafiqri-aybi.github.io/
 
-Recovery: ordinary revert of the release commit; baseline preserved in Git history. No repo history is deleted and knowledge repositories are read-only.
+Source commit: `ecdce4ec93d397001a71c08c80f9781fb4f1c45a`. Reviewed PR: https://github.com/arsafiqri-aybi/arsafiqri-aybi.github.io/pull/1. Release merge on `main`: `70220b67e4bdc7b1630ce0f2c0f3aec609fa8ec6`.
+
+GitHub Pages build for that merge is `built`, with no build error. Sixteen public HTTPS checks passed: seven page routes, CSS/JS/font/art assets, favicon/social artwork, robots, sitemap, and custom 404. Public bytes match the verified local implementation. The actual public site browser journey home → Hey detail → Back also passed at 390×844, preserving the selected work, with zero uncaught errors and no page overflow.
+
+No workflow, Pages configuration, font-license, or knowledge-repository mutation was required. Deployment and production verification are PASS within the documented browser/HTTP scope.
+
+Recovery: ordinary mainline revert of the merge (`git revert -m 1 70220b67e4bdc7b1630ce0f2c0f3aec609fa8ec6`), followed by ordinary push and Pages verification; baseline preserved in Git history. No repo history is deleted and knowledge repositories are read-only.
 
 ## Known limitations
 

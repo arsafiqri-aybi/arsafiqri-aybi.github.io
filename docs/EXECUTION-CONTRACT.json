@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
   "contract_id": "ars-immersive-portfolio",
-  "revision": 1,
+  "revision": 2,
   "goal": "Rebuild the Ars portfolio as an original cinematic interactive experience.",
   "deliverable": "Static GitHub Pages website with six case studies, original art, navigation/motion, QA evidence and GitHub source.",
-  "status": "RUNNING",
+  "status": "COMPLETE",
   "protected_constraints": [
     {
       "id": "identity",
@@ -118,8 +118,8 @@
       "property": "Production",
       "verifier": "Source evidence and rendered/browser checks documented in QA-MATRIX.md",
       "required": true,
-      "status": "NOT_RUN",
-      "evidence": null
+      "status": "PASS",
+      "evidence": "docs/production-verification.json: 16 exact artifact checks; production-browser.json: actual public journey; GitHub Pages built release 70220b67"
     },
     {
       "id": "G12",
@@ -251,14 +251,14 @@
     {
       "id": "github_source",
       "required": true,
-      "status": "NOT_RUN",
-      "evidence": null
+      "status": "SUCCESS",
+      "evidence": "GitHub source ecdce4ec, reviewed PR #1, release merge 70220b67; public verification records in docs/"
     },
     {
       "id": "production",
       "required": true,
-      "status": "NOT_RUN",
-      "evidence": null
+      "status": "SUCCESS",
+      "evidence": "GitHub source ecdce4ec, reviewed PR #1, release merge 70220b67; public verification records in docs/"
     }
   ],
   "route": {
@@ -289,7 +289,7 @@
     "Native CSS/WAAPI/SVG instead of unnecessary runtime dependencies"
   ],
   "state_ref": "docs/PROJECT-STATE.md",
-  "next_action": "Commit reviewed source branch, inspect diff, merge via existing Pages path and verify production.",
+  "next_action": "Owner visual review of live website; no known implementation gate failure in verified scope.",
   "nodes": [
     {
       "id": "S0",

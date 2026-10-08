@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-08",
+  "url": "https://arsafiqri-aybi.github.io/",
+  "source_commit": "ecdce4ec93d397001a71c08c80f9781fb4f1c45a",
+  "release_commit": "70220b67e4bdc7b1630ce0f2c0f3aec609fa8ec6",
+  "method": "HTTPS certificate verification through urllib; cache-busted public routes/assets; byte-for-byte comparison to verified local artifacts",
+  "checks": [
+    {
+      "path": "/",
+      "url": "https://arsafiqri-aybi.github.io/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 16141,
+      "sha256": "db7277a1017337783fcfce4206b1a4f7e32570470ad7a2a9adbe67199f184c08",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/hey/",
+      "url": "https://arsafiqri-aybi.github.io/work/hey/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6386,
+      "sha256": "32e89814d17eaffd8b8d69b29bba795aa5d2ec6557c6612b9f56f849ecfd238e",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/scale-governor/",
+      "url": "https://arsafiqri-aybi.github.io/work/scale-governor/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6136,
+      "sha256": "c4596a7103c7ecc76bfc771a864fadebc69d25f2a26703b15001e51d0f9723ff",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/motion/",
+      "url": "https://arsafiqri-aybi.github.io/work/motion/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6219,
+      "sha256": "86367c50d2849440d08a3d77274cb1037b15b73d7934ec529650a3318a96b2b6",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/skill-builder/",
+      "url": "https://arsafiqri-aybi.github.io/work/skill-builder/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6117,
+      "sha256": "4862610f0f83c5be4714431be69f0391db4ecef36203f4389350590971859df9",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/copywriting/",
+      "url": "https://arsafiqri-aybi.github.io/work/copywriting/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6148,
+      "sha256": "813a14a15d0c30137d27103c817aae53ed3d7d6ad4b36e79a9277c85f55da6f0",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/work/website-builder/",
+      "url": "https://arsafiqri-aybi.github.io/work/website-builder/?release=70220b67",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6184,
+      "sha256": "bf52bcdf0bdf0aeef0988a8e4d2a56ea9e32294b1a0a144d923392a66c4e572e",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/styles.css",
+      "url": "https://arsafiqri-aybi.github.io/styles.css?release=70220b67",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 29133,
+      "sha256": "2be5583bf59dfa85608ca74600283146c055e847c5752da49bcdb93e43dc4f16",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/app.js",
+      "url": "https://arsafiqri-aybi.github.io/app.js?release=70220b67",
+      "status": 200,
+      "content_type": "application/javascript; charset=utf-8",
+      "bytes": 7458,
+      "sha256": "5cb38c50016b8f46ec06da80708f69831b3492993da3fcf2d490c5f0e6f3f142",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/fonts.css",
+      "url": "https://arsafiqri-aybi.github.io/fonts.css?release=70220b67",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 82638,
+      "sha256": "7419ec7fe0be5675551d8616274f6fe79f61d9aafd962bde343283b1a9fe54b1",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/assets/core.svg",
+      "url": "https://arsafiqri-aybi.github.io/assets/core.svg?release=70220b67",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "bytes": 113070,
+      "sha256": "9426f5706ae265c999939873ebdf984d75f3939afd806d984717fcce93530c00",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/favicon.svg",
+      "url": "https://arsafiqri-aybi.github.io/favicon.svg?release=70220b67",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "bytes": 248,
+      "sha256": "3a6a96aa59e7e90df790c431e47f2af1d177c48017063c8064e4d876a9132234",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/social.svg",
+      "url": "https://arsafiqri-aybi.github.io/social.svg?release=70220b67",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "bytes": 873,
+      "sha256": "de86e26a83c2b98ce3727a1a658d63c0fbaabf949bd5fbe9139bbd553d06d529",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/robots.txt",
+      "url": "https://arsafiqri-aybi.github.io/robots.txt?release=70220b67",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 134,
+      "sha256": "00c7d2d2e9786c8e6abb8cef578d615f9ca54ffda436a75491e587391ec44da1",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "url": "https://arsafiqri-aybi.github.io/sitemap.xml?release=70220b67",
+      "status": 200,
+      "content_type": "application/xml",
+      "bytes": 590,
+      "sha256": "1f8e98d79a0ee2cfde01962b5b87f7e16e60eddc3143da889cdf41a297f6a764",
+      "matches_local": true,
+      "pass": true
+    },
+    {
+      "path": "/release-test-nonexistent",
+      "url": "https://arsafiqri-aybi.github.io/release-test-nonexistent?release=70220b67",
+      "status": 404,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2012,
+      "sha256": "05551af14fbe1d9f464733e914eef8913ca1159fc4627d6355dcbfe8ac54847b",
+      "matches_local": true,
+      "pass": true
+    }
+  ],
+  "summary": {
+    "pass": 16,
+    "fail": 0
+  }
+}
