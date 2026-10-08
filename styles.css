@@ -645,3 +645,65 @@ html[data-ars-view="section"] .home-site .topbar{
     transition:none!important;
   }
 }
+
+
+/* ARS review 09: a larger, real outer grid around the existing two-column grid.
+   Borders/guides remain visible ONLY in ?grid=1 review mode. */
+@media(min-width:681px){
+  .explorer{width:min(calc(100% - 40px),1280px)}
+  .explore-frame{
+    box-sizing:border-box;
+    width:100%;
+    min-width:0;
+    min-height:clamp(555px,69svh,650px);
+    display:grid;
+    align-items:center;
+    padding:clamp(36px,4.4vw,58px) clamp(25px,3.3vw,46px);
+    border:0;
+    background:transparent;
+  }
+  .explore-frame>.explore-layout{min-width:0;width:100%;min-height:0}
+  /* Three closer-together slots with an actual blank slot preceding Home.
+     Once Work is selected, rail scrolling lifts Home to slot 1. */
+  .section-rail{height:132px;width:142px;max-width:100%;gap:0}
+  .rail-window{height:132px;max-height:132px;width:100%;min-width:0;overflow-x:hidden;overflow-y:auto}
+  .rail-list{width:100%;display:flex;flex-direction:column}
+  .rail-leading-space{height:44px;min-height:44px;flex:0 0 44px;display:block;pointer-events:none}
+  .rail-choice{
+    height:44px;min-height:44px;flex:0 0 44px;
+    width:calc(100% - 16px);
+    margin-left:5px;padding:7px 0;
+    font-size:16px;font-weight:430;line-height:1.3;
+    transform:translateX(-4px) scale(1);
+    transform-origin:left center;
+  }
+  .rail-choice[aria-current=true]{
+    font-size:20px;font-weight:770;
+    transform:translateX(9px) scale(1.05);
+    animation:ars-rail-focus-compact .44s var(--ease) both;
+  }
+  @keyframes ars-rail-focus-compact{
+    0%{opacity:.65;transform:translateX(0px) scale(.89)}
+    66%{opacity:1;transform:translateX(10px) scale(1.1)}
+    100%{opacity:1;transform:translateX(9px) scale(1.05)}
+  }
+  /* Work editorial text LEFT, approved Hey system preview RIGHT. */
+  [data-preview="work"] .work-composition{
+    grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);
+    align-items:center;
+  }
+  [data-preview="work"] .preview-copy{min-width:0}
+  [data-preview="work"] .work-art-focus{min-width:0}
+}
+@media(max-width:900px) and (min-width:681px){
+  .explore-frame{padding:35px 24px;min-height:clamp(580px,79svh,760px)}
+  [data-preview="work"] .work-composition{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .explore-frame{display:block;width:100%;padding:0;min-height:0}
+  .rail-leading-space{display:none}
+  [data-preview="work"] .work-composition{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .rail-choice[aria-current=true]{animation:none!important}
+}

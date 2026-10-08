@@ -13,9 +13,11 @@ applyTheme();
      ['.topbar','H0 / HEADER','frame'],
      ['.topbar .brand','H1 / LOGO ARS','detail'],
      ['.explorer','01 / EXPLORER CANVAS','frame'],
+     ['.explore-frame','01A / OUTER CONTAINER','frame'],
      ['.explore-layout','02 / TWO-COLUMN GRID','frame'],
      ['.section-rail','02A / NAVBAR','area'],
      ['.rail-window','02A.1 / NAV SCROLL AREA','detail'],
+     ['.rail-leading-space','02A.0 / EMPTY SLOT','detail'],
      ['.preview-stage','02B / PREVIEW AREA','area'],
      ['[data-preview="home"] .home-composition','HOME / COLUMN GRID','area'],
      ['[data-preview="home"] .identity-copy','HOME A / TEXT','detail'],
@@ -125,15 +127,15 @@ const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
 function positionBrand(){
  const topbar=document.querySelector('.home-site .topbar');
- const preview=explorer?.querySelector('.preview-stage');
+ const outer=explorer?.querySelector('.explore-frame');
  const brand=topbar?.querySelector('.brand');
- // Align the wordmark directly above the Preview Area's upper boundary.
- // Stationary across rail scroll: only compute on initial layout or resize.
- if(!topbar||!preview||!brand||explorer.classList.contains('is-away'))return;
- const previewTop=window.scrollY+preview.getBoundingClientRect().top;
+ // The wordmark sits above the OUTER review frame, not the inner two-column grid.
+ // Position remains fixed when changing rail selection, with no logo animation.
+ if(!topbar||!outer||!brand||explorer.classList.contains('is-away'))return;
+ const frameTop=window.scrollY+outer.getBoundingClientRect().top;
  const headerTop=window.scrollY+topbar.getBoundingClientRect().top;
- const logoTop=previewTop-headerTop-brand.offsetHeight-10;
- if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',logoTop.toFixed(2)+'px');
+ const logoTop=frameTop-headerTop-brand.offsetHeight-16;
+ if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',Math.max(0,logoTop).toFixed(2)+'px');
 }
 function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,viewport.scrollLeft+itemRect.left-viewRect.left-(viewRect.width-itemRect.width)/2),behavior:'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}}
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(positionBrand);}}
