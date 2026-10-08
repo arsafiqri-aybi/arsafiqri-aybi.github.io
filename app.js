@@ -89,8 +89,9 @@ document.querySelectorAll('[data-motion-player]').forEach(stage=>{
  cover.addEventListener('click',()=>{
   const started=video.play();
   if(started&&typeof started.then==='function'){
-   started.then(()=>{cover.hidden=true;if(error)error.textContent='';}).catch(()=>{
-    if(error)error.textContent='Playback unavailable. Use the project source link.';
+   started.then(()=>{cover.hidden=true;video.focus({preventScroll:true});if(error)error.textContent='';}).catch(()=>{
+    cover.hidden=true;
+    if(error)error.textContent='Playback unavailable here. Use the project source link to view the original file.';
    });
   }else{cover.hidden=true}
  });

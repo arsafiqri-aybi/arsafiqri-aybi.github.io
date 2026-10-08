@@ -57,3 +57,10 @@ test('portrait 800 binary matches declared provenance',()=>{
  assert.equal(createHash('sha256').update(bytes).digest('hex'),'d2578b49531b52d247eedb83064cb43b4bb0a84d65932e1abe410f3c03daf0b8');
  assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex'),'4a46765f2a93d57fdf30b23498b656b0aebc8113');
 });
+
+test('motion overlay respects hidden state, native controls and accessible focus',()=>{
+ const css=file('styles.css'),app=file('app.js');
+ assert.match(css,/html\.motion-enhanced \.motion-play-cover\[hidden\]\{display:none\}/);
+ assert.match(app,/cover\.hidden=true;video\.focus\(\{preventScroll:true\}\)/);
+ assert.match(app,/cover\.hidden=true;[\s\S]*?Playback unavailable here/);
+});
