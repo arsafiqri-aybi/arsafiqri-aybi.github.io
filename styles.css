@@ -368,3 +368,23 @@ html[data-ars-view="section"] .home-site .topbar{
 @media(max-width:680px){
   .home-site .topbar .brand{transform:translateX(-50%)}
 }
+
+/* ARS refinement 04: center logo between page top and Preview Area top.
+   Balanced two-column Home: equal column widths, stronger identity size,
+   portrait without redundant caption or decorative backplate. */
+.home-site .brand{font-size:32px;font-weight:750;letter-spacing:-.085em}
+.home-composition{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.8vw,54px)}
+.home-composition .identity-copy{width:100%;min-width:0}
+.home-composition .identity-copy h1{font-size:clamp(41px,3.95vw,53px);max-width:100%;line-height:1.13}
+.home-composition .ars-portrait-stage{width:100%;max-width:100%;justify-self:stretch;margin:0}
+.home-composition .ars-portrait-stage img{width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+.home-site .topbar .brand{transition:none!important;transform:translateX(-50%)}
+@media(max-width:900px){
+ .home-composition{grid-template-columns:1fr;gap:28px}
+ .home-composition .ars-portrait-stage{width:min(100%,390px);max-width:390px;justify-self:start}
+}
+@media(max-width:680px){
+ .home-site .brand{font-size:30px}
+ .home-composition .ars-portrait-stage{width:min(100%,375px);max-width:375px;justify-self:center}
+ .home-composition .identity-copy h1{font-size:clamp(39px,10vw,50px)}
+}

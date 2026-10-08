@@ -125,15 +125,17 @@ const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
 function positionBrand(){
  const topbar=document.querySelector('.home-site .topbar');
- const layout=explorer?.querySelector('.explore-layout');
+ const preview=explorer?.querySelector('.preview-stage');
  const brand=topbar?.querySelector('.brand');
- // The wordmark is stationary: calculate the midpoint between the header's
- // upper grid boundary and the preview grid once, not on navigation/wheel.
- if(!topbar||!layout||!brand||explorer.classList.contains('is-away'))return;
- const frame=topbar.getBoundingClientRect(),grid=layout.getBoundingClientRect();
- const halfGap=(grid.top-frame.top)/2;
- const brandTop=halfGap-brand.offsetHeight/2;
- if(Number.isFinite(brandTop))topbar.style.setProperty('--ars-logo-top',brandTop.toFixed(2)+'px');
+ // The reference line is the top edge of PREVIEW AREA, not the outer
+ // two-column grid. Place the logo's center halfway from page top to it.
+ // This is a static layout measurement, not an animation on rail scroll.
+ if(!topbar||!preview||!brand||explorer.classList.contains('is-away'))return;
+ const previewTop=window.scrollY+preview.getBoundingClientRect().top;
+ const headerTop=window.scrollY+topbar.getBoundingClientRect().top;
+ const midpoint=previewTop/2;
+ const logoTop=midpoint-headerTop-brand.offsetHeight/2;
+ if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',logoTop.toFixed(2)+'px');
 }
 function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,viewport.scrollLeft+itemRect.left-viewRect.left-(viewRect.width-itemRect.width)/2),behavior:'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}}
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(positionBrand);}}
