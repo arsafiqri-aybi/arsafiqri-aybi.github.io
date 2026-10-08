@@ -1,0 +1,417 @@
+{
+  "date": "2026-10-08",
+  "environment": {
+    "url": "http://127.0.0.1:4173/",
+    "browser": "133.0.6943.0",
+    "headless": true,
+    "physical_device": false
+  },
+  "checks": [
+    {
+      "name": "Responsive home and all six direct case routes",
+      "status": "PASS",
+      "detail": {
+        "renders": 35
+      }
+    },
+    {
+      "name": "Short landscape and effective 200% zoom layout",
+      "status": "PASS",
+      "detail": "720px layout represents 1440px desktop at 200% effective CSS viewport; real browser chrome zoom not exercised."
+    },
+    {
+      "name": "Rapid selection, hidden focus exclusion, local list controls",
+      "status": "PASS",
+      "detail": {
+        "rapidClicks": 24,
+        "visiblePanels": 1,
+        "hiddenFocusableRects": 0
+      }
+    },
+    {
+      "name": "Keyboard selector and focus-visible",
+      "status": "PASS",
+      "detail": "End / Home / ArrowDown update preview and preserve focus; outline visible."
+    },
+    {
+      "name": "Preview to detail, refresh, Back and Forward",
+      "status": "PASS",
+      "detail": "Native route / reload / history work; selected preview restored."
+    },
+    {
+      "name": "No-JavaScript identity, six works, detail and contact",
+      "status": "PASS",
+      "detail": "All core content and direct links remain static."
+    },
+    {
+      "name": "Motion runtime reduction, resize interruption and reverse scrolling",
+      "status": "PASS",
+      "detail": "Reduced motion cancels active animation and preserves selected state; resize and reverse scroll preserve content."
+    },
+    {
+      "name": "Blocked image/font resources retain content and navigation",
+      "status": "PASS",
+      "detail": "System font fallback, dimensions and native links survive media errors."
+    },
+    {
+      "name": "404 route and contact destinations",
+      "status": "PASS",
+      "detail": "Custom 404 returns to home; real owner Instagram destination."
+    },
+    {
+      "name": "Axe WCAG 2.2 AA automated sample",
+      "status": "PASS",
+      "detail": "Eight pages checked; automated sample is not full conformance or screen-reader testing."
+    },
+    {
+      "name": "Visibility handler and browser freeze/resume lifecycle",
+      "status": "PASS",
+      "detail": {
+        "result": {
+          "hiddenAnimations": 0,
+          "semanticPanels": 1
+        },
+        "scope": "Visibility handler input is a labelled synthetic document-hidden state in real Chromium. Freeze/resume is actual CDP browser lifecycle. Headless shell keeps actual visibilityState visible; physical background/OEM behavior was not tested."
+      }
+    },
+    {
+      "name": "No uncaught client exceptions",
+      "status": "PASS",
+      "detail": []
+    }
+  ],
+  "responsive": [
+    {
+      "route": "/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/hey/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/scale-governor/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/motion/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/skill-builder/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/copywriting/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/website-builder/",
+      "viewport": 320,
+      "width": 320,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/hey/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/scale-governor/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/motion/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/skill-builder/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/copywriting/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/website-builder/",
+      "viewport": 390,
+      "width": 390,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/hey/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/scale-governor/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/motion/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/skill-builder/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/copywriting/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/website-builder/",
+      "viewport": 768,
+      "width": 768,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/hey/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/scale-governor/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/motion/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/skill-builder/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/copywriting/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/website-builder/",
+      "viewport": 1024,
+      "width": 1024,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/hey/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/scale-governor/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/motion/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/skill-builder/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/copywriting/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    },
+    {
+      "route": "/work/website-builder/",
+      "viewport": 1440,
+      "width": 1440,
+      "overflow": false,
+      "offenders": []
+    }
+  ],
+  "accessibility": [
+    {
+      "route": "/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 9
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "route": "/work/hey/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 4
+        }
+      ]
+    },
+    {
+      "route": "/work/scale-governor/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ]
+    },
+    {
+      "route": "/work/motion/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ]
+    },
+    {
+      "route": "/work/skill-builder/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "route": "/work/copywriting/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ]
+    },
+    {
+      "route": "/work/website-builder/",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ]
+    },
+    {
+      "route": "/404.html",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "consoleErrors": [],
+  "performance": [],
+  "summary": {
+    "pass": 12,
+    "fail": 0
+  }
+}

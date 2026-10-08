@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-08",
+  "scope": "Local source review and output/resource audit, not penetration testing",
+  "credential_patterns": "No AWS access key, GitHub credential, private-key or long JWT match in authored website files",
+  "dom": "No innerHTML, eval, dynamically injected URL, user input, cookies or tracking endpoint. JSON content is escaped at static generation.",
+  "network": "Only same-origin static assets. External Instagram/GitHub links are ordinary user-initiated navigation.",
+  "rights": "Original project art and geometry; existing font OFL files retained; no supplied reference-video assets republished.",
+  "local_resources": "Eight HTML pages and their local links/assets checked; no broken local resource.",
+  "source_sha256": {
+    "index.html": "db7277a1017337783fcfce4206b1a4f7e32570470ad7a2a9adbe67199f184c08",
+    "styles.css": "2be5583bf59dfa85608ca74600283146c055e847c5752da49bcdb93e43dc4f16",
+    "app.js": "5cb38c50016b8f46ec06da80708f69831b3492993da3fcf2d490c5f0e6f3f142",
+    "content/projects.json": "1988b60793367a96c250dd988cde0aef58815161e5976f3d67cef6beaf312502",
+    "assets/core.svg": "9426f5706ae265c999939873ebdf984d75f3939afd806d984717fcce93530c00"
+  }
+}

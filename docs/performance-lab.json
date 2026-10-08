@@ -1,0 +1,783 @@
+{
+  "date": "2026-10-08",
+  "environment": {
+    "browser": "133.0.6943.0",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1,
+    "cpu_throttle": 4,
+    "network": {
+      "latency_ms": 150,
+      "download_bytes_per_sec": 200000,
+      "upload_bytes_per_sec": 93750
+    },
+    "server": "local Node HTTP with gzip",
+    "cache": "disabled / new context each run",
+    "scope": "Lab only; baseline and candidate have different content and visuals. No causal speed improvement or field INP claim."
+  },
+  "runs": [
+    {
+      "variant": "baseline",
+      "run": 1,
+      "lcp_ms": 756,
+      "cls": 0.047391571724885374,
+      "long_tasks": 1,
+      "max_long_task_ms": 79,
+      "resources": [
+        {
+          "name": "/baseline/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/baseline/styles.css",
+          "transfer": 1959,
+          "encoded": 1659,
+          "decoded": 4362
+        },
+        {
+          "name": "/baseline/app.js",
+          "transfer": 677,
+          "encoded": 377,
+          "decoded": 659
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 756,
+            "duration": 0,
+            "size": 86184,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 794.1000000000931,
+            "value": 0.047391571724885374,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 666.7000000001863,
+            "duration": 79,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "variant": "baseline",
+      "run": 2,
+      "lcp_ms": 740,
+      "cls": 0.047391571724885374,
+      "long_tasks": 1,
+      "max_long_task_ms": 61,
+      "resources": [
+        {
+          "name": "/baseline/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/baseline/styles.css",
+          "transfer": 1959,
+          "encoded": 1659,
+          "decoded": 4362
+        },
+        {
+          "name": "/baseline/app.js",
+          "transfer": 677,
+          "encoded": 377,
+          "decoded": 659
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 740,
+            "duration": 0,
+            "size": 86184,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 781.8999999999069,
+            "value": 0.047391571724885374,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 669.0999999998603,
+            "duration": 61,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": [
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 779.3999999999069,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "baseline",
+      "run": 3,
+      "lcp_ms": 752,
+      "cls": 0.047391571724885374,
+      "long_tasks": 1,
+      "max_long_task_ms": 74,
+      "resources": [
+        {
+          "name": "/baseline/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/baseline/styles.css",
+          "transfer": 1959,
+          "encoded": 1659,
+          "decoded": 4362
+        },
+        {
+          "name": "/baseline/app.js",
+          "transfer": 677,
+          "encoded": 377,
+          "decoded": 659
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 752,
+            "duration": 0,
+            "size": 86184,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 793.7000000001863,
+            "value": 0.047391571724885374,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 669.2000000001863,
+            "duration": 74,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": [
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 791.3000000000466,
+            "duration": 16,
+            "size": 0,
+            "interactionId": 0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "candidate",
+      "run": 1,
+      "lcp_ms": 1340,
+      "cls": 0.004825889984879651,
+      "long_tasks": 2,
+      "max_long_task_ms": 232,
+      "resources": [
+        {
+          "name": "/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/styles.css",
+          "transfer": 7608,
+          "encoded": 7308,
+          "decoded": 28871
+        },
+        {
+          "name": "/app.js",
+          "transfer": 2571,
+          "encoded": 2271,
+          "decoded": 7458
+        },
+        {
+          "name": "/assets/core.svg",
+          "transfer": 83825,
+          "encoded": 83525,
+          "decoded": 113070
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 1340,
+            "duration": 0,
+            "size": 83981,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 1319.1999999999534,
+            "value": 0.004825889984879651,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 989.8999999999069,
+            "duration": 232,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1266,
+            "duration": 58,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": [
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1237,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "candidate",
+      "run": 2,
+      "lcp_ms": 1376,
+      "cls": 0.004825889984879651,
+      "long_tasks": 2,
+      "max_long_task_ms": 231,
+      "resources": [
+        {
+          "name": "/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/styles.css",
+          "transfer": 7608,
+          "encoded": 7308,
+          "decoded": 28871
+        },
+        {
+          "name": "/app.js",
+          "transfer": 2571,
+          "encoded": 2271,
+          "decoded": 7458
+        },
+        {
+          "name": "/assets/core.svg",
+          "transfer": 83825,
+          "encoded": 83525,
+          "decoded": 113070
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 1376,
+            "duration": 0,
+            "size": 83981,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 1351.7000000001863,
+            "value": 0.004825889984879651,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 1006,
+            "duration": 231,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1284,
+            "duration": 72,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": [
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1252.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "candidate",
+      "run": 3,
+      "lcp_ms": 1356,
+      "cls": 0.004825889984879651,
+      "long_tasks": 2,
+      "max_long_task_ms": 233,
+      "resources": [
+        {
+          "name": "/fonts.css",
+          "transfer": 62500,
+          "encoded": 62200,
+          "decoded": 82638
+        },
+        {
+          "name": "/styles.css",
+          "transfer": 7608,
+          "encoded": 7308,
+          "decoded": 28871
+        },
+        {
+          "name": "/app.js",
+          "transfer": 2571,
+          "encoded": 2271,
+          "decoded": 7458
+        },
+        {
+          "name": "/assets/core.svg",
+          "transfer": 83825,
+          "encoded": 83525,
+          "decoded": 113070
+        }
+      ],
+      "raw": {
+        "lcp": [
+          {
+            "start": 1356,
+            "duration": 0,
+            "size": 83981,
+            "interactionId": 0
+          }
+        ],
+        "shifts": [
+          {
+            "start": 1329.8000000000466,
+            "value": 0.004825889984879651,
+            "recent": false
+          }
+        ],
+        "tasks": [
+          {
+            "start": 998.9000000001397,
+            "duration": 233,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1272,
+            "duration": 61,
+            "size": 0,
+            "interactionId": 0
+          }
+        ],
+        "events": [
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          },
+          {
+            "start": 1244.3000000000466,
+            "duration": 32,
+            "size": 0,
+            "interactionId": 0
+          }
+        ]
+      }
+    }
+  ],
+  "bytes": {
+    "index.html": {
+      "raw": 16141,
+      "gzip": 4170
+    },
+    "styles.css": {
+      "raw": 28871,
+      "gzip": 7308
+    },
+    "app.js": {
+      "raw": 7458,
+      "gzip": 2271
+    },
+    "fonts.css": {
+      "raw": 82638,
+      "gzip": 62200
+    },
+    "assets/core.svg": {
+      "raw": 113070,
+      "gzip": 83525
+    }
+  },
+  "motion": {
+    "scenario": "180 rAF callbacks with forward/reverse native scroll and 12 rapid work changes; 1440×1000; 4× CPU; unthrottled local network",
+    "intervals_ms": [
+      16.699999999999818,
+      16.700000000000045,
+      16.700000000000045,
+      16.59999999999991,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000045,
+      16.700000000000045,
+      16.59999999999991,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000045,
+      16.600000000000136,
+      16.699999999999818,
+      16.700000000000045,
+      16.700000000000045,
+      16.59999999999991,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000045,
+      16.600000000000136,
+      16.699999999999818,
+      16.700000000000045,
+      16.600000000000136,
+      16.699999999999818,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000045,
+      16.600000000000136,
+      16.699999999999818,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000045,
+      16.600000000000136,
+      16.699999999999818,
+      16.700000000000045,
+      16.700000000000045,
+      16.59999999999991,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.800000000000182,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.59999999999991,
+      16.800000000000182,
+      16.59999999999991,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.59999999999991,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.700000000000273,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.59999999999991,
+      16.800000000000182,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.59999999999991,
+      16.800000000000182,
+      16.59999999999991,
+      16.699999999999818,
+      16.700000000000273,
+      16.59999999999991,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.59999999999991,
+      16.700000000000273,
+      16.699999999999818,
+      16.59999999999991,
+      16.800000000000182,
+      16.59999999999991,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818,
+      16.699999999999818,
+      16.699999999999818,
+      16.699999999999818,
+      16.600000000000364,
+      16.699999999999818
+    ],
+    "median_ms": 16.699999999999818,
+    "p95_ms": 16.700000000000273,
+    "over_33_ms": 0,
+    "scope": "rAF scheduling intervals, not a full compositor/presentation frame trace; software headless browser, not a physical phone"
+  },
+  "native_transition": {
+    "observed": true,
+    "events": [
+      "ARS_VT cross-document active"
+    ]
+  }
+}
