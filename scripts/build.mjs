@@ -2,8 +2,11 @@
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {loadV2ReleaseView} from '../v2/scripts/generator-bridge.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const items=JSON.parse(readFileSync(resolve(root,'content/projects.json'),'utf8'));
+const fullCatalog=JSON.parse(readFileSync(resolve(root,'content/projects.json'),'utf8'));
+const releaseView=loadV2ReleaseView({root,catalog:fullCatalog,manifestPath:process.env.ARS_V2_CANDIDATE_MANIFEST??null});
+const items=releaseView.items;
 const art=JSON.parse(readFileSync(resolve(root,'content/artwork.json'),'utf8'));
 const arch=JSON.parse(readFileSync(resolve(root,'content/architecture.json'),'utf8'));
 const buildSite=(items, art, architecture) => {
@@ -16,7 +19,7 @@ const buildSite=(items, art, architecture) => {
  const contact=`<div class="contact-simple"><h2>Let's talk about what you're building.</h2><p>Projects, professional opportunities, or a conversation about the work.</p><div class="contact-actions"><a href="https://www.instagram.com/arsafiqri_ua/">Message on Instagram</a><a href="https://github.com/arsafiqri-aybi">GitHub profile</a></div><p class="quiet-note">Email, LinkedIn and a downloadable résumé will appear only when verified public destinations are available.</p></div>`;
  const navNames=["Home","Work","Expertise","Approach","About","Connect"];
  const nav=navNames.map((n,i)=>`<button class="rail-choice" type="button" data-rail="${n.toLowerCase()}" aria-current="${i===0?"true":"false"}" tabindex="${i===0?"0":"-1"}">${n}</button>`).join("");
- const selected=[items.find(x=>x.id==="hey"),items.find(x=>x.id==="personal-browser-operator"),items.find(x=>x.id==="motion")].filter(Boolean);
+ const selected=releaseView.selectedIds.map(id=>items.find(x=>x.id===id)).filter(Boolean);
  const selectedSet=new Set(selected.map(x=>x.id)), archive=items.filter(x=>!selectedSet.has(x.id));
  const featuredCards=selected.map((p,i)=>`<a class="feature-work feature-${i}" href="${workHref(p)}">${artEl(p)}<span class="feature-meta"><span class="feature-title">${esc(p.name)}</span><span class="feature-summary">${esc(p.summary)}</span><span class="feature-status">${esc(p.status)} · ${esc(p.category)}</span></span></a>`).join("");
  const indexRows=items.map(p=>`<a class="index-row" href="${workHref(p)}"><span class="index-title">${esc(p.name)}</span><span class="index-category">${esc(p.category)}</span><span class="index-status">${esc(p.status)}</span></a>`).join("");
