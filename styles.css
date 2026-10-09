@@ -3105,3 +3105,215 @@ body.home-site{
  }
 }
 
+
+
+/* ARS Android Home Balanced 53.
+   Five visual roles in ONE home canvas: professional identity, headline
+   positioning, value, actual portrait, and action to Work.
+   Mobile text is provisional demonstration copy; desktop copy stays approved.
+   These are the FINAL mobile Home-specific overrides over older experiments.
+   Only the Home article, not Work/About/Connect or the desktop arc. */
+.ars-role-mobile,.ars-value-mobile{display:none}
+@media(max-width:680px){
+ .home-site .ars-role-desktop,
+ .home-site .ars-value-desktop{display:none}
+ .home-site .ars-role-mobile,
+ .home-site .ars-value-mobile{display:inline}
+
+ /* Preserve each swipe slide's full width while Home gets its own geometry.
+    Content may scroll INSIDE Home on very short viewport heights. */
+ html.is-enhanced .home-site .explorer:not(.is-away)
+ .preview-stage>[data-preview="home"],
+ .home-site .ars-vertical-story-panel>[data-preview="home"]{
+   display:flex!important;
+   flex-direction:column;
+   align-items:stretch;
+   justify-content:flex-start;
+   height:100%;
+   min-height:0;
+   overflow-x:hidden;
+   overflow-y:auto;
+   overscroll-behavior-y:contain;
+   padding:clamp(12px,2.2svh,20px) 1px clamp(11px,2svh,18px);
+ }
+
+ html.is-enhanced .home-site .explorer:not(.is-away)
+ .preview-stage>[data-preview="home"] .home-composition,
+ .home-site .ars-vertical-story-panel>[data-preview="home"] .home-composition{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr);
+   grid-template-rows:auto minmax(135px,1fr);
+   align-items:stretch;
+   gap:clamp(14px,2.4svh,23px)!important;
+   width:100%;
+   height:auto!important;
+   min-height:0;
+   flex:1 1 auto;
+   padding:0!important;
+   margin:0;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .identity-copy,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy{
+   display:block;
+   width:100%;
+   margin:0;
+   padding:0;
+   min-width:0;
+   align-self:start;
+   flex:none;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .ars-home-identity,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-home-identity{
+   display:none!important;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .home-role,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .home-role{
+   display:block;
+   font-size:clamp(10.5px,2.9vw,12px);
+   font-weight:590;
+   line-height:1.4;
+   letter-spacing:.015em;
+   color:var(--sub);
+   margin:0!important;
+   padding:0;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .home-role::after,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .home-role::after{
+   display:block!important;
+   content:""!important;
+   width:100%;
+   height:1px;
+   background:var(--rule);
+   margin:clamp(13px,2svh,19px) 0 clamp(17px,2.5svh,24px)!important;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .identity-copy::after,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy::after{
+   display:none!important;
+   content:none!important;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .identity-copy h1,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy h1{
+   font-size:clamp(29px,8.7vw,39px);
+   font-weight:440;
+   line-height:1.1;
+   letter-spacing:-.052em;
+   max-width:460px;
+   margin:0!important;
+   text-wrap:balance;
+   color:var(--fg);
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .identity-copy p,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy p{
+   font-size:clamp(12px,3.25vw,13.5px);
+   line-height:1.64;
+   letter-spacing:-.008em;
+   font-weight:400;
+   color:var(--sub);
+   max-width:395px;
+   margin:clamp(12px,1.8svh,17px) 0 0!important;
+   text-wrap:pretty;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .ars-portrait-stage,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-portrait-stage{
+   position:relative;
+   display:block;
+   width:100%;
+   min-width:0;
+   min-height:135px!important;
+   max-height:none!important;
+   height:100%!important;
+   margin:0!important;
+   padding:0;
+   overflow:hidden!important;
+   align-self:stretch;
+   flex:none;
+   border-radius:11px;
+   background:#202930;
+   box-shadow:none!important;
+   transform:none!important;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .ars-portrait-stage img,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-portrait-stage img{
+   width:100%;
+   height:100%;
+   display:block;
+   min-width:0;
+   object-fit:cover;
+   object-position:50% 27%;
+   border-radius:11px;
+   box-shadow:none!important;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .ars-photo-ambient,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-photo-ambient{
+   border-radius:11px;
+ }
+
+ .home-site .preview-stage>[data-preview="home"] .ars-main-swipe-cue,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-main-swipe-cue{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   gap:10px;
+   min-height:44px;
+   flex:0 0 auto;
+   margin:clamp(11px,1.8svh,17px) 0 0!important;
+   padding:8px 0 0;
+   border-top:1px solid var(--rule);
+   width:100%;
+ }
+
+ .home-site .ars-main-swipe-cue .ars-home-explore-action{
+   min-height:40px;
+   padding:5px 0;
+   font-size:12px;
+   letter-spacing:-.005em;
+ }
+
+ .home-site .ars-main-swipe-cue .ars-cue-instruction{
+   font-size:10px;
+   max-width:48%;
+   text-align:right;
+   line-height:1.5;
+   color:var(--sub);
+ }
+}
+@media(max-width:680px) and (max-height:640px){
+ .home-site .preview-stage>[data-preview="home"] .home-role::after,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .home-role::after{
+   margin:10px 0 13px!important;
+ }
+ .home-site .preview-stage>[data-preview="home"] .identity-copy h1,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy h1{
+   font-size:clamp(27px,8vw,34px);
+ }
+ .home-site .preview-stage>[data-preview="home"] .identity-copy p,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .identity-copy p{
+   margin-top:10px!important;
+   font-size:12px;
+   line-height:1.5;
+ }
+ html.is-enhanced .home-site .explorer:not(.is-away)
+ .preview-stage>[data-preview="home"] .home-composition{
+   grid-template-rows:auto minmax(115px,1fr);
+   gap:12px!important;
+ }
+ .home-site .preview-stage>[data-preview="home"] .ars-portrait-stage,
+ .home-site .ars-vertical-story-panel [data-preview="home"] .ars-portrait-stage{
+   min-height:115px!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .home-site .ars-main-swipe-cue .ars-cue-down,
+ .home-site .ars-main-swipe-cue .ars-cue-left{animation:none!important}
+}
+
