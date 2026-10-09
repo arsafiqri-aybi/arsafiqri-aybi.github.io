@@ -304,6 +304,9 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
+let verticalStoryRunning=false;
+let verticalStoryCleanup=null;
+let lastVerticalWheelAt=-Infinity;
 let railMotionReady=false;
 let railHintTimer=0;
 function scheduleRailDiscovery(){
@@ -421,6 +424,7 @@ function syncSoftArc(index){
 
 function choose(idx,moveFocus=false,fromMobileScroll=false){
  if(!choices.length)return;
+ if(verticalStoryCleanup&&!fromMobileScroll)verticalStoryCleanup();
  const previous=selected;
  selected=Math.max(0,Math.min(choices.length-1,idx));
  // Keep the Home card mounted and measured when another chapter is active.
@@ -522,10 +526,146 @@ function restoreWorkContext(){
 }
 if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose(i));b.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=choices.length-1;else n=i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1);choose(n,true);});});const rail=document.querySelector('.rail-window');
 const previewStage=explorer?.querySelector('.preview-stage');
+/* Two gestures, one destination: native horizontal CSS carousel for finger-follow
+   swipes; vertical touch/wheel animates the SAME neighbor on the Y axis.
+   Inner sections are allowed to scroll their own content before stepping. */
+function mobileVisiblePane(){
+ return previews[mobileParent(selected)]||null;
+}
+function canStepVerticallyFrom(target,direction){
+ const pane=mobileVisiblePane();
+ if(!pane)return false;
+ let element=target instanceof Element?target:target?.parentElement;
+ while(element&&element!==previewStage){
+   if(element.scrollHeight>element.clientHeight+4){
+     const overflow=getComputedStyle(element).overflowY;
+     if(['auto','scroll','overlay'].includes(overflow)){
+       const remaining=element.scrollHeight-element.clientHeight-element.scrollTop;
+       if(direction>0&&remaining>5)return false;
+       if(direction<0&&element.scrollTop>5)return false;
+     }
+   }
+   if(element===pane)break;
+   element=element.parentElement;
+ }
+ return true;
+}
+function mobileVerticalStep(direction){
+ if(window.innerWidth>680||!explorer||explorer.classList.contains('is-away')||
+    verticalStoryRunning||!previewStage)return false;
+ const fromIndex=mobileChapters.indexOf(mobileParent(selected));
+ const toIndex=fromIndex+direction;
+ if(toIndex<0||toIndex>=mobileChapters.length)return false;
+ const current=previews[mobileChapters[fromIndex]];
+ const destination=previews[mobileChapters[toIndex]];
+ if(!current||!destination)return false;
+ const targetIndex=mobileChapters[toIndex];
+ if(reduced.matches){choose(targetIndex);return true;}
+ const layout=explorer.querySelector('.explore-layout');
+ if(!layout)return false;
+ // Clone presentation only: copies are inert, hidden from assistive technology,
+ // and have their ids removed to avoid ambiguous document references.
+ const layer=document.createElement('div');
+ layer.className='ars-vertical-story';
+ layer.setAttribute('aria-hidden','true');
+ layer.inert=true;
+ function makePanel(source,kind,tokens){
+   const shell=document.createElement('div');
+   shell.className='ars-vertical-story-panel ars-vertical-story-'+kind;
+   const copy=source.cloneNode(true);
+   [copy,...copy.querySelectorAll('[id]')].forEach(node=>node.removeAttribute('id'));
+   shell.append(copy);
+   for(const [name,value] of Object.entries(tokens))shell.style.setProperty(name,value);
+   shell.style.backgroundColor=tokens['--bg']||'#151719';
+   return shell;
+ }
+ function tokens(){
+   const style=getComputedStyle(root);
+   const result={};
+   ['--bg','--fg','--sub','--rule','--accent'].forEach(name=>{
+     result[name]=style.getPropertyValue(name).trim();
+   });
+   // --bg may contain var(...): compute actual background from html.
+   result['--bg']=getComputedStyle(document.documentElement).backgroundColor;
+   return result;
+ }
+ const departing=makePanel(current,'out',tokens());
+ verticalStoryRunning=true;
+ choose(targetIndex,false,true);
+ const arriving=makePanel(destination,'in',tokens());
+ layer.append(departing,arriving);
+ layout.append(layer);
+ // Reposition the underlying native carousel in one frame while it is covered.
+ // Do not replace native horizontal dragging with JavaScript swipe detection.
+ const oldBehavior=previewStage.style.scrollBehavior;
+ const oldSnap=previewStage.style.scrollSnapType;
+ previewStage.style.scrollBehavior='auto';
+ previewStage.style.scrollSnapType='none';
+ previewStage.scrollLeft=destination.offsetLeft;
+ previewStage.style.scrollBehavior=oldBehavior;
+ previewStage.style.scrollSnapType=oldSnap;
+ let cleaned=false;
+ const cleanup=()=>{
+   if(cleaned)return;
+   cleaned=true;
+   layer.remove();
+   verticalStoryRunning=false;
+   if(verticalStoryCleanup===cleanup)verticalStoryCleanup=null;
+ };
+ verticalStoryCleanup=cleanup;
+ const duration=490;
+ const opts={duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'};
+ const leave=departing.animate([
+   {transform:'translate3d(0,0,0)',opacity:1},
+   {transform:'translate3d(0,'+(direction>0?'-100%':'100%')+',0)',opacity:.88}
+ ],opts);
+ const enter=arriving.animate([
+   {transform:'translate3d(0,'+(direction>0?'100%':'-100%')+',0)',opacity:.9},
+   {transform:'translate3d(0,0,0)',opacity:1}
+ ],opts);
+ Promise.allSettled([leave.finished,enter.finished]).then(cleanup);
+ return true;
+}
+let verticalTouchStart=null;
+previewStage?.addEventListener('touchstart',event=>{
+ if(window.innerWidth>680||verticalStoryRunning||event.touches.length!==1){
+   verticalTouchStart=null;return;
+ }
+ const finger=event.touches[0];
+ verticalTouchStart={
+   id:finger.identifier,x:finger.clientX,y:finger.clientY,
+   down:canStepVerticallyFrom(event.target,1),
+   up:canStepVerticallyFrom(event.target,-1)
+ };
+},{passive:true});
+previewStage?.addEventListener('touchend',event=>{
+ if(!verticalTouchStart||window.innerWidth>680||verticalStoryRunning)return;
+ const start=verticalTouchStart;
+ verticalTouchStart=null;
+ const finger=[...event.changedTouches].find(t=>t.identifier===start.id);
+ if(!finger)return;
+ const dy=start.y-finger.clientY,dx=start.x-finger.clientX;
+ if(Math.abs(dy)<55||Math.abs(dy)<Math.abs(dx)*1.4)return;
+ const dir=dy>0?1:-1;
+ if((dir>0&&start.down)||(dir<0&&start.up))mobileVerticalStep(dir);
+},{passive:true});
+previewStage?.addEventListener('touchcancel',()=>{verticalTouchStart=null;},{passive:true});
+previewStage?.addEventListener('wheel',event=>{
+ if(window.innerWidth>680||verticalStoryRunning||event.ctrlKey||event.metaKey||
+    event.shiftKey||Math.abs(event.deltaY)<7||
+    Math.abs(event.deltaX)>Math.abs(event.deltaY)*.8)return;
+ const direction=Math.sign(event.deltaY);
+ if(!canStepVerticallyFrom(event.target,direction))return;
+ // Prevent the body from fighting the vertical chapter animation at an edge.
+ if(event.cancelable)event.preventDefault();
+ const now=performance.now();
+ if(now-lastVerticalWheelAt<710)return;
+ if(mobileVerticalStep(direction))lastVerticalWheelAt=now;
+},{passive:false});
 // Native horizontal Android scroll-snap is the motion engine. Keep nav state in sync.
 let storyScrollFrame=0;
 previewStage?.addEventListener('scroll',()=>{
- if(window.innerWidth>680||explorer?.classList.contains('is-away')||storyScrollFrame)return;
+ if(window.innerWidth>680||explorer?.classList.contains('is-away')||verticalStoryRunning||storyScrollFrame)return;
  storyScrollFrame=requestAnimationFrame(()=>{
    storyScrollFrame=0;
    if(!previewStage||window.innerWidth>680)return;
@@ -540,10 +680,14 @@ previewStage?.addEventListener('scroll',()=>{
 },{passive:true});
 previewStage?.addEventListener('keydown',e=>{
  if(window.innerWidth>680||e.target!==previewStage)return;
- if(!['ArrowRight','ArrowLeft','PageDown','PageUp'].includes(e.key))return;
+ if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','PageDown','PageUp'].includes(e.key))return;
  e.preventDefault();
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='PageDown'||e.key==='PageUp'){
+   mobileVerticalStep(['ArrowDown','PageDown'].includes(e.key)?1:-1);
+   return;
+ }
  const at=mobileChapters.indexOf(mobileParent(selected));
- choose(mobileChapters[Math.max(0,Math.min(3,at+(['ArrowRight','PageDown'].includes(e.key)?1:-1)))]);
+ choose(mobileChapters[Math.max(0,Math.min(3,at+(e.key==='ArrowRight'?1:-1)))]);
 });
 
 function arrangeMobileRail(){
@@ -738,6 +882,7 @@ window.addEventListener('resize',syncAboutCarousel,{passive:true});
 syncAboutCarousel();
 
 // Compact mobile navigation preserves existing preview and swipe behavior.
+document.querySelector('[data-explore-work]')?.addEventListener('click',()=>choose(1));
 const mobileMenu=document.querySelector('.ars-mobile-menu');
 const mobileHeader=document.querySelector('.ars-mobile-header');
 function syncBalancedMobileMenu(){

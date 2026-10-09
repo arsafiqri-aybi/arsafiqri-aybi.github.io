@@ -2937,3 +2937,136 @@ body.home-site{
  }
 }
 
+
+
+
+/* ARS Dual Axis Navigation 48 — same four chapters with two spatial gestures.
+   Horizontal finger swipe = native scroll-snap X. Vertical swipe/wheel =
+   contextual Y slide with current/target snapshots, not a second nav path.
+   Desktop wheel and Soft Arc Wheel remain untouched. */
+@media(max-width:680px){
+ .home-site .explorer:not(.is-away) .explore-layout{position:relative}
+ .home-site .explorer:not(.is-away) .preview-stage{
+   overscroll-behavior-y:contain;
+ }
+ .home-site .ars-vertical-story{
+   position:absolute;
+   z-index:12;
+   top:58px;
+   left:0;
+   right:0;
+   bottom:0;
+   overflow:hidden;
+   pointer-events:none;
+   isolation:isolate;
+ }
+ .home-site .ars-vertical-story-panel{
+   position:absolute;
+   inset:0;
+   display:block;
+   overflow:hidden;
+   color:var(--fg);
+   will-change:transform,opacity;
+ }
+ .home-site .ars-vertical-story-panel>.section-preview{
+   display:flex!important;
+   width:100%;
+   height:100%;
+   min-height:0;
+   flex-direction:column;
+   justify-content:center;
+   overflow:hidden;
+   padding:clamp(12px,2svh,22px) 1px;
+ }
+ .home-site .ars-vertical-story-panel>[data-preview="home"]{
+   justify-content:flex-start;
+ }
+ .home-site .ars-vertical-story-panel [data-preview="home"] .home-composition{
+   height:calc(100% - 38px);
+ }
+ .home-site .ars-vertical-story-panel .ars-about-deck{height:100%}
+ .home-site .ars-home-identity{
+   display:block;
+   color:var(--sub);
+   font-size:11px;
+   font-weight:600;
+   line-height:1.5;
+   letter-spacing:.015em;
+   margin:0 0 7px;
+ }
+ .home-site .explorer.is-home-preview:not(.is-away) .home-role{
+   margin-bottom:12px;
+ }
+ .home-site .explorer.is-home-preview:not(.is-away) .preview-stage>[data-preview="home"] .home-composition{
+   height:calc(100% - 40px);
+   min-height:0;
+ }
+ .home-site .ars-main-swipe-cue{
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
+   gap:12px;
+   min-height:31px;
+   height:auto;
+   margin-top:6px;
+   padding:0;
+ }
+ .home-site .ars-home-explore-action{
+   display:inline-flex;
+   align-items:center;
+   gap:12px;
+   border:0;
+   background:none;
+   color:var(--fg);
+   font:600 11px/1.3 Manrope,Arial,sans-serif;
+   cursor:pointer;
+   padding:7px 0;
+   min-height:38px;
+ }
+ .home-site .ars-home-explore-action:focus-visible{
+   outline:2px solid var(--accent);
+   outline-offset:4px;
+ }
+ .home-site .ars-cue-arrows{
+   display:inline-flex;
+   align-items:center;
+   gap:5px;
+   font-size:16px;
+   line-height:1;
+   color:var(--accent);
+ }
+ .home-site .ars-cue-left{
+   display:inline-block;
+   animation:ars-hint-left 2.7s ease-in-out 2;
+ }
+ .home-site .ars-cue-down{
+   display:inline-block;
+   animation:ars-hint-down 2.7s ease-in-out 2;
+ }
+ @keyframes ars-hint-down{
+   0%,70%,100%{transform:translateY(0)}
+   35%{transform:translateY(7px)}
+ }
+ .home-site .ars-cue-instruction{
+   text-align:right;
+   font-size:10px;
+   line-height:1.5;
+   letter-spacing:0;
+   color:var(--sub);
+ }
+}
+@media(max-width:680px) and (max-height:610px){
+ .home-site .explorer.is-home-preview:not(.is-away) .preview-stage>[data-preview="home"] .home-composition{
+   height:auto;
+ }
+ .home-site .ars-vertical-story-panel>[data-preview="home"] .home-composition{height:auto}
+}
+@media(max-width:680px) and (max-width:365px){
+ .home-site .ars-cue-instruction{font-size:9px}
+ .home-site .ars-home-explore-action{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+ .home-site .ars-cue-down,.home-site .ars-cue-left{animation:none!important}
+ .home-site .ars-vertical-story-panel{will-change:auto}
+}
+
