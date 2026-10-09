@@ -317,6 +317,20 @@ function scheduleRailDiscovery(){
     try{sessionStorage.setItem('ars-arc-hint-seen','1');}catch{}
   },850);
 }
+// Optical indicator: one linear progress value across ALL six sections.
+function syncWheelIndicator(){
+  if(window.innerWidth>680||!explorer||!choices.length)return;
+  const track=explorer.querySelector('.section-rail .rail-list');
+  if(!track||track.clientWidth<=0)return;
+  const sideInset=18, markerWidth=25;
+  const travel=Math.max(0,track.clientWidth-2*sideInset-markerWidth);
+  const index=Math.max(0,Math.min(choices.length-1,selected));
+  const progress=index/Math.max(1,choices.length-1);
+  const x=sideInset+travel*progress;
+  const value=x.toFixed(2)+'px';
+  if(track.style.getPropertyValue('--ars-wheel-indicator-x')!==value)
+    track.style.setProperty('--ars-wheel-indicator-x',value);
+}
 function centerMobileRail(){
   if(window.innerWidth>680||!explorer||!choices.length)return;
   const track=explorer.querySelector('.section-rail .rail-list');
@@ -349,6 +363,7 @@ function centerMobileRail(){
   const nextFit=fit.toFixed(3);
   if(track.style.getPropertyValue('--ars-mobile-active-fit')!==nextFit)
     track.style.setProperty('--ars-mobile-active-fit',nextFit);
+  syncWheelIndicator();
 }
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
