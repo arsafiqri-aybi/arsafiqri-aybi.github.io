@@ -620,6 +620,13 @@ function mobileVerticalStep(direction){
    layer.remove();
    verticalStoryRunning=false;
    if(verticalStoryCleanup===cleanup)verticalStoryCleanup=null;
+   // A CSS snap can be interrupted when we briefly disable it for the Y
+   // transition. Always leave the underlying native X carousel precisely
+   // aligned to the destination before exposing it again.
+   if(previewStage&&selected===targetIndex){
+     previewStage.scrollTo({left:destination.offsetLeft,behavior:'instant'});
+     requestAnimationFrame(finalizeMobileSnap);
+   }
  };
  verticalStoryCleanup=cleanup;
  const duration=490;
