@@ -125,6 +125,21 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
+function centerMobileRail(){
+  if(window.innerWidth>680||!explorer)return;
+  const track=explorer.querySelector('.section-rail .rail-list');
+  if(!track)return;
+  // Measure the actual layout box; do not assume its center equals the screen center.
+  const box=track.getBoundingClientRect();
+  if(box.width<=0)return;
+  const vv=window.visualViewport;
+  const viewportCenter=vv?(vv.offsetLeft+vv.width/2):(document.documentElement.clientWidth/2);
+  const centerInTrack=viewportCenter-box.left;
+  if(Number.isFinite(centerInTrack)){
+    track.style.setProperty('--ars-rail-active-x',centerInTrack.toFixed(2)+'px');
+  }
+}
+
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
  const previous=selected;
@@ -155,6 +170,7 @@ function choose(idx,moveFocus=false){
    }
    if(moveFocus)target.focus({preventScroll:true});
  }
+ if(mobile)requestAnimationFrame(centerMobileRail);
 }
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
@@ -201,6 +217,7 @@ const previewStage=explorer?.querySelector('.preview-stage');
 
 function arrangeMobileRail(){
  if(!rail)return;
+ requestAnimationFrame(centerMobileRail);
  // The one-word rail stays stationary; only the selected label changes.
  rail.scrollLeft=0;
  const nav=rail.closest('.section-rail');
@@ -244,6 +261,12 @@ document.addEventListener('click',e=>{
   }
 },true);
 window.addEventListener('resize',()=>requestAnimationFrame(arrangeMobileRail),{passive:true});
+window.addEventListener('orientationchange',()=>requestAnimationFrame(centerMobileRail),{passive:true});
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',()=>requestAnimationFrame(centerMobileRail),{passive:true});
+  window.visualViewport.addEventListener('scroll',()=>requestAnimationFrame(centerMobileRail),{passive:true});
+}
+if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(centerMobileRail));
 requestAnimationFrame(arrangeMobileRail);
 
 let wheelDistance=0, wheelLastAt=0, wheelLockUntil=0;
