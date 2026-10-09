@@ -1106,3 +1106,136 @@ html[data-ars-view="section"] .home-site .topbar{
     left:var(--ars-rail-next-x,calc(50% + 145px))!important;
   }
 }
+
+
+/* Android v18 — real three-slot structural rail.
+   EMPTY LEFT SLOT / ACTIVE CENTER SLOT / NEXT RIGHT SLOT.
+   When Work is selected, Home occupies the left slot instead of the spacer.
+   Every slot is 1/3 of the same centered rail; no absolute coordinates. */
+@media(max-width:680px){
+  html.is-enhanced .home-site .section-rail{
+    position:relative;
+    width:100%;
+    margin-inline:auto;
+  }
+  html.is-enhanced .home-site .section-rail .rail-window{
+    width:100%;
+    min-width:0;
+    height:68px;
+    overflow:hidden;
+    touch-action:pan-y;
+  }
+  html.is-enhanced .home-site .section-rail .rail-list{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:68px;
+    width:100%!important;
+    min-width:0!important;
+    height:68px;
+    column-gap:0!important;
+    row-gap:0;
+    margin:0;
+    padding:0;
+    position:relative;
+    transform:none;
+  }
+  html.is-enhanced .home-site .section-rail .rail-leading-space{
+    display:block!important;
+    grid-column:1;
+    grid-row:1;
+    align-self:stretch;
+    width:100%;
+    min-width:0;
+    height:68px;
+    min-height:0;
+    margin:0;
+    padding:0;
+    visibility:hidden;
+    opacity:0;
+    pointer-events:none!important;
+    user-select:none;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice{
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    grid-row:1;
+    display:none!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:68px;
+    min-height:68px;
+    margin:0;
+    padding:0!important;
+    border:0;
+    justify-self:stretch;
+    align-self:stretch;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    white-space:nowrap;
+    overflow:visible;
+    transform:none;
+    transform-origin:center;
+    animation:none;
+    transition:opacity .22s ease,color .22s ease;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{
+    display:flex!important;
+    grid-column:2;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    font-size:calc(clamp(22px,6.6vw,28px) * var(--ars-mobile-active-fit,1));
+    font-weight:770;
+    color:var(--fg);
+    transform:none;
+    animation:none!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]){
+    display:flex!important;
+    grid-column:1;
+    opacity:.58;
+    visibility:visible;
+    pointer-events:auto;
+    font-size:clamp(14px,3.9vw,17px);
+    font-weight:450;
+    color:var(--sub);
+    transform:none;
+    animation:none!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
+    display:flex!important;
+    grid-column:3;
+    opacity:.58;
+    visibility:visible;
+    pointer-events:auto;
+    font-size:clamp(14px,3.9vw,17px);
+    font-weight:450;
+    color:var(--sub);
+    transform:none;
+    animation:none!important;
+  }
+  html.is-enhanced .home-site .section-rail[data-slide-direction="next"] .rail-choice[aria-current=true]{
+    animation:ars-grid-enter-next .32s var(--ease) both!important;
+  }
+  html.is-enhanced .home-site .section-rail[data-slide-direction="prev"] .rail-choice[aria-current=true]{
+    animation:ars-grid-enter-prev .32s var(--ease) both!important;
+  }
+  @keyframes ars-grid-enter-next{
+    from{opacity:.5;transform:translateX(22px) scale(.93)}
+    to{opacity:1;transform:translateX(0) scale(1)}
+  }
+  @keyframes ars-grid-enter-prev{
+    from{opacity:.5;transform:translateX(-22px) scale(.93)}
+    to{opacity:1;transform:translateX(0) scale(1)}
+  }
+}
+@media(max-width:680px) and (prefers-reduced-motion:reduce){
+  html.is-enhanced .home-site .section-rail[data-slide-direction] .rail-choice[aria-current=true]{
+    animation:none!important;
+  }
+}

@@ -128,25 +128,21 @@ let selected=0;
 function centerMobileRail(){
   if(window.innerWidth>680||!explorer||!choices.length)return;
   const track=explorer.querySelector('.section-rail .rail-list');
+  if(!track||track.clientWidth<=0)return;
+  // There are THREE equal physical columns; the first column is an actual
+  // aria-hidden, non-interactive placeholder whenever Home is active.
+  // CSS Grid guarantees the active (middle) column shares the screen center.
+  const cellWidth=track.clientWidth/3;
   const active=choices[selected];
-  if(!track||!active)return;
-  const trackBox=track.getBoundingClientRect();
-  if(trackBox.width<=0)return;
-  const visual=window.visualViewport;
-  const screenCenter=visual?(visual.offsetLeft+visual.width/2):(document.documentElement.clientWidth/2);
-  // Measure every name in the SAME active font, not the smaller inactive font.
-  // A hidden one-line probe reflects real font metrics including letter spacing.
-  const activeStyle=getComputedStyle(active);
+  const computed=getComputedStyle(active);
   const probe=document.createElement('span');
   Object.assign(probe.style,{
-    position:'absolute',left:'-10000px',top:'-10000px',
-    display:'inline-block',width:'max-content',maxWidth:'none',
-    whiteSpace:'nowrap',visibility:'hidden',pointerEvents:'none',
-    fontFamily:activeStyle.fontFamily,fontSize:activeStyle.fontSize,
-    fontWeight:activeStyle.fontWeight,fontStyle:activeStyle.fontStyle,
-    fontStretch:activeStyle.fontStretch,letterSpacing:activeStyle.letterSpacing,
-    fontKerning:activeStyle.fontKerning,fontFeatureSettings:activeStyle.fontFeatureSettings,
-    textTransform:activeStyle.textTransform,lineHeight:activeStyle.lineHeight
+    position:'absolute',left:'-9999px',top:'-9999px',
+    display:'inline-block',whiteSpace:'nowrap',
+    visibility:'hidden',pointerEvents:'none',width:'max-content',
+    fontFamily:computed.fontFamily,fontWeight:computed.fontWeight,
+    letterSpacing:computed.letterSpacing,fontSize:'clamp(22px,6.6vw,28px)',
+    lineHeight:computed.lineHeight,fontFeatureSettings:computed.fontFeatureSettings
   });
   document.body.appendChild(probe);
   let widest=0;
@@ -155,15 +151,12 @@ function centerMobileRail(){
     widest=Math.max(widest,probe.getBoundingClientRect().width);
   }
   probe.remove();
-  if(widest<=0)return;
-  // The widest word (at active size and weight) determines EVERY slot width.
-  const slotWidth=Math.ceil(widest+22);
-  const center=screenCenter-trackBox.left;
-  if(!Number.isFinite(center))return;
-  track.style.setProperty('--ars-mobile-slot-width',slotWidth+'px');
-  track.style.setProperty('--ars-rail-active-x',center.toFixed(2)+'px');
-  track.style.setProperty('--ars-rail-prev-x',(center-slotWidth).toFixed(2)+'px');
-  track.style.setProperty('--ars-rail-next-x',(center+slotWidth).toFixed(2)+'px');
+  if(!widest)return;
+  // Fit the LONGEST active word inside any of the identical responsive cells.
+  const fit=Math.min(1,Math.max(.75,(cellWidth-6)/widest));
+  const nextFit=fit.toFixed(3);
+  if(track.style.getPropertyValue('--ars-mobile-active-fit')!==nextFit)
+    track.style.setProperty('--ars-mobile-active-fit',nextFit);
 }
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
