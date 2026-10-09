@@ -125,18 +125,6 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
-function positionBrand(){
- const topbar=document.querySelector('.home-site .topbar');
- const outer=explorer?.querySelector('.explore-frame');
- const brand=topbar?.querySelector('.brand');
- // The wordmark sits above the OUTER review frame, not the inner two-column grid.
- // Position remains fixed when changing rail selection, with no logo animation.
- if(!topbar||!outer||!brand||explorer.classList.contains('is-away'))return;
- const frameTop=window.scrollY+outer.getBoundingClientRect().top;
- const headerTop=window.scrollY+topbar.getBoundingClientRect().top;
- const logoTop=frameTop-headerTop-brand.offsetHeight-16;
- if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',Math.max(0,logoTop).toFixed(2)+'px');
-}
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
  const previous=selected;
@@ -144,16 +132,15 @@ function choose(idx,moveFocus=false){
  const mobile=window.innerWidth<=680;
  const railNav=explorer?.querySelector('.section-rail');
  if(railNav){
-   if(mobile&&selected!==previous){
-     railNav.dataset.slideDirection=selected>previous?'next':'prev';
-   } else if(!mobile){
-     delete railNav.dataset.slideDirection;
-   }
+   if(mobile&&selected!==previous)railNav.dataset.slideDirection=selected>previous?'next':'prev';
+   else if(!mobile)delete railNav.dataset.slideDirection;
  }
  choices.forEach((c,i)=>{
    c.setAttribute('aria-current',String(i===selected));
    c.tabIndex=i===selected?0:-1;
-   c.classList.toggle('was-active',mobile&&selected!==previous&&i===previous);
+   c.classList.remove('was-active');
+   c.classList.toggle('is-next',mobile&&i===selected+1);
+   c.classList.toggle('is-prev',mobile&&selected===choices.length-1&&i===selected-1);
  });
  previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));
  root.dataset.context=[0,1,5].includes(selected)?'dark':'light';
@@ -161,17 +148,15 @@ function choose(idx,moveFocus=false){
  const target=choices[selected];
  if(target){
    const viewport=target.closest('.rail-window');
-   if(viewport&&mobile){
-     // Only the selected word is visible and centered. No scrolling track.
-     viewport.scrollLeft=0;
-   } else if(viewport){
+   if(viewport&&mobile)viewport.scrollLeft=0;
+   else if(viewport){
      const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();
      viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});
    }
    if(moveFocus)target.focus({preventScroll:true});
  }
 }
-function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(positionBrand);}}
+function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
@@ -286,8 +271,8 @@ function focusLocationTarget(){
  }else choices[selected]?.focus({preventScroll:true});
 }
 root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();
-window.addEventListener('resize',()=>requestAnimationFrame(positionBrand),{passive:true});
-requestAnimationFrame(positionBrand);
+
+
 window.addEventListener('hashchange',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
 window.addEventListener('popstate',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
 window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});
