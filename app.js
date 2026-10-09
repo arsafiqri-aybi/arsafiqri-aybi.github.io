@@ -297,6 +297,9 @@ applyTheme();
 document.querySelectorAll('[data-theme-switch]').forEach(b=>b.addEventListener('click',()=>{theme=themes[(themes.indexOf(theme)+1)%themes.length];try{localStorage.setItem('ars-theme',theme);}catch{}applyTheme();}));
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const names=['home','work','expertise','approach','about','connect'];
+// Android's top-level chapters; deeper desktop topics live under About.
+const mobileChapters=[0,1,4,5];
+const mobileParent=index=>mobileChapters.includes(index)?index:4;
 const choices=[...document.querySelectorAll('[data-rail]')],previews=[...document.querySelectorAll('[data-preview]')];
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
@@ -416,9 +419,6 @@ function syncSoftArc(index){
   softArcFrameId=requestAnimationFrame(animateSoftArc);
 }
 
-// Four Android parent sections. Expertise and Approach belong to About.
-const mobileChapters=[0,1,4,5];
-const mobileParent=index=>mobileChapters.includes(index)?index:4;
 function choose(idx,moveFocus=false,fromMobileScroll=false){
  if(!choices.length)return;
  const previous=selected;
