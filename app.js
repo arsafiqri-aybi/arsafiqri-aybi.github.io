@@ -17,6 +17,7 @@ applyTheme();
      ['.explore-layout','02 / TWO-COLUMN GRID','frame'],
      ['.section-rail','02A / NAVBAR','area'],
      ['.rail-window','02A.1 / NAV SCROLL AREA','detail'],
+     ['.rail-list','02A.2 / THREE-SLOT GRID','area'],
      ['.rail-leading-space','02A.0 / EMPTY SLOT','detail'],
      ['.preview-stage','02B / PREVIEW AREA','area'],
      ['[data-preview="home"] .home-composition','HOME / COLUMN GRID','area'],
@@ -116,6 +117,151 @@ applyTheme();
    controls.append(heading,description,actions);
    document.body.appendChild(controls);
    document.documentElement.classList.add('grid-review');
+
+   // Review-only guide layer: use live element rectangles WITHOUT adding
+   // children to navbar buttons (which would change their measured text).
+   const guideLayer=document.createElement('div');
+   guideLayer.className='ars-grid-guides';
+   guideLayer.setAttribute('aria-hidden','true');
+   document.body.appendChild(guideLayer);
+   const measurements=document.createElement('div');
+   measurements.className='ars-grid-metrics';
+   measurements.setAttribute('aria-live','off');
+   controls.insertBefore(measurements,actions);
+   const railTrack=document.querySelector('.home-site .section-rail .rail-list');
+   const railWindow=document.querySelector('.home-site .section-rail .rail-window');
+   const railButtons=[...document.querySelectorAll('.home-site [data-rail]')];
+   const railSpacer=document.querySelector('.home-site .rail-leading-space');
+   let guidePending=false;
+   const bounded=(rect)=>rect&&Number.isFinite(rect.left)&&Number.isFinite(rect.top)&&rect.width>0&&rect.height>0;
+   const makeGuide=(kind,rect,label,role='')=>{
+     if(!bounded(rect))return;
+     const element=document.createElement('div');
+     element.className='ars-guide '+kind+(role?' '+role:'');
+     element.style.left=rect.left+'px';
+     element.style.top=rect.top+'px';
+     element.style.width=rect.width+'px';
+     element.style.height=rect.height+'px';
+     if(label){
+       const badge=document.createElement('span');
+       badge.className='ars-guide-caption';
+       badge.textContent=label;
+       element.appendChild(badge);
+     }
+     guideLayer.appendChild(element);
+   };
+   const makeLine=(x,top,height,name,role='')=>{
+     if(!Number.isFinite(x)||!Number.isFinite(top)||height<=0)return;
+     const line=document.createElement('div');
+     line.className='ars-guide-line'+(role?' '+role:'');
+     line.style.left=x+'px';
+     line.style.top=top+'px';
+     line.style.height=height+'px';
+     if(name){
+       const textNode=document.createElement('span');
+       textNode.textContent=name;
+       line.appendChild(textNode);
+     }
+     guideLayer.appendChild(line);
+   };
+   const wordRect=button=>{
+     if(!button)return null;
+     const node=[...button.childNodes].find(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
+     if(!node)return button.getBoundingClientRect();
+     const range=document.createRange();
+     range.selectNodeContents(node);
+     return range.getBoundingClientRect();
+   };
+   const paintGridGuides=()=>{
+     guidePending=false;
+     guideLayer.replaceChildren();
+     const visible=document.documentElement.classList.contains('grid-review');
+     const explorer=document.querySelector('.home-site [data-explorer]');
+     if(!visible||!explorer||explorer.classList.contains('is-away')||!railWindow||!railTrack){
+       measurements.textContent='Panduan detail tampil pada halaman preview dengan garis diaktifkan.';
+       return;
+     }
+     const railRect=railWindow.getBoundingClientRect();
+     const trackRect=railTrack.getBoundingClientRect();
+     if(!bounded(railRect)||!bounded(trackRect))return;
+     const mobile=window.innerWidth<=680;
+     const visual=window.visualViewport;
+     const viewportCenter=visual?(visual.offsetLeft+visual.width/2):document.documentElement.clientWidth/2;
+     makeLine(viewportCenter,0,window.innerHeight,'VIEWPORT CENTER','viewport');
+     makeLine(railRect.left+railRect.width/2,railRect.top,railRect.height,'NAV CENTER','nav');
+     makeGuide('frame',railRect,'02A.1 / NAV WINDOW · '+Math.round(railRect.width)+'px');
+     if(mobile){
+       // Actual CSS grid is repeat(3,1fr); draw ALL cells, including its
+       // transparent/untappable left placeholder on the Home preview.
+       const cellWidth=trackRect.width/3;
+       const names=['LEFT','CENTER','RIGHT'];
+       for(let i=0;i<3;i++){
+         const rect={left:trackRect.left+i*cellWidth,top:trackRect.top,width:cellWidth,height:trackRect.height};
+         const role=i===1?'active':i===0?'previous':'next';
+         const btn=i===0?railButtons.find(b=>b.classList.contains('is-prev')):i===1?railButtons.find(b=>b.getAttribute('aria-current')==='true'):railButtons.find(b=>b.classList.contains('is-next'));
+         const name=btn?.textContent.trim().toUpperCase()||(i===0?'EMPTY / INERT':i===2?'EMPTY / END':'ACTIVE');
+         makeGuide('slot',rect,'02A.'+(i+3)+' / '+names[i]+' · '+name+' · '+cellWidth.toFixed(1)+'px',role);
+       }
+       if(railSpacer&&railSpacer.getBoundingClientRect().width>0){
+         // Its DOM box occupies the same left-column position as a prev item.
+         const placeholder=railSpacer.getBoundingClientRect();
+         makeGuide('spacer',placeholder,'PLACEHOLDER / NON-INTERACTIVE');
+       }
+     }else{
+       // Desktop retains its real vertical rail. Outline each visible row.
+       if(railSpacer)makeGuide('slot',railSpacer.getBoundingClientRect(),'02A.0 / EMPTY DESKTOP SLOT','previous');
+     }
+     let activeWord=null,activeButton=null;
+     railButtons.forEach((button,i)=>{
+       const bounds=button.getBoundingClientRect();
+       if(!bounded(bounds)||getComputedStyle(button).display==='none')return;
+       const current=button.getAttribute('aria-current')==='true';
+       const side=mobile?(current?'active':button.classList.contains('is-prev')?'previous':button.classList.contains('is-next')?'next':'other'):(current?'active':'other');
+       if(mobile&&side==='other')return;
+       const word=wordRect(button);
+       makeGuide('item',bounds,'ITEM '+String(i+1).padStart(2,'0')+' / '+button.textContent.trim().toUpperCase(),side);
+       if(bounded(word))makeGuide('glyph',word,'TEXT '+word.width.toFixed(1)+'px',side);
+       if(current){activeButton=bounds;activeWord=word;}
+     });
+     if(bounded(activeWord)){
+       const mid=activeWord.left+activeWord.width/2;
+       makeLine(mid,railRect.top,railRect.height,'TEXT CENTER','word');
+       const delta=mid-viewportCenter;
+       measurements.textContent='VIEWPORT '+viewportCenter.toFixed(1)+'px  ·  TEXT '+mid.toFixed(1)+'px  ·  Δ '+(delta>=0?'+':'')+delta.toFixed(1)+'px'+(mobile?'  ·  3 equal slots: '+(trackRect.width/3).toFixed(1)+'px':'');
+     }else if(bounded(activeButton)){
+       measurements.textContent='Active navbar: '+(activeButton.left+activeButton.width/2).toFixed(1)+'px';
+     }
+     const activePreview=document.querySelector('.home-site .section-preview.is-selected');
+     if(activePreview){
+       const headline=activePreview.querySelector('h1,h2');
+       const description=activePreview.querySelector('.identity-copy p,.preview-copy p,.lead');
+       const art=activePreview.querySelector('.ars-portrait-stage,.work-art-focus,.side-artwork');
+       if(headline)makeGuide('content',headline.getBoundingClientRect(),'03 / PREVIEW HEADING');
+       if(description)makeGuide('content',description.getBoundingClientRect(),'03A / PREVIEW DESCRIPTION');
+       if(art)makeGuide('content',art.getBoundingClientRect(),'04 / PREVIEW IMAGE');
+     }
+   };
+   const scheduleGuides=()=>{
+     if(guidePending)return;
+     guidePending=true;
+     requestAnimationFrame(paintGridGuides);
+   };
+   window.addEventListener('resize',scheduleGuides,{passive:true});
+   window.addEventListener('scroll',scheduleGuides,{passive:true});
+   window.visualViewport?.addEventListener('resize',scheduleGuides,{passive:true});
+   window.visualViewport?.addEventListener('scroll',scheduleGuides,{passive:true});
+   document.fonts?.ready?.then(scheduleGuides);
+   const observer=new MutationObserver(scheduleGuides);
+   railButtons.forEach(button=>observer.observe(button,{attributes:true,attributeFilter:['aria-current','class']}));
+   const explorerNode=document.querySelector('.home-site [data-explorer]');
+   if(explorerNode)observer.observe(explorerNode,{attributes:true,attributeFilter:['class']});
+   document.querySelector('.home-site .section-rail')?.addEventListener('animationend',scheduleGuides);
+   // Let the guide settle after the section transition as well.
+   document.addEventListener('animationend',e=>{
+     if(e.target?.closest?.('.section-rail'))scheduleGuides();
+   },{passive:true});
+   toggle.addEventListener('click',scheduleGuides);
+   scheduleGuides();
  }
 
 document.querySelectorAll('[data-theme-switch]').forEach(b=>b.addEventListener('click',()=>{theme=themes[(themes.indexOf(theme)+1)%themes.length];try{localStorage.setItem('ars-theme',theme);}catch{}applyTheme();}));

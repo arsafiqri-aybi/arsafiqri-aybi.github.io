@@ -1255,3 +1255,60 @@ html[data-ars-view="section"] .home-site .topbar{
    margin:0!important;
  }
 }
+
+
+/* ARS review 20 — pixel-based grid guides (only ?grid=1).
+   Drawn in a pointer-transparent fixed layer; never modifies navbar layout. */
+.ars-grid-guides{display:none;position:fixed;inset:0;z-index:925;pointer-events:none;overflow:hidden;font:600 9px/1.2 Manrope,system-ui,sans-serif}
+html.grid-review .ars-grid-guides{display:block}
+.ars-guide{
+ position:absolute;box-sizing:border-box;pointer-events:none;
+ border:1px solid rgba(238,191,92,.94);
+ background:rgba(238,191,92,.045);
+}
+.ars-guide.slot{border:1px dashed #57e0cb;background:rgba(65,224,197,.075)}
+.ars-guide.slot.active{border:1.5px solid #67e9ad;background:rgba(103,233,173,.07)}
+.ars-guide.slot.previous,.ars-guide.slot.next{border-color:rgba(87,224,203,.8)}
+.ars-guide.spacer{border:1px dashed #ddacff;background:rgba(221,172,255,.13)}
+.ars-guide.frame{border:1px solid #60c8f6;background:transparent}
+.ars-guide.item{border:1px solid #e4b369;background:rgba(228,179,105,.06)}
+.ars-guide.item.active{border-color:#f8df83}
+.ars-guide.glyph{border:1px dashed #ff82cb;background:rgba(255,130,203,.12)}
+.ars-guide.content{border:1px dotted #9bdafa;background:transparent}
+.ars-guide-caption{
+ position:absolute;top:1px;left:2px;display:inline-block;
+ max-width:calc(100% - 4px);overflow:hidden;text-overflow:ellipsis;
+ white-space:nowrap;border-radius:2px;padding:2px 3px;
+ font-size:8px;line-height:1.1;letter-spacing:0;
+ font-weight:750;color:#122125;background:#ffdf8a;
+ box-shadow:0 1px 4px rgba(0,0,0,.23);
+}
+.ars-guide.slot>.ars-guide-caption{background:#89ebda}
+.ars-guide.slot.active>.ars-guide-caption{background:#82f0b7}
+.ars-guide.spacer>.ars-guide-caption{background:#d7b4ff}
+.ars-guide.frame>.ars-guide-caption{background:#91d9fb}
+.ars-guide.glyph>.ars-guide-caption{background:#ffb1d8;top:auto;bottom:100%;margin-bottom:1px}
+.ars-guide.content>.ars-guide-caption{background:#c8e9ff}
+.ars-guide-line{
+ position:absolute;top:0;height:100%;width:0;
+ border-left:1px dashed #ff80c0;pointer-events:none;
+}
+.ars-guide-line.viewport{border-left:1px dashed rgba(255,128,192,.85)}
+.ars-guide-line.nav{border-left:1px dotted #70d9ff}
+.ars-guide-line.word{border-left:2px solid #ff80c0}
+.ars-guide-line>span{
+ position:absolute;top:2px;left:3px;width:max-content;
+ padding:2px 4px;max-width:130px;
+ color:#fff;background:#9a3d78;border-radius:3px;font-size:8px;
+ white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.28)
+}
+.ars-guide-line.nav>span{background:#245f7e}
+.ars-guide-line.word>span{top:auto;bottom:3px;background:#a33c74}
+.ars-grid-metrics{font:650 10px/1.45 Manrope,system-ui,sans-serif;color:#dce7ec;font-variant-numeric:tabular-nums}
+@media(max-width:680px){
+ .ars-grid-guides{font-size:8px}
+ .ars-guide-caption{font-size:7px;padding:2px}
+ .ars-guide.glyph>.ars-guide-caption{display:none}
+ .ars-guide-line.word>span{display:none}
+ .ars-grid-metrics{font-size:9px}
+}
