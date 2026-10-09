@@ -1474,3 +1474,26 @@ html.grid-review .ars-grid-guides{display:block}
     margin-top:9px;
   }
 }
+
+
+/* ARS Editorial Copy 25: quiet, search-readable professional positioning.
+   This is a brand descriptor, not a claim of an employment history title. */
+.home-site [data-preview="home"] .home-role{
+  display:block;
+  width:100%;
+  margin:0 0 clamp(11px,1.5vw,17px);
+  color:var(--sub);
+  font-size:clamp(11px,1vw,13px);
+  font-weight:650;
+  line-height:1.35;
+  letter-spacing:.045em;
+  white-space:normal;
+  text-transform:none;
+}
+@media(max-width:680px){
+  .home-site .explorer.is-home-preview .home-role{
+    margin-bottom:clamp(10px,1.5svh,14px);
+    font-size:clamp(11px,2.9vw,12px);
+    letter-spacing:.03em;
+  }
+}
