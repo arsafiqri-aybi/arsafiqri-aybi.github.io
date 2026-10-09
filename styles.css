@@ -2695,3 +2695,141 @@ body.home-site{
  .home-site .ars-about-mini-progress i,
  .home-site .ars-about-tabs button::after{transition:none}
 }
+
+
+/* ARS Mobile Case Study Swipe v45 — eight evidence-bound chapters per case.
+   Desktop keeps the original long-form editorial case study and its anchors.
+   No visible Next/Previous UI; native horizontal scroll follows the finger. */
+.ars-case-deck{display:none}
+@media(max-width:680px){
+ body.project-page.ars-case-slide-ready{
+   height:100svh;min-height:0;overflow:hidden;
+   background:#151719;color:#f2f2f0;
+ }
+ body.project-page.ars-case-slide-ready main#main{
+   height:100%;min-height:0;width:100%;overflow:hidden;
+ }
+ body.project-page.ars-case-slide-ready main#main>.showcase,
+ body.project-page.ars-case-slide-ready main#main>.reader{
+   display:none!important;
+ }
+ body.project-page.ars-case-slide-ready .ars-case-deck{
+   display:flex;flex-direction:column;height:100%;
+   width:100%;min-width:0;overflow:hidden;
+   background:#151719;color:#f2f2f0;
+ }
+ body.project-page.ars-case-slide-ready .ars-case-deck-header{
+   display:flex;flex:0 0 auto;
+   align-items:center;justify-content:space-between;
+   height:67px;min-height:67px;
+   padding:env(safe-area-inset-top,0px) 22px 0;
+   border-bottom:1px solid #40464a;
+   font-size:12px;color:#bdc4c8;
+ }
+ .ars-case-back{
+   color:#e9eded;text-decoration:none;
+   min-height:44px;display:inline-flex;align-items:center;
+   font-size:12px;font-weight:600;letter-spacing:.01em;
+ }
+ .ars-case-back:focus-visible,.ars-case-progress-button:focus-visible,
+ .ars-case-evidence-link:focus-visible{
+   outline:2px solid #dce4e8;outline-offset:3px;
+ }
+ .ars-case-count{font-size:11px;color:#a7b4ba;letter-spacing:.11em;font-variant-numeric:tabular-nums}
+ body.project-page.ars-case-slide-ready .ars-case-track{
+   display:flex;flex:1 1 auto;flex-direction:row;
+   width:100%;min-width:0;min-height:0;
+   overflow-x:auto;overflow-y:hidden;
+   -webkit-overflow-scrolling:touch;
+   touch-action:pan-x;
+   scroll-snap-type:x mandatory;
+   scroll-behavior:smooth;
+   overscroll-behavior-x:contain;
+   scrollbar-width:none;
+ }
+ .ars-case-track::-webkit-scrollbar{display:none}
+ .ars-case-slide{
+   flex:0 0 100%;width:100%;min-width:100%;height:100%;
+   display:flex;flex-direction:column;justify-content:center;
+   overflow-x:hidden;overflow-y:auto;
+   overscroll-behavior-y:contain;
+   scroll-snap-align:start;scroll-snap-stop:always;
+   padding:clamp(26px,6svh,60px) 27px;
+   gap:clamp(15px,2.5svh,25px);
+ }
+ .ars-case-eyebrow{
+   font-size:10px;line-height:1.5;text-transform:uppercase;
+   letter-spacing:.12em;color:#a1aeb5;
+ }
+ .ars-case-heading{
+   font-size:clamp(31px,9.5vw,47px);font-weight:430;
+   letter-spacing:-.052em;line-height:1.08;
+   margin:0;overflow-wrap:anywhere;color:#f7f5f2;
+ }
+ .ars-case-description{
+   font-size:clamp(13px,3.55vw,15px);
+   line-height:1.73;margin:0;color:#b7c1c6;
+   max-width:480px;white-space:normal;
+ }
+ .ars-case-contributions{
+   padding:0 0 0 19px;margin:0;display:flex;flex-direction:column;
+   gap:10px;color:#bec7cc;font-size:12.5px;line-height:1.6;
+ }
+ .ars-case-footnote{
+   padding-top:13px;border-top:1px solid #384249;
+   margin:0;font-size:11px;color:#91a0a8;line-height:1.65;
+ }
+ .ars-case-evidence-list{
+   display:flex;flex-direction:column;border-top:1px solid #3d454a;
+ }
+ .ars-case-evidence-link{
+   padding:15px 0;min-height:48px;
+   display:flex;align-items:center;
+   border-bottom:1px solid #3d454a;
+   text-decoration:none;color:#e8eff2;font-size:12.5px;
+ }
+ .ars-case-swipe-instruction{
+   font-size:11px;color:#9faeb4;
+   margin-top:16px;animation:ars-case-instruct 2.5s ease-in-out 3;
+ }
+ @keyframes ars-case-instruct{
+   0%,100%{transform:translateX(0)}
+   45%{transform:translateX(-7px)}
+ }
+ body.project-page.ars-case-slide-ready .ars-case-deck-footer{
+   display:flex;flex:0 0 auto;align-items:center;
+   justify-content:space-between;gap:12px;
+   height:68px;min-height:68px;
+   padding:10px 22px max(10px,env(safe-area-inset-bottom));
+   border-top:1px solid #373f44;
+ }
+ .ars-case-footer-label{
+   font-size:9px;letter-spacing:.06em;color:#9faeb3;
+   max-width:43%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ }
+ .ars-case-progress{display:flex;align-items:center;gap:5px;justify-content:flex-end;flex:1;max-width:52%}
+ .ars-case-progress-button{
+   appearance:none;flex:1 1 auto;min-width:0;
+   height:30px;position:relative;
+   padding:0;border:0;background:transparent;cursor:pointer;
+ }
+ .ars-case-progress-button::after{
+   content:"";display:block;position:absolute;
+   left:0;right:0;top:50%;height:2px;border-radius:2px;
+   background:#49545a;transform:translateY(-50%);
+   transition:background .2s,height .2s;
+ }
+ .ars-case-progress-button[aria-current=step]::after{
+   height:3px;background:#eef2f4;
+ }
+}
+@media(max-width:680px) and (max-height:570px){
+ .ars-case-slide{justify-content:flex-start;padding-block:20px}
+ .ars-case-heading{font-size:clamp(27px,8vw,37px)}
+}
+@media(max-width:680px) and (prefers-reduced-motion:reduce){
+ .ars-case-track{scroll-behavior:auto!important}
+ .ars-case-swipe-instruction{animation:none}
+ .ars-case-progress-button::after{transition:none}
+}
+
