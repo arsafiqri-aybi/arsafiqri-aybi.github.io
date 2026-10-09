@@ -304,6 +304,9 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
+let locationInitialized=false;
+let firstMobileLanding=false;
+let mobileSnapTimer=0;
 let verticalStoryRunning=false;
 let verticalStoryCleanup=null;
 let lastVerticalWheelAt=-Infinity;
@@ -472,19 +475,25 @@ function choose(idx,moveFocus=false,fromMobileScroll=false){
  }
 }
 function showFromLocation(){
+ const firstLoad=!locationInitialized;
+ locationInitialized=true;
  let section=location.hash.replace('#','').toLowerCase();
+ let resumingFromCase=false;
+ firstMobileLanding=firstLoad&&window.innerWidth<=680&&!section;
  // A return from a case-study on Android resumes the Work carousel,
  // rather than opening the legacy desktop Work detail page.
  if(window.innerWidth<=680&&section==='work'){
    let cameFromCase=false;
    try{cameFromCase=sessionStorage.getItem(workReturnKey)==='1';}catch{}
    if(cameFromCase){
+     resumingFromCase=true;
+     firstMobileLanding=false;
      try{sessionStorage.removeItem(workReturnKey);sessionStorage.setItem('ars-section','1');}catch{}
      history.replaceState(null,'',location.pathname+location.search);
      section='';
    }
  }
-const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home'||firstMobileLanding)choose(0);else if(resumingFromCase)choose(1);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
@@ -662,21 +671,70 @@ previewStage?.addEventListener('wheel',event=>{
  if(now-lastVerticalWheelAt<710)return;
  if(mobileVerticalStep(direction))lastVerticalWheelAt=now;
 },{passive:false});
-// Native horizontal Android scroll-snap is the motion engine. Keep nav state in sync.
+/* Native horizontal scroll-snap owns the drag, but interrupted smooth
+   transitions must NOT leave the viewport between two chapters.
+   On scrollend (with a timer fallback), align exactly to the nearest slide.
+   Direct fresh visits begin at Home, while case-study returns reopen Work. */
 let storyScrollFrame=0;
+function closestMobileChapter(){
+ if(!previewStage||!previewStage.clientWidth)return null;
+ let index=0,dist=Infinity,left=0;
+ for(const id of mobileChapters){
+   const pane=previews[id];if(!pane)continue;
+   const target=pane.offsetLeft;
+   const distance=Math.abs(previewStage.scrollLeft-target);
+   if(distance<dist){dist=distance;index=id;left=target;}
+ }
+ return {index,left,dist};
+}
+function finalizeMobileSnap(){
+ if(window.innerWidth>680||verticalStoryRunning||explorer?.classList.contains('is-away'))return;
+ const nearest=closestMobileChapter();
+ if(!nearest)return;
+ if(nearest.index!==selected)choose(nearest.index,false,true);
+ if(nearest.dist>2){
+   // Never animate a correction: mid-slide states must not persist.
+   previewStage?.scrollTo({left:nearest.left,behavior:'instant'});
+ }
+}
 previewStage?.addEventListener('scroll',()=>{
- if(window.innerWidth>680||explorer?.classList.contains('is-away')||verticalStoryRunning||storyScrollFrame)return;
+ if(window.innerWidth>680||explorer?.classList.contains('is-away')||verticalStoryRunning)return;
+ window.clearTimeout(mobileSnapTimer);
+ mobileSnapTimer=window.setTimeout(finalizeMobileSnap,200);
+ if(storyScrollFrame)return;
  storyScrollFrame=requestAnimationFrame(()=>{
    storyScrollFrame=0;
-   if(!previewStage||window.innerWidth>680)return;
-   let next=selected,near=Infinity;
-   for(const id of mobileChapters){
-     const pane=previews[id];if(!pane)continue;
-     const d=Math.abs(previewStage.scrollLeft-pane.offsetLeft);
-     if(d<near){near=d;next=id;}
-   }
-   if(next!==selected)choose(next,false,true);
+   const nearest=closestMobileChapter();
+   if(nearest&&nearest.index!==selected)choose(nearest.index,false,true);
  });
+},{passive:true});
+previewStage?.addEventListener('scrollend',()=>{
+ window.clearTimeout(mobileSnapTimer);
+ finalizeMobileSnap();
+},{passive:true});
+function alignInitialHome(){
+ if(!firstMobileLanding||window.innerWidth>680||!previewStage||
+    explorer?.classList.contains('is-away'))return;
+ firstMobileLanding=false;
+ const pane=previews[0];
+ if(!pane)return;
+ // Browser reload / restoration may happen AFTER initial DOM hydration.
+ // Reposition once after paint, rather than restoring stale Work/half-slide.
+ previewStage.scrollTo({left:pane.offsetLeft,behavior:'instant'});
+ if(selected!==0)choose(0,false,true);
+}
+requestAnimationFrame(()=>requestAnimationFrame(alignInitialHome));
+window.addEventListener('pageshow',event=>{
+ if(event.persisted||window.innerWidth>680||location.hash)return;
+ // A fresh load or reload is Home; bfcache restoration keeps its context.
+ if(!locationInitialized||selected!==0)return;
+ const navigation=performance.getEntriesByType('navigation')[0];
+ if(navigation?.type==='navigate'||navigation?.type==='reload'){
+   const pane=previews[0];
+   if(pane&&!explorer?.classList.contains('is-away')){
+     previewStage?.scrollTo({left:pane.offsetLeft,behavior:'instant'});
+   }
+ }
 },{passive:true});
 previewStage?.addEventListener('keydown',e=>{
  if(window.innerWidth>680||e.target!==previewStage)return;

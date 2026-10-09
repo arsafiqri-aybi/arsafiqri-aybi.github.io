@@ -3073,3 +3073,35 @@ body.home-site{
  .home-site .ars-vertical-story-panel{will-change:auto}
 }
 
+
+
+/* ARS Mobile Slide Integrity 51: contain the horizontal viewport and prevent
+   an interrupted transition from presenting Work and About together.
+   No changes to desktop Soft Arc Wheel or mobile story content. */
+@media(max-width:680px){
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage{
+   position:relative;
+   width:100%;max-width:100%;min-width:0;
+   overflow-x:auto;overflow-y:hidden;
+   display:flex;flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;
+   scroll-snap-type:x mandatory;
+   scroll-padding-inline:0;
+   scrollbar-width:none;
+   overscroll-behavior-x:contain;
+ }
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage>.section-preview{
+   box-sizing:border-box;
+   flex:0 0 100%;
+   inline-size:100%;
+   min-inline-size:100%;
+   max-inline-size:100%;
+   margin:0;
+   transform:none;
+   scroll-snap-align:start;
+   scroll-margin-inline:0;
+ }
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage>.section-preview.is-selected{
+   animation:none!important;
+ }
+}
+
