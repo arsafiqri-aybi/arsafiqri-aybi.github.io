@@ -2334,3 +2334,8 @@ body.home-site{
 .ars-portrait-stage:hover img,.home-composition .ars-portrait-stage:hover img{
  box-shadow:none!important;
 }
+
+/* Keep About's secondary links exclusive to the Android four-chapter layout. */
+@media(min-width:681px){
+ .home-site .ars-about-branches{display:none}
+}
