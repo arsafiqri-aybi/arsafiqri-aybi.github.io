@@ -140,7 +140,7 @@ function choose(idx,moveFocus=false){
    c.tabIndex=i===selected?0:-1;
    c.classList.remove('was-active');
    c.classList.toggle('is-next',mobile&&i===selected+1);
-   c.classList.toggle('is-prev',mobile&&selected===choices.length-1&&i===selected-1);
+   c.classList.toggle('is-prev',mobile&&i===selected-1);
  });
  previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));
  root.dataset.context=[0,1,5].includes(selected)?'dark':'light';
@@ -205,36 +205,43 @@ function arrangeMobileRail(){
  rail.scrollLeft=0;
  const nav=rail.closest('.section-rail');
  if(nav)nav.setAttribute('aria-label',window.innerWidth<=680
-   ?'Portfolio sections. Swipe right for next and left for previous section.'
+   ?'Portfolio sections. Swipe left for next and right for previous section.'
    :'Portfolio sections');
  if(window.innerWidth>680){
    choices.forEach(c=>c.classList.remove('was-active'));
  }
 }
+// Horizontal swipes from anywhere on a mobile preview; page vertical scroll is native.
 let mobileTouchStart=null,lastMobileSwipeAt=-Infinity;
-rail?.addEventListener('touchstart',e=>{
- if(window.innerWidth>680||e.touches.length!==1)return;
- const t=e.touches[0];
- mobileTouchStart={x:t.clientX,y:t.clientY};
+const canSwipePreview=()=>window.innerWidth<=680&&
+  root.classList.contains('is-enhanced')&&
+  explorer&&!explorer.classList.contains('is-away');
+document.addEventListener('touchstart',e=>{
+  if(!canSwipePreview()||e.touches.length!==1){mobileTouchStart=null;return;}
+  const finger=e.touches[0];
+  mobileTouchStart={identifier:finger.identifier,x:finger.clientX,y:finger.clientY};
 },{passive:true});
-rail?.addEventListener('touchend',e=>{
- if(window.innerWidth>680||!mobileTouchStart||e.changedTouches.length!==1){mobileTouchStart=null;return;}
- const t=e.changedTouches[0];
- const dx=t.clientX-mobileTouchStart.x,dy=t.clientY-mobileTouchStart.y;
- mobileTouchStart=null;
- if(Math.abs(dx)<36||Math.abs(dx)<Math.abs(dy)*1.3)return;
- lastMobileSwipeAt=performance.now();
- // Requested Android gesture: swipe finger right Home -> Work;
- // swipe left moves to the previous section.
- choose(selected+(dx>0?1:-1));
+document.addEventListener('touchend',e=>{
+  if(!mobileTouchStart)return;
+  const start=mobileTouchStart;
+  mobileTouchStart=null;
+  if(!canSwipePreview()||e.touches.length!==0)return;
+  const finger=[...e.changedTouches].find(t=>t.identifier===start.identifier);
+  if(!finger)return;
+  const dx=finger.clientX-start.x,dy=finger.clientY-start.y;
+  if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.5)return;
+  // LEFT -> next (Home to Work); RIGHT -> previous (Work to Home).
+  const next=Math.max(0,Math.min(choices.length-1,selected+(dx<0?1:-1)));
+  if(next===selected)return;
+  lastMobileSwipeAt=performance.now();
+  choose(next);
 },{passive:true});
-rail?.addEventListener('touchcancel',()=>{mobileTouchStart=null},{passive:true});
-// Suppress a synthetic click after a genuine swipe. Ordinary taps still work.
-rail?.addEventListener('click',e=>{
- if(performance.now()-lastMobileSwipeAt<350){
-   e.preventDefault();
-   e.stopImmediatePropagation();
- }
+document.addEventListener('touchcancel',()=>{mobileTouchStart=null},{passive:true});
+document.addEventListener('click',e=>{
+  if(canSwipePreview()&&performance.now()-lastMobileSwipeAt<360){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
 },true);
 window.addEventListener('resize',()=>requestAnimationFrame(arrangeMobileRail),{passive:true});
 requestAnimationFrame(arrangeMobileRail);

@@ -1024,3 +1024,18 @@ html[data-ars-view="section"] .home-site .topbar{
 @media(max-width:680px) and (prefers-reduced-motion:reduce){
  html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{animation:none!important}
 }
+
+
+/* Android navigation 14: display previous and next names beside the active one. */
+@media(max-width:680px){
+  html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]),
+  html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
+    display:flex!important;
+    visibility:visible;
+    opacity:.58;
+    pointer-events:auto;
+    font-weight:450;
+    color:var(--sub);
+    animation:none;
+  }
+}
