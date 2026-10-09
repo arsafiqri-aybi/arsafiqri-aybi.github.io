@@ -2339,3 +2339,127 @@ body.home-site{
 @media(min-width:681px){
  .home-site .ars-about-branches{display:none}
 }
+
+
+/* ARS Android Header & Portrait Frame 42
+   Four compact horizontal destinations on the right, name on the left.
+   The active underline spans the ENTIRE nav item and joins the header rule.
+   The photograph uses a subtle INNER EDGE vignette instead of a floating
+   circular halo or outer box-shadow; image framing and crop stay intact. */
+@media(max-width:680px){
+ .home-site .explorer:not(.is-away) .ars-mobile-header{
+   gap:10px;
+   border:0;
+   isolation:isolate;
+ }
+ .home-site .explorer:not(.is-away) .ars-mobile-header::after{
+   content:"";
+   position:absolute;
+   left:0;
+   right:0;
+   bottom:0;
+   height:1px;
+   pointer-events:none;
+   background:color-mix(in srgb,var(--fg) 24%,transparent);
+   z-index:0;
+ }
+ .home-site .ars-mobile-brand{
+   font-size:15px;
+   font-weight:650;
+   letter-spacing:-.035em;
+   white-space:nowrap;
+ }
+ .home-site .ars-mobile-menu{
+   gap:clamp(9px,2.8vw,17px);
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button{
+   min-height:48px;
+   padding-block:10px;
+   z-index:1;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button::after{
+   left:0;
+   right:0;
+   bottom:0;
+   width:auto;
+   height:2px;
+   border-radius:0;
+   transform:scaleX(0);
+   transform-origin:center center;
+   opacity:0;
+   background:var(--fg);
+   transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .24s ease;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button[aria-current=true]::after{
+   transform:scaleX(1);
+   opacity:1;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu .ars-mobile-connect{
+   min-width:32px;
+   padding-inline:5px;
+ }
+}
+@media(max-width:360px){
+ .home-site .ars-mobile-brand{font-size:14px}
+ .home-site .ars-mobile-menu{gap:8px}
+ .home-site .ars-mobile-header .ars-mobile-menu button{
+   font-size:12px;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu .ars-mobile-connect{
+   min-width:30px;
+   padding-inline:4px;
+ }
+}
+/* Replace the old radial halo with a thin shadow ON the photo's inner
+   frame edges. There is no box-shadow outside the picture. */
+.ars-portrait-stage > .ars-photo-ambient,
+.about-portrait > .ars-photo-ambient{
+ position:absolute;
+ inset:0;
+ left:0;
+ right:0;
+ top:0;
+ bottom:0;
+ width:100%;
+ height:100%;
+ z-index:2;
+ pointer-events:none;
+ border-radius:0;
+ background:
+   linear-gradient(to bottom,
+     rgba(9,15,20,.18) 0%,
+     rgba(9,15,20,0) 10%,
+     rgba(9,15,20,0) 90%,
+     rgba(9,15,20,.24) 100%),
+   linear-gradient(to right,
+     rgba(9,15,20,.17) 0%,
+     rgba(9,15,20,0) 10%,
+     rgba(9,15,20,0) 90%,
+     rgba(9,15,20,.17) 100%);
+ filter:none;
+ transform:none;
+ box-shadow:none;
+}
+.ars-portrait-stage img,
+.about-portrait img,
+.home-composition .ars-portrait-stage img{
+ transform:none!important;
+ box-shadow:none!important;
+ filter:none!important;
+}
+.about-portrait > .ars-photo-ambient{
+ border-radius:6px;
+}
+@media(max-width:680px){
+ .home-site .ars-portrait-stage > .ars-photo-ambient{
+   border-radius:12px;
+ }
+ .about-portrait > .ars-photo-ambient{
+   border-radius:5px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .home-site .ars-mobile-header .ars-mobile-menu button::after{
+   transition:none;
+ }
+}
