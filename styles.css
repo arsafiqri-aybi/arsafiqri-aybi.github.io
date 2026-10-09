@@ -2112,3 +2112,46 @@ body .ars-site-footer nav a:focus-visible{
   .home-site .explorer.is-home-preview{width:100%}
   .home-site .explorer.is-home-preview>.explore-frame{width:calc(100% - 44px);margin-inline:auto}
 }
+
+/* ARS Soft Arc Wheel Compact — approved October 2026.
+   A ghosted semicircular path with soft synchronized preview motion.
+   Desktop only: retain existing mobile header, links, and page layouts. */
+@media(min-width:681px){
+ html.is-enhanced .home-site .section-rail{
+   height:144px;width:142px;max-width:100%;overflow:visible;
+ }
+ html.is-enhanced .home-site .section-rail .rail-window{
+   position:relative;width:100%;min-width:0;height:144px;max-height:144px;
+   overflow:hidden;overscroll-behavior:contain;
+   mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);
+ }
+ html.is-enhanced .home-site .section-rail .rail-list{
+   position:relative;height:100%;width:100%;display:block;padding:0;margin:0;transform:none;
+ }
+ html.is-enhanced .home-site .section-rail .rail-leading-space{display:none}
+ html.is-enhanced .home-site .section-rail .rail-choice{
+   position:absolute;top:0;left:0;width:calc(100% - 36px);height:38px;min-height:38px;
+   margin:0;padding:6px 0;display:block;text-align:left;white-space:nowrap;
+   background:transparent;border:0;font-size:16px;font-weight:450;line-height:26px;
+   color:var(--sub);transform-origin:left center;animation:none!important;
+   transition:color 220ms ease;will-change:transform,opacity;
+ }
+ html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{
+   font-size:18px;font-weight:650;color:var(--fg);animation:none!important;
+ }
+ html.is-enhanced .home-site .section-rail .rail-choice:hover,
+ html.is-enhanced .home-site .section-rail .rail-choice:focus-visible{color:var(--fg)}
+ html.is-enhanced .home-site .section-preview.is-selected{
+   animation:ars-soft-arc-preview-in 460ms cubic-bezier(.22,1,.36,1) both;
+ }
+ @keyframes ars-soft-arc-preview-in{
+   from{opacity:.48;transform:translate3d(0,11px,0)}
+   to{opacity:1;transform:translate3d(0,0,0)}
+ }
+}
+@media(min-width:681px) and (prefers-reduced-motion:reduce){
+ html.is-enhanced .home-site .section-rail .rail-choice{
+   animation:none!important;transition:none!important;will-change:auto;
+ }
+ html.is-enhanced .home-site .section-preview.is-selected{animation:none!important}
+}

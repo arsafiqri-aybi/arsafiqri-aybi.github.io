@@ -365,6 +365,57 @@ function centerMobileRail(){
     track.style.setProperty('--ars-mobile-active-fit',nextFit);
   syncWheelIndicator();
 }
+
+/* ARS Soft Arc Wheel Compact. The track is intentionally invisible.
+   Position and preview share a 460ms ease; mobile header is unchanged. */
+let softArcPosition=0,softArcFrom=0,softArcTarget=0;
+let softArcStarted=0,softArcFrameId=0;
+const softArcEase=t=>1-Math.pow(1-t,3);
+function paintSoftArc(position){
+  if(window.innerWidth<=680||!choices.length)return;
+  const view=explorer?.querySelector('.section-rail .rail-window');
+  if(!view)return;
+  const h=view.clientHeight||144,w=view.clientWidth||142;
+  const radius=Math.min(31,w*.23),baseX=Math.max(3,w*.035);
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  choices.forEach((item,i)=>{
+    const d=i-position,distance=Math.abs(d);
+    const x=baseX+radius*Math.cos(d*.78);
+    const y=h/2+Math.sin(d*.68)*h*.34;
+    const near=Math.max(0,1-distance);
+    const scale=reduced?1:1+near*.045;
+    item.style.transform='translate3d('+x.toFixed(2)+'px,'+(y-19).toFixed(2)+'px,0) scale('+scale.toFixed(3)+')';
+    item.style.opacity=String(Math.max(0,Math.min(1,.58+.42*near)));
+    item.style.visibility=distance<=1.58?'visible':'hidden';
+    item.style.pointerEvents=distance<=1.35?'auto':'none';
+    item.style.zIndex=String(10-Math.round(distance));
+  });
+}
+function animateSoftArc(now){
+  const t=Math.min(1,(now-softArcStarted)/460);
+  softArcPosition=softArcFrom+(softArcTarget-softArcFrom)*softArcEase(t);
+  paintSoftArc(softArcPosition);
+  if(t<1)softArcFrameId=requestAnimationFrame(animateSoftArc);
+  else{softArcPosition=softArcTarget;softArcFrameId=0;}
+}
+function syncSoftArc(index){
+  if(window.innerWidth<=680||!choices.length)return;
+  if(softArcFrameId)cancelAnimationFrame(softArcFrameId);
+  softArcFrameId=0;
+  const next=Math.max(0,Math.min(choices.length-1,index));
+  if(!root.classList.contains('is-enhanced')||matchMedia('(prefers-reduced-motion: reduce)').matches){
+    softArcPosition=next;
+    softArcTarget=next;
+    paintSoftArc(next);
+    return;
+  }
+  softArcFrom=softArcPosition;
+  softArcTarget=next;
+  softArcStarted=performance.now();
+  if(Math.abs(softArcTarget-softArcFrom)<.001){paintSoftArc(next);return;}
+  softArcFrameId=requestAnimationFrame(animateSoftArc);
+}
+
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
  const previous=selected;
@@ -389,6 +440,7 @@ function choose(idx,moveFocus=false){
    c.classList.toggle('is-prev',mobile&&i===selected-1);
  });
  previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));
+  syncSoftArc(selected);
  root.dataset.context=[0,1,5].includes(selected)?'dark':'light';
  try{sessionStorage.setItem('ars-section',String(selected));}catch{}
  const target=choices[selected];
@@ -469,6 +521,8 @@ function arrangeMobileRail(){
  }
  if(window.innerWidth>680){
    choices.forEach(c=>c.classList.remove('was-active'));
+   softArcPosition=selected;
+   syncSoftArc(selected);
  }
 }
 // Horizontal swipes from anywhere on a mobile preview; page vertical scroll is native.
