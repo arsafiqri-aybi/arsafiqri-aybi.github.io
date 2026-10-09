@@ -2355,8 +2355,12 @@ body.home-site{
  .home-site .explorer:not(.is-away) .ars-mobile-header::after{
    content:"";
    position:absolute;
-   left:0;
-   right:0;
+   /* Header content stays aligned; only the rule bleeds edge-to-edge. */
+   left:50%;
+   right:auto;
+   width:100vw;
+   width:100dvw;
+   transform:translateX(-50%);
    bottom:0;
    height:1px;
    pointer-events:none;
