@@ -128,6 +128,10 @@ applyTheme();
    measurements.className='ars-grid-metrics';
    measurements.setAttribute('aria-live','off');
    controls.insertBefore(measurements,actions);
+   const whitespaceLabel=document.createElement('div');
+   whitespaceLabel.className='ars-grid-whitespace';
+   whitespaceLabel.setAttribute('aria-live','off');
+   controls.insertBefore(whitespaceLabel,actions);
    const railTrack=document.querySelector('.home-site .section-rail .rail-list');
    const railWindow=document.querySelector('.home-site .section-rail .rail-window');
    const railButtons=[...document.querySelectorAll('.home-site [data-rail]')];
@@ -233,6 +237,17 @@ applyTheme();
      }
      const activePreview=document.querySelector('.home-site .section-preview.is-selected');
      if(activePreview?.dataset.preview==='home'&&window.innerWidth<=680){
+       const whitespaceLabel=document.querySelector('.ars-grid-whitespace');
+       const navBox=railWindow.getBoundingClientRect();
+       const copyNode=activePreview.querySelector('.identity-copy');
+       const portraitNode=activePreview.querySelector('.ars-portrait-stage');
+       const canvasNode=activePreview.closest('.explorer');
+       if(whitespaceLabel&&copyNode&&portraitNode&&canvasNode){
+         const upper=copyNode.getBoundingClientRect().top-navBox.bottom;
+         const lower=canvasNode.getBoundingClientRect().bottom-portraitNode.getBoundingClientRect().bottom;
+         whitespaceLabel.textContent='HOME SPACE · after navbar '+upper.toFixed(0)+'px / after photo '+lower.toFixed(0)+'px';
+       }
+
        const copy=activePreview.querySelector('.identity-copy');
        const photo=activePreview.querySelector('.ars-portrait-stage');
        const image=photo?.querySelector('img');

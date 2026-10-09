@@ -1645,3 +1645,69 @@ html.grid-review .ars-grid-guides{display:block}
     will-change:auto;
   }
 }
+
+
+/* ARS Adaptive Optical Balance 29 — responsive Home vertical whitespace.
+   Why: the previous max-height portrait sat at the top of an oversized
+   expanding grid row, pushing unused whitespace below the portrait.
+   Treat role+headline+description+photo as ONE intrinsic-height group:
+   safely center it in the region underneath the independent 3-slot navbar.
+   Portrait stays full-aligned, face-focused and responsively bounded. */
+@media (max-width:680px) {
+  .home-site .explorer.is-home-preview .home-composition {
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    align-items:stretch;
+    gap:clamp(24px,3.5svh,30px);
+    width:100%;
+    height:100%;
+    min-height:0;
+    margin:0;
+    padding:0;
+    grid-template-rows:none;
+    grid-template-columns:none;
+  }
+  .home-site .explorer.is-home-preview .identity-copy {
+    display:block;
+    flex:0 0 auto;
+    width:100%;
+    min-width:0;
+    align-self:stretch;
+  }
+  .home-site .explorer.is-home-preview .ars-portrait-stage {
+    display:block;
+    flex:0 0 auto;
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    height:clamp(220px,min(45svh,calc((100vw - 40px)*1.08)),430px);
+    min-height:220px;
+    max-height:none;
+    margin:0;
+    padding:0;
+    align-self:stretch;
+    justify-self:stretch;
+  }
+  .home-site .explorer.is-home-preview .ars-portrait-stage img {
+    display:block;
+    width:100%;
+    height:100%;
+    max-width:100%;
+    max-height:100%;
+    object-fit:cover;
+    object-position:50% 27%;
+  }
+}
+/* On very short mobile viewports, preserve legibility and allow normal
+   document scrolling. Safe center never shifts overflowing content above
+   the viewport; the 670px page floor prevents abrupt image clipping. */
+@media (max-width:680px) and (max-height:680px) {
+  .home-site .explorer.is-home-preview .home-composition {
+    gap:clamp(18px,2.7svh,24px);
+  }
+}
+
+/* Opt-in layout diagnosis: live viewport whitespace measurements. */
+.ars-grid-whitespace{font:650 10px/1.4 Manrope,system-ui,sans-serif;color:#a8d7c2;font-variant-numeric:tabular-nums}
+@media(max-width:680px){.ars-grid-whitespace{font-size:9px}}
