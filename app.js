@@ -125,21 +125,50 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
+function railTextBounds(button){
+  // Measure the actual text node instead of assuming the button's padding box
+  // has the same visual width/center as the rendered word.
+  if(!button)return null;
+  const textNode=[...button.childNodes].find(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
+  if(textNode){
+    const range=document.createRange();
+    range.selectNodeContents(textNode);
+    const rect=range.getBoundingClientRect();
+    if(rect.width>0)return rect;
+  }
+  return button.getBoundingClientRect();
+}
+function railCenterPositions(trackLeft,viewportMiddle,activeWidth,prevWidth,nextWidth,offset,gap){
+  const active=viewportMiddle-trackLeft-offset;
+  return {
+    active,
+    previous:active-(activeWidth+prevWidth)/2-gap,
+    next:active+(activeWidth+nextWidth)/2+gap
+  };
+}
 function centerMobileRail(){
   if(window.innerWidth>680||!explorer)return;
   const track=explorer.querySelector('.section-rail .rail-list');
-  if(!track)return;
-  // Measure the actual layout box; do not assume its center equals the screen center.
-  const box=track.getBoundingClientRect();
-  if(box.width<=0)return;
-  const vv=window.visualViewport;
-  const viewportCenter=vv?(vv.offsetLeft+vv.width/2):(document.documentElement.clientWidth/2);
-  const centerInTrack=viewportCenter-box.left;
-  if(Number.isFinite(centerInTrack)){
-    track.style.setProperty('--ars-rail-active-x',centerInTrack.toFixed(2)+'px');
-  }
+  const active=choices[selected];
+  if(!track||!active)return;
+  const trackBox=track.getBoundingClientRect();
+  const activeBox=active.getBoundingClientRect();
+  const activeText=railTextBounds(active);
+  if(trackBox.width<=0||!activeText||activeText.width<=0)return;
+  const visual=window.visualViewport;
+  const viewportWidth=visual?.width||document.documentElement.clientWidth;
+  const viewportMiddle=visual?(visual.offsetLeft+visual.width/2):(document.documentElement.clientWidth/2);
+  // Corrections for asymmetric text/padding/letter spacing, including device zoom.
+  const textOffset=(activeText.left+activeText.width/2)-(activeBox.left+activeBox.width/2);
+  const previousText=railTextBounds(choices[selected-1]);
+  const nextText=railTextBounds(choices[selected+1]);
+  const gap=Math.min(20,Math.max(11,viewportWidth*.038));
+  const points=railCenterPositions(trackBox.left,viewportMiddle,activeText.width,previousText?.width||0,nextText?.width||0,textOffset,gap);
+  if(!Number.isFinite(points.active))return;
+  track.style.setProperty('--ars-rail-active-x',points.active.toFixed(2)+'px');
+  track.style.setProperty('--ars-rail-prev-x',points.previous.toFixed(2)+'px');
+  track.style.setProperty('--ars-rail-next-x',points.next.toFixed(2)+'px');
 }
-
 function choose(idx,moveFocus=false){
  if(!choices.length)return;
  const previous=selected;
@@ -267,6 +296,17 @@ if(window.visualViewport){
   window.visualViewport.addEventListener('scroll',()=>requestAnimationFrame(centerMobileRail),{passive:true});
 }
 if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(centerMobileRail));
+// A sliding label has a transient scale/position. Recalibrate once its motion ends.
+rail?.addEventListener('animationend',e=>{
+  if(e.target.matches?.('.rail-choice'))requestAnimationFrame(centerMobileRail);
+});
+// Text widths can change from late font swaps or accessibility font settings.
+if(typeof ResizeObserver!=='undefined'){
+  const railResize=new ResizeObserver(()=>requestAnimationFrame(centerMobileRail));
+  const track=explorer?.querySelector('.section-rail .rail-list');
+  if(track)railResize.observe(track);
+  choices.forEach(choice=>railResize.observe(choice));
+}
 requestAnimationFrame(arrangeMobileRail);
 
 let wheelDistance=0, wheelLastAt=0, wheelLockUntil=0;

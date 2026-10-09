@@ -1058,3 +1058,22 @@ html[data-ars-view="section"] .home-site .topbar{
     left:calc(var(--ars-rail-active-x,50%) - clamp(97px,27vw,133px))!important;
   }
 }
+
+
+/* Android centering 16 — positions from measured glyph/text widths.
+   Active text center = visual viewport midpoint (no fixed 100px neighbor offsets). */
+@media(max-width:680px){
+  .home-site .section-rail .rail-list{
+    --ars-rail-prev-x:calc(50% - 110px);
+    --ars-rail-next-x:calc(50% + 110px);
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{
+    left:var(--ars-rail-active-x,50%)!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]){
+    left:var(--ars-rail-prev-x,calc(50% - 110px))!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
+    left:var(--ars-rail-next-x,calc(50% + 110px))!important;
+  }
+}
