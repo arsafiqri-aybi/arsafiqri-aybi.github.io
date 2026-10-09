@@ -1711,3 +1711,46 @@ html.grid-review .ars-grid-guides{display:block}
 /* Opt-in layout diagnosis: live viewport whitespace measurements. */
 .ars-grid-whitespace{font:650 10px/1.4 Manrope,system-ui,sans-serif;color:#a8d7c2;font-variant-numeric:tabular-nums}
 @media(max-width:680px){.ars-grid-whitespace{font-size:9px}}
+
+
+/* ARS Editorial Hairlines 30 — mobile-only, two quiet horizontal rules.
+   The first line sits ABOVE the role/title group, occupying some of the
+   generous whitespace below the iOS wheel. The second sits BELOW the
+   description and ABOVE the portrait. Both share the exact copy/photo edges.
+   Pseudo-elements avoid extra DOM, screen-reader output, or tap targets. */
+@media (max-width:680px){
+  .home-site .explorer.is-home-preview .identity-copy::before,
+  .home-site .explorer.is-home-preview .identity-copy::after{
+    content:"";
+    display:block;
+    box-sizing:border-box;
+    inline-size:100%;
+    block-size:1px;
+    flex:none;
+    background:var(--rule);
+    background:color-mix(in srgb,var(--fg) 23%,transparent);
+    pointer-events:none;
+  }
+  .home-site .explorer.is-home-preview .identity-copy::before{
+    margin:0 0 clamp(19px,3svh,28px);
+  }
+  .home-site .explorer.is-home-preview .identity-copy::after{
+    margin:clamp(15px,2svh,19px) 0 0;
+  }
+  /* The bottom separator already provides part of the text-to-photo rhythm.
+     Avoid accidentally doubling that gap. */
+  .home-site .explorer.is-home-preview .home-composition{
+    gap:clamp(15px,2.3svh,20px);
+  }
+}
+@media (max-width:680px) and (max-height:680px){
+  .home-site .explorer.is-home-preview .identity-copy::before{
+    margin-bottom:14px;
+  }
+  .home-site .explorer.is-home-preview .identity-copy::after{
+    margin-top:12px;
+  }
+  .home-site .explorer.is-home-preview .home-composition{
+    gap:clamp(12px,1.9svh,17px);
+  }
+}
