@@ -1077,3 +1077,32 @@ html[data-ars-view="section"] .home-site .topbar{
     left:var(--ars-rail-next-x,calc(50% + 110px))!important;
   }
 }
+
+
+/* ARS Android 17 — equal-width text slots measured from the longest active word.
+   Each visible label uses one identical slot; its text is centered within it.
+   The active slot midpoint is the screen midpoint, independent of word length. */
+@media(max-width:680px){
+  .home-site .section-rail .rail-list{
+    --ars-mobile-slot-width:145px;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice{
+    width:var(--ars-mobile-slot-width,145px)!important;
+    min-width:var(--ars-mobile-slot-width,145px)!important;
+    max-width:none!important;
+    box-sizing:border-box;
+    padding-inline:0;
+    justify-content:center;
+    text-align:center;
+    white-space:nowrap;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{
+    left:var(--ars-rail-active-x,50%)!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]){
+    left:var(--ars-rail-prev-x,calc(50% - 145px))!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
+    left:var(--ars-rail-next-x,calc(50% + 145px))!important;
+  }
+}
