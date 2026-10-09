@@ -1239,3 +1239,19 @@ html[data-ars-view="section"] .home-site .topbar{
     animation:none!important;
   }
 }
+
+
+/* Android v19 — stop legacy !important left offsets from shifting grid items.
+   Each of the three columns owns its centered word; no relative left nudge. */
+@media(max-width:680px){
+ html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true],
+ html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]),
+ html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
+   left:0!important;
+   top:0!important;
+   right:auto!important;
+   bottom:auto!important;
+   inset-inline-start:0!important;
+   margin:0!important;
+ }
+}
