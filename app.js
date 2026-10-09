@@ -585,8 +585,8 @@ function mobileVerticalStep(direction){
    ['--bg','--fg','--sub','--rule','--accent'].forEach(name=>{
      result[name]=style.getPropertyValue(name).trim();
    });
-   // --bg may contain var(...): compute actual background from html.
-   result['--bg']=getComputedStyle(document.documentElement).backgroundColor;
+   // The computed --bg token resolves immediately to the destination
+   // color. html.backgroundColor is transitioning and may still be OLD.
    return result;
  }
  const departing=makePanel(current,'out',tokens());
