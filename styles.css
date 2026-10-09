@@ -2173,3 +2173,18 @@ body.home-site{
 @media(prefers-reduced-motion:reduce){
   html{transition:none}
 }
+
+
+/* ARS Portrait No-Shadow 38 — approved request.
+   Remove ALL shadows from the owner's photo and its framing container,
+   including hover and About portrait; preserve image crop and typography. */
+.ars-portrait-stage,
+.ars-portrait-stage img,
+.home-composition .ars-portrait-stage,
+.home-composition .ars-portrait-stage img,
+.home-composition .ars-portrait-stage:hover img,
+.about-portrait,
+.about-portrait img {
+  box-shadow:none!important;
+  filter:none!important;
+}
