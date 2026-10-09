@@ -2940,6 +2940,9 @@ body.home-site{
 
 
 
+/* Keep the approved desktop Home composition unchanged. */
+.home-site .ars-home-identity{display:none}
+
 /* ARS Dual Axis Navigation 48 — same four chapters with two spatial gestures.
    Horizontal finger swipe = native scroll-snap X. Vertical swipe/wheel =
    contextual Y slide with current/target snapshots, not a second nav path.
