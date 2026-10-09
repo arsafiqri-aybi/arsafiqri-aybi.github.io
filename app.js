@@ -125,7 +125,6 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
-let mobileRailReady=false;
 function positionBrand(){
  const topbar=document.querySelector('.home-site .topbar');
  const outer=explorer?.querySelector('.explore-frame');
@@ -138,7 +137,40 @@ function positionBrand(){
  const logoTop=frameTop-headerTop-brand.offsetHeight-16;
  if(Number.isFinite(logoTop))topbar.style.setProperty('--ars-logo-top',Math.max(0,logoTop).toFixed(2)+'px');
 }
-function choose(idx,moveFocus=false){if(!choices.length)return;selected=Math.max(0,Math.min(choices.length-1,idx));choices.forEach((c,i)=>{c.setAttribute('aria-current',String(i===selected));c.tabIndex=i===selected?0:-1;});previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));root.dataset.context=[0,1,5].includes(selected)?'dark':'light';try{sessionStorage.setItem('ars-section',String(selected));}catch{}const target=choices[selected];if(target){const viewport=target.closest('.rail-window');if(viewport){const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();if(window.innerWidth<=680){viewport.scrollTo({left:Math.max(0,target.offsetLeft+target.offsetWidth/2-viewport.clientWidth/2),behavior:mobileRailReady&&!reduced.matches?'smooth':'instant'});}else{viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});}}if(moveFocus)target.focus({preventScroll:true});}}
+function choose(idx,moveFocus=false){
+ if(!choices.length)return;
+ const previous=selected;
+ selected=Math.max(0,Math.min(choices.length-1,idx));
+ const mobile=window.innerWidth<=680;
+ const railNav=explorer?.querySelector('.section-rail');
+ if(railNav){
+   if(mobile&&selected!==previous){
+     railNav.dataset.slideDirection=selected>previous?'next':'prev';
+   } else if(!mobile){
+     delete railNav.dataset.slideDirection;
+   }
+ }
+ choices.forEach((c,i)=>{
+   c.setAttribute('aria-current',String(i===selected));
+   c.tabIndex=i===selected?0:-1;
+   c.classList.toggle('was-active',mobile&&selected!==previous&&i===previous);
+ });
+ previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));
+ root.dataset.context=[0,1,5].includes(selected)?'dark':'light';
+ try{sessionStorage.setItem('ars-section',String(selected));}catch{}
+ const target=choices[selected];
+ if(target){
+   const viewport=target.closest('.rail-window');
+   if(viewport&&mobile){
+     // Only the selected word is visible and centered. No scrolling track.
+     viewport.scrollLeft=0;
+   } else if(viewport){
+     const itemRect=target.getBoundingClientRect(),viewRect=viewport.getBoundingClientRect();
+     viewport.scrollTo({top:Math.max(0,viewport.scrollTop+itemRect.top-viewRect.top-(viewRect.height-itemRect.height)/2),behavior:'instant'});
+   }
+   if(moveFocus)target.focus({preventScroll:true});
+ }
+}
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(positionBrand);}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
@@ -183,17 +215,16 @@ if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose
 const previewStage=explorer?.querySelector('.preview-stage');
 
 function arrangeMobileRail(){
- if(!rail||window.innerWidth>680){mobileRailReady=false;return;}
- const first=choices[0],last=choices[choices.length-1];
- if(!first||!last)return;
- rail.style.setProperty('--ars-mobile-leading',Math.max(0,(rail.clientWidth-first.offsetWidth)/2)+'px');
- rail.style.setProperty('--ars-mobile-trailing',Math.max(0,(rail.clientWidth-last.offsetWidth)/2)+'px');
- requestAnimationFrame(()=>{
-   if(window.innerWidth>680)return;
-   const active=choices[selected];
-   if(active)rail.scrollTo({left:Math.max(0,active.offsetLeft+active.offsetWidth/2-rail.clientWidth/2),behavior:'instant'});
-   mobileRailReady=true;
- });
+ if(!rail)return;
+ // The one-word rail stays stationary; only the selected label changes.
+ rail.scrollLeft=0;
+ const nav=rail.closest('.section-rail');
+ if(nav)nav.setAttribute('aria-label',window.innerWidth<=680
+   ?'Portfolio sections. Swipe right for next and left for previous section.'
+   :'Portfolio sections');
+ if(window.innerWidth>680){
+   choices.forEach(c=>c.classList.remove('was-active'));
+ }
 }
 let mobileTouchStart=null,lastMobileSwipeAt=-Infinity;
 rail?.addEventListener('touchstart',e=>{
