@@ -1549,7 +1549,7 @@ html.grid-review .ars-grid-guides{display:block}
    Text stays upright; hints never add arrows or visual clutter. */
 @media (max-width:680px) {
   html.is-enhanced .home-site .section-rail.ars-wheel-ready {
-    --ars-wheel-step:calc(100% / 3);
+    --ars-wheel-step:100%; /* one slot width, since each button fills exactly one 1fr cell */
     --ars-wheel-drop:13px;
     --ars-wheel-duration:440ms;
     --ars-wheel-ease:cubic-bezier(.22,1,.36,1);
@@ -1616,11 +1616,11 @@ html.grid-review .ars-grid-guides{display:block}
     100% {opacity:1;transform:translate3d(0,0,0) scale(1)}
   }
   @keyframes ars-wheel-exit-to-left {
-    0%   {opacity:1;transform:translate3d(var(--ars-wheel-step),calc(-1 * var(--ars-wheel-drop)),0) scale(1.68)}
+    0%   {opacity:1;transform:translate3d(var(--ars-wheel-step),0,0) scale(1.68)}
     100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
   }
   @keyframes ars-wheel-exit-to-right {
-    0%   {opacity:1;transform:translate3d(calc(-1 * var(--ars-wheel-step)),calc(-1 * var(--ars-wheel-drop)),0) scale(1.68)}
+    0%   {opacity:1;transform:translate3d(calc(-1 * var(--ars-wheel-step)),0,0) scale(1.68)}
     100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
   }
   @keyframes ars-wheel-side-arrive-right {
