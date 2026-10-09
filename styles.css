@@ -1540,3 +1540,108 @@ html.grid-review .ars-grid-guides{display:block}
     row-gap:clamp(18px,2.7svh,24px);
   }
 }
+
+
+/* ARS iOS Arc Wheel 27 — mobile-only, three physical slots remain equal.
+   Resting neighbors sit 13px BELOW the locked geometric center.
+   On selection, an outgoing label rolls downward to a side while the
+   incoming label rises smoothly into the fixed center slot.
+   Text stays upright; hints never add arrows or visual clutter. */
+@media (max-width:680px) {
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready {
+    --ars-wheel-step:calc(100% / 3);
+    --ars-wheel-drop:13px;
+    --ars-wheel-duration:440ms;
+    --ars-wheel-ease:cubic-bezier(.22,1,.36,1);
+    perspective:850px;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-window,
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-list {
+    perspective:850px;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice {
+    transform-origin:center center;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    will-change:transform,opacity;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice[aria-current=true] {
+    z-index:3;
+    transform:translate3d(0,0,0) scale(1);
+    animation:none!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice.is-prev:not([aria-current=true]),
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice.is-next:not([aria-current=true]) {
+    z-index:1;
+    transform:translate3d(0,var(--ars-wheel-drop),0) scale(1);
+    opacity:.53;
+    animation:none!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice.was-active:not([aria-current=true]) {
+    z-index:2;
+  }
+  /* Finger swipe left: previous center rolls LEFT + DOWN.
+     The next word rolls LEFT + UP from the right-hand slot. */
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="next"] .rail-choice[aria-current=true] {
+    animation:ars-wheel-enter-from-right var(--ars-wheel-duration) var(--ars-wheel-ease) both!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="next"] .rail-choice.is-prev.was-active:not([aria-current=true]) {
+    animation:ars-wheel-exit-to-left var(--ars-wheel-duration) var(--ars-wheel-ease) both!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="next"] .rail-choice.is-next:not(.was-active):not([aria-current=true]) {
+    animation:ars-wheel-side-arrive-right 380ms var(--ars-wheel-ease) both!important;
+  }
+  /* Finger swipe right: reverse the same path without a jump. */
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="prev"] .rail-choice[aria-current=true] {
+    animation:ars-wheel-enter-from-left var(--ars-wheel-duration) var(--ars-wheel-ease) both!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="prev"] .rail-choice.is-next.was-active:not([aria-current=true]) {
+    animation:ars-wheel-exit-to-right var(--ars-wheel-duration) var(--ars-wheel-ease) both!important;
+  }
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction="prev"] .rail-choice.is-prev:not(.was-active):not([aria-current=true]) {
+    animation:ars-wheel-side-arrive-left 380ms var(--ars-wheel-ease) both!important;
+  }
+  /* One gentle hint on first Home visit; the nav itself remains centered. */
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready.ars-wheel-hint:not([data-slide-direction]) .rail-choice.is-next:not([aria-current=true]) {
+    animation:ars-wheel-discovery 720ms cubic-bezier(.23,1,.32,1) both!important;
+  }
+  @keyframes ars-wheel-enter-from-right {
+    0%   {opacity:.50;transform:translate3d(var(--ars-wheel-step),var(--ars-wheel-drop),0) scale(.60)}
+    76%  {opacity:1;transform:translate3d(-2px,-1px,0) scale(1.015)}
+    100% {opacity:1;transform:translate3d(0,0,0) scale(1)}
+  }
+  @keyframes ars-wheel-enter-from-left {
+    0%   {opacity:.50;transform:translate3d(calc(-1 * var(--ars-wheel-step)),var(--ars-wheel-drop),0) scale(.60)}
+    76%  {opacity:1;transform:translate3d(2px,-1px,0) scale(1.015)}
+    100% {opacity:1;transform:translate3d(0,0,0) scale(1)}
+  }
+  @keyframes ars-wheel-exit-to-left {
+    0%   {opacity:1;transform:translate3d(var(--ars-wheel-step),calc(-1 * var(--ars-wheel-drop)),0) scale(1.68)}
+    100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
+  }
+  @keyframes ars-wheel-exit-to-right {
+    0%   {opacity:1;transform:translate3d(calc(-1 * var(--ars-wheel-step)),calc(-1 * var(--ars-wheel-drop)),0) scale(1.68)}
+    100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
+  }
+  @keyframes ars-wheel-side-arrive-right {
+    0%   {opacity:0;transform:translate3d(17px,19px,0) scale(.88)}
+    100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
+  }
+  @keyframes ars-wheel-side-arrive-left {
+    0%   {opacity:0;transform:translate3d(-17px,19px,0) scale(.88)}
+    100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
+  }
+  @keyframes ars-wheel-discovery {
+    0%,100% {opacity:.53;transform:translate3d(0,var(--ars-wheel-drop),0) scale(1)}
+    42%     {opacity:.78;transform:translate3d(-9px,10px,0) scale(1.06)}
+  }
+}
+@media (max-width:680px) and (prefers-reduced-motion:reduce) {
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready .rail-choice,
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready[data-slide-direction] .rail-choice,
+  html.is-enhanced .home-site .section-rail.ars-wheel-ready.ars-wheel-hint .rail-choice {
+    animation:none!important;
+    transition:none!important;
+    will-change:auto;
+  }
+}

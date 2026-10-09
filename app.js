@@ -286,6 +286,22 @@ const choices=[...document.querySelectorAll('[data-rail]')],previews=[...documen
 const explorer=document.querySelector('[data-explorer]');
 const pages=[...document.querySelectorAll('[data-page]')];
 let selected=0;
+let railMotionReady=false;
+let railHintTimer=0;
+function scheduleRailDiscovery(){
+  const nav=explorer?.querySelector('.section-rail');
+  if(!nav||window.innerWidth>680||selected!==0||
+     matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  // A small motion hint only once per browser tab session.
+  try{if(sessionStorage.getItem('ars-arc-hint-seen')==='1')return;}catch{}
+  window.clearTimeout(railHintTimer);
+  railHintTimer=window.setTimeout(()=>{
+    if(window.innerWidth>680||selected!==0||explorer?.classList.contains('is-away')||
+       document.visibilityState==='hidden')return;
+    nav.classList.add('ars-wheel-hint');
+    try{sessionStorage.setItem('ars-arc-hint-seen','1');}catch{}
+  },850);
+}
 function centerMobileRail(){
   if(window.innerWidth>680||!explorer||!choices.length)return;
   const track=explorer.querySelector('.section-rail .rail-list');
@@ -326,15 +342,19 @@ function choose(idx,moveFocus=false){
  // Scope viewport-fit styling only to the current Home preview.
  explorer?.classList.toggle('is-home-preview',selected===0);
  const mobile=window.innerWidth<=680;
+ const moved=mobile&&railMotionReady&&selected!==previous;
  const railNav=explorer?.querySelector('.section-rail');
  if(railNav){
-   if(mobile&&selected!==previous)railNav.dataset.slideDirection=selected>previous?'next':'prev';
-   else if(!mobile)delete railNav.dataset.slideDirection;
+   window.clearTimeout(railHintTimer);
+   railNav.classList.remove('ars-wheel-hint');
+   railNav.classList.toggle('ars-wheel-ready',mobile);
+   if(moved)railNav.dataset.slideDirection=selected>previous?'next':'prev';
+   else delete railNav.dataset.slideDirection;
  }
  choices.forEach((c,i)=>{
    c.setAttribute('aria-current',String(i===selected));
    c.tabIndex=i===selected?0:-1;
-   c.classList.remove('was-active');
+   c.classList.toggle('was-active',moved&&i===previous);
    c.classList.toggle('is-next',mobile&&i===selected+1);
    c.classList.toggle('is-prev',mobile&&i===selected-1);
  });
@@ -399,12 +419,24 @@ const previewStage=explorer?.querySelector('.preview-stage');
 function arrangeMobileRail(){
  if(!rail)return;
  requestAnimationFrame(centerMobileRail);
- // The one-word rail stays stationary; only the selected label changes.
  rail.scrollLeft=0;
  const nav=rail.closest('.section-rail');
- if(nav)nav.setAttribute('aria-label',window.innerWidth<=680
-   ?'Portfolio sections. Swipe left for next and right for previous section.'
-   :'Portfolio sections');
+ if(nav){
+   const mobile=window.innerWidth<=680;
+   nav.classList.toggle('ars-wheel-ready',mobile);
+   nav.setAttribute('aria-label',mobile
+     ?'Portfolio sections. Swipe left for next and right for previous section.'
+     :'Portfolio sections');
+   if(!mobile){
+     nav.classList.remove('ars-wheel-hint');
+     delete nav.dataset.slideDirection;
+   }else{
+     choices.forEach((c,i)=>{
+       c.classList.toggle('is-next',i===selected+1);
+       c.classList.toggle('is-prev',i===selected-1);
+     });
+   }
+ }
  if(window.innerWidth>680){
    choices.forEach(c=>c.classList.remove('was-active'));
  }
@@ -450,7 +482,12 @@ if(window.visualViewport){
 if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(centerMobileRail));
 // A sliding label has a transient scale/position. Recalibrate once its motion ends.
 rail?.addEventListener('animationend',e=>{
-  if(e.target.matches?.('.rail-choice'))requestAnimationFrame(centerMobileRail);
+  if(e.target.matches?.('.rail-choice')){
+    e.target.classList.remove('was-active');
+    if(e.animationName==='ars-wheel-discovery')
+      rail.closest('.section-rail')?.classList.remove('ars-wheel-hint');
+    requestAnimationFrame(centerMobileRail);
+  }
 });
 // Text widths can change from late font swaps or accessibility font settings.
 if(typeof ResizeObserver!=='undefined'){
@@ -493,6 +530,8 @@ function focusLocationTarget(){
  }else choices[selected]?.focus({preventScroll:true});
 }
 root.classList.add('is-enhanced');showFromLocation();restoreWorkContext();
+railMotionReady=true;
+scheduleRailDiscovery();
 
 
 window.addEventListener('hashchange',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
