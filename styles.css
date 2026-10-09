@@ -2901,3 +2901,39 @@ body.home-site{
  .home-site .ars-work-project{min-height:52px}
 }
 
+
+
+/* ARS Progressive Swipe Accessibility 47 — no-JS fallback stays readable.
+   Four-window horizontal navigation is enabled only after JS enhancement;
+   the rest of the website and desktop arc stay untouched. */
+@media(max-width:680px){
+ html:not(.is-enhanced) body.home-site:has(.explorer:not(.is-away)){
+   display:block;
+   block-size:auto;
+   min-block-size:100svh;
+   overflow:visible;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away){
+   height:auto;min-height:100svh;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away) .explore-layout{
+   height:auto;min-height:0;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away) .preview-stage{
+   display:block;
+   overflow:visible;
+   height:auto;min-height:0;
+   scroll-snap-type:none;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away) .preview-stage>.section-preview:not(.is-selected){
+   display:none!important;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away) .preview-stage>[data-preview="home"]{
+   display:block!important;
+   height:auto;min-height:0;
+ }
+ html:not(.is-enhanced) .home-site .explorer:not(.is-away) .ars-main-swipe-cue{
+   display:none;
+ }
+}
+

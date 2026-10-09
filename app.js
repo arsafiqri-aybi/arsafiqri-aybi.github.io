@@ -690,6 +690,10 @@ function syncAboutCarousel(){
  if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / 04';
  const progress=document.querySelector('[data-about-progress]');
  if(progress)progress.style.transform='scaleX('+((current+1)/aboutPanels.length)+')';
+ const hint=document.querySelector('.ars-about-swipe-hint');
+ if(hint)hint.textContent=current===aboutPanels.length-1
+   ?'← Swipe once more for Connect'
+   :current===0?'← Swipe to explore chapters':'← Swipe between chapters';
 }
 aboutButtons.forEach((button,index)=>button.addEventListener('click',()=>{
  const panel=aboutPanels[index];
@@ -704,9 +708,32 @@ aboutTrack?.addEventListener('keydown',event=>{
  event.preventDefault();
  let current=0,d=Infinity;
  aboutPanels.forEach((panel,index)=>{const gap=Math.abs(panel.offsetLeft-aboutTrack.scrollLeft);if(gap<d){d=gap;current=index;}});
+ if(current===0&&event.key==='ArrowLeft'){choose(1);return;}
+ if(current===aboutPanels.length-1&&event.key==='ArrowRight'){choose(5);return;}
  const next=Math.max(0,Math.min(aboutPanels.length-1,current+(event.key==='ArrowRight'?1:-1)));
  aboutTrack.scrollTo({left:aboutPanels[next].offsetLeft,behavior:reduced.matches?'instant':'smooth'});
 });
+// Edge hand-off: nested About stops at four chapters, but a subsequent
+// horizontal swipe continues the portfolio to Work or Connect.
+let aboutBoundaryStart=null;
+aboutTrack?.addEventListener('touchstart',event=>{
+ if(window.innerWidth>680||event.touches.length!==1){aboutBoundaryStart=null;return;}
+ const finger=event.touches[0];
+ aboutBoundaryStart={id:finger.identifier,x:finger.clientX,y:finger.clientY};
+},{passive:true});
+aboutTrack?.addEventListener('touchend',event=>{
+ if(!aboutBoundaryStart||window.innerWidth>680)return;
+ const initial=aboutBoundaryStart;aboutBoundaryStart=null;
+ const finger=[...event.changedTouches].find(t=>t.identifier===initial.id);
+ if(!finger)return;
+ const dx=finger.clientX-initial.x,dy=finger.clientY-initial.y;
+ if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.5)return;
+ const atStart=aboutTrack.scrollLeft<=5;
+ const atEnd=aboutTrack.scrollLeft>=aboutTrack.scrollWidth-aboutTrack.clientWidth-5;
+ if(atStart&&dx>0)choose(1);
+ else if(atEnd&&dx<0)choose(5);
+},{passive:true});
+aboutTrack?.addEventListener('touchcancel',()=>aboutBoundaryStart=null,{passive:true});
 window.addEventListener('resize',syncAboutCarousel,{passive:true});
 syncAboutCarousel();
 
