@@ -233,12 +233,6 @@ applyTheme();
      }
      const activePreview=document.querySelector('.home-site .section-preview.is-selected');
      if(activePreview){
-       if(activePreview.dataset.preview==='home'&&window.innerWidth<=680){
-         const copy=activePreview.querySelector('.identity-copy');
-         const photo=activePreview.querySelector('.ars-portrait-stage');
-         if(copy)makeGuide('slot',copy.getBoundingClientRect(),'03 / TEXT CELL · 30%','active');
-         if(photo)makeGuide('slot',photo.getBoundingClientRect(),'04 / PHOTO CELL · 70%','next');
-       }
        const headline=activePreview.querySelector('h1,h2');
        const description=activePreview.querySelector('.identity-copy p,.preview-copy p,.lead');
        const art=activePreview.querySelector('.ars-portrait-stage,.work-art-focus,.side-artwork');
