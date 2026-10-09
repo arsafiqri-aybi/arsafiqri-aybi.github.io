@@ -2188,3 +2188,149 @@ body.home-site{
   box-shadow:none!important;
   filter:none!important;
 }
+
+/* ARS Android horizontal navbar + native chapter scroll 39.
+   The desktop spacious Soft Arc Wheel is deliberately unaffected. */
+@media(max-width:680px){
+ body.home-site:has(.explorer:not(.is-away)){
+   display:grid;grid-template-columns:minmax(0,1fr);
+   grid-template-rows:minmax(0,1fr) auto;
+   block-size:100svh;min-block-size:0;overflow:hidden;
+ }
+ body.home-site:has(.explorer:not(.is-away))>main{
+   width:100%;height:100%;min-width:0;min-height:0;
+ }
+ .home-site .explorer:not(.is-away),
+ .home-site .explorer.is-home-preview:not(.is-away){
+   display:block;width:100%;height:100%;min-height:0;margin:0;padding:8px 0 0;
+ }
+ .home-site .explorer:not(.is-away)>.explore-frame{
+   display:block;width:calc(100% - 44px);max-width:600px;
+   height:100%;min-height:0;margin:0 auto;padding:0;
+ }
+ .home-site .explorer:not(.is-away) .explore-layout,
+ .home-site .explorer.is-home-preview:not(.is-away) .explore-layout{
+   display:grid;grid-template-columns:minmax(0,1fr);
+   grid-template-rows:48px minmax(0,1fr);
+   align-items:stretch;width:100%;height:100%;min-height:0;gap:10px;
+ }
+ .home-site .explorer:not(.is-away) .ars-mobile-header{
+   display:flex;grid-column:1;grid-row:1;position:relative;
+   align-items:center;justify-content:space-between;flex-wrap:nowrap;
+   width:100%;min-width:0;height:48px;min-height:48px;gap:12px;
+   margin:0;padding:0;
+ }
+ .home-site .ars-mobile-brand{
+   flex:0 0 auto;font-size:16px;font-weight:650;letter-spacing:-.045em;
+ }
+ .home-site .ars-mobile-menu{
+   display:flex;align-items:center;justify-content:flex-end;flex:0 1 auto;
+   width:auto;min-width:0;gap:clamp(10px,3.3vw,19px);
+   overflow:visible;scroll-behavior:auto;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button{
+   position:relative;display:inline-flex;align-items:center;justify-content:center;
+   flex:0 0 auto;min-width:0;min-height:44px;padding:7px 0;
+   font:500 12.5px/1.3 Manrope,Arial,sans-serif;white-space:nowrap;
+   border:0;background:none;color:var(--sub);transition:color .26s ease;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button[aria-current=true]{
+   color:var(--fg);font-weight:680;
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button::after{
+   content:"";position:absolute;bottom:2px;left:50%;
+   width:13px;height:1.5px;border-radius:2px;background:var(--fg);
+   opacity:0;transform:translateX(-50%) scaleX(.5);
+   transition:opacity .24s ease,transform .28s cubic-bezier(.22,1,.36,1);
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu button[aria-current=true]::after{
+   opacity:1;transform:translateX(-50%) scaleX(1);
+ }
+ .home-site .ars-mobile-header .ars-mobile-menu .ars-mobile-connect{
+   flex:0 0 32px;min-width:32px;padding:7px 5px;
+ }
+ .home-site .ars-mobile-connect svg{
+   width:19px;height:19px;fill:none;stroke:currentColor;display:block;
+ }
+ .home-site .ars-mobile-guide{display:none!important}
+ .home-site .explorer:not(.is-away) .preview-stage,
+ .home-site .explorer.is-home-preview:not(.is-away) .preview-stage{
+   position:relative;grid-column:1;grid-row:2;display:block;
+   width:100%;height:100%;min-width:0;min-height:0;
+   overflow-x:hidden;overflow-y:auto;
+   scrollbar-width:none;-webkit-overflow-scrolling:touch;
+   overscroll-behavior-y:contain;touch-action:pan-y;
+   scroll-snap-type:y mandatory;scroll-behavior:smooth;
+ }
+ .home-site .explorer:not(.is-away) .preview-stage::-webkit-scrollbar{display:none}
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage>.section-preview,
+ .home-site .explorer:not(.is-away) .preview-stage>.section-preview{
+   display:flex!important;flex-direction:column;justify-content:center;
+   width:100%;height:100%;min-height:100%;
+   padding:clamp(10px,2svh,22px) 0;margin:0;
+   overflow:visible;scroll-snap-align:start;scroll-snap-stop:normal;
+   animation:none!important;
+ }
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage>[data-preview="expertise"],
+ html.is-enhanced .home-site .explorer:not(.is-away) .preview-stage>[data-preview="approach"],
+ .home-site .explorer:not(.is-away) .preview-stage>[data-preview="expertise"],
+ .home-site .explorer:not(.is-away) .preview-stage>[data-preview="approach"]{
+   display:none!important;
+ }
+ .home-site .explorer:not(.is-away) .preview-stage .type-composition{
+   width:100%;min-height:0;
+ }
+ .home-site .explorer.is-home-preview:not(.is-away) .preview-stage>[data-preview="home"] .home-composition{
+   width:100%;height:100%;min-height:0;
+   display:flex;flex-direction:column;justify-content:flex-start;
+   gap:clamp(13px,2svh,22px);
+ }
+ .home-site .ars-about-branches{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+ .home-site .ars-about-branches a{
+   display:inline-flex;align-items:center;gap:10px;min-height:43px;
+   padding:10px 13px;border:1px solid var(--rule);border-radius:9px;
+   background:transparent;color:var(--fg);
+   text-decoration:none;font-size:12px;line-height:1.3;font-weight:600;
+ }
+ .home-site .ars-about-branches a span{color:var(--sub)}
+ .home-site .ars-about-branches a:focus-visible{outline:2px solid var(--accent)}
+}
+@media(max-width:680px) and (max-height:610px){
+ .home-site .explorer:not(.is-away) .preview-stage{scroll-snap-type:y proximity}
+ .home-site .explorer:not(.is-away) .preview-stage>.section-preview{
+   min-height:100%;height:auto;padding-block:16px;
+ }
+ .home-site .explorer.is-home-preview:not(.is-away) .preview-stage>[data-preview="home"] .home-composition{
+   height:auto;
+ }
+ .home-site .explorer.is-home-preview:not(.is-away) .ars-portrait-stage{
+   height:170px;min-height:170px;flex:0 0 170px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .home-site .explorer:not(.is-away) .preview-stage{scroll-behavior:auto}
+ .home-site .ars-mobile-header .ars-mobile-menu button,
+ .home-site .ars-mobile-header .ars-mobile-menu button::after{transition:none}
+}
+/* ARS elevated portrait 39 — diffuse floating ambient, never a box shadow.
+   Preserve the approved crop and remove rectangular elevation borders. */
+.ars-portrait-stage,.about-portrait{
+ position:relative;isolation:isolate;overflow:visible!important;
+}
+.ars-photo-ambient{
+ position:absolute;z-index:0;pointer-events:none;
+ left:6%;right:6%;bottom:-10px;height:38%;border-radius:50%;
+ background:radial-gradient(ellipse at center,
+   rgba(92,120,141,.34),rgba(39,54,66,.25) 42%,transparent 78%);
+ filter:blur(20px);
+ transform:translate3d(0,10px,0) scale(1.08);
+}
+.ars-portrait-stage img,.about-portrait img,
+.home-composition .ars-portrait-stage img{
+ position:relative;z-index:1;
+ box-shadow:none!important;filter:none!important;
+ transform:translate3d(0,-3px,0)!important;
+}
+.ars-portrait-stage:hover img,.home-composition .ars-portrait-stage:hover img{
+ box-shadow:none!important;
+}

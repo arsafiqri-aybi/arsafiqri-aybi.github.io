@@ -416,13 +416,16 @@ function syncSoftArc(index){
   softArcFrameId=requestAnimationFrame(animateSoftArc);
 }
 
-function choose(idx,moveFocus=false){
+// Four Android parent sections. Expertise and Approach belong to About.
+const mobileChapters=[0,1,4,5];
+const mobileParent=index=>mobileChapters.includes(index)?index:4;
+function choose(idx,moveFocus=false,fromMobileScroll=false){
  if(!choices.length)return;
  const previous=selected;
  selected=Math.max(0,Math.min(choices.length-1,idx));
- // Scope viewport-fit styling only to the current Home preview.
- explorer?.classList.toggle('is-home-preview',selected===0);
+ // Keep the Home card mounted and measured when another chapter is active.
  const mobile=window.innerWidth<=680;
+ explorer?.classList.toggle('is-home-preview',mobile||selected===0);
  const moved=mobile&&railMotionReady&&selected!==previous;
  const railNav=explorer?.querySelector('.section-rail');
  if(railNav){
@@ -453,7 +456,16 @@ function choose(idx,moveFocus=false){
    }
    if(moveFocus)target.focus({preventScroll:true});
  }
- if(mobile)requestAnimationFrame(centerMobileRail);
+ if(mobile){
+   if(!fromMobileScroll&&!explorer?.classList.contains('is-away')){
+     const stage=explorer?.querySelector('.preview-stage');
+     const pane=previews[mobileParent(selected)];
+     if(stage&&pane&&Math.abs(stage.scrollTop-pane.offsetTop)>2){
+       stage.scrollTo({top:pane.offsetTop,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+     }
+   }
+   requestAnimationFrame(centerMobileRail);
+ }
 }
 function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
@@ -497,6 +509,29 @@ function restoreWorkContext(){
 }
 if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose(i));b.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=choices.length-1;else n=i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1);choose(n,true);});});const rail=document.querySelector('.rail-window');
 const previewStage=explorer?.querySelector('.preview-stage');
+// Native Android scroll-snap is the motion engine. Keep nav state in sync.
+let storyScrollFrame=0;
+previewStage?.addEventListener('scroll',()=>{
+ if(window.innerWidth>680||explorer?.classList.contains('is-away')||storyScrollFrame)return;
+ storyScrollFrame=requestAnimationFrame(()=>{
+   storyScrollFrame=0;
+   if(!previewStage||window.innerWidth>680)return;
+   let next=selected,near=Infinity;
+   for(const id of mobileChapters){
+     const pane=previews[id];if(!pane)continue;
+     const d=Math.abs(previewStage.scrollTop-pane.offsetTop);
+     if(d<near){near=d;next=id;}
+   }
+   if(next!==selected)choose(next,false,true);
+ });
+},{passive:true});
+previewStage?.addEventListener('keydown',e=>{
+ if(window.innerWidth>680||e.target!==previewStage)return;
+ if(!['ArrowDown','ArrowUp','PageDown','PageUp'].includes(e.key))return;
+ e.preventDefault();
+ const at=mobileChapters.indexOf(mobileParent(selected));
+ choose(mobileChapters[Math.max(0,Math.min(3,at+(['ArrowDown','PageDown'].includes(e.key)?1:-1)))]);
+});
 
 function arrangeMobileRail(){
  if(!rail)return;
@@ -545,7 +580,8 @@ document.addEventListener('touchend',e=>{
   const dx=finger.clientX-start.x,dy=finger.clientY-start.y;
   if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.5)return;
   // LEFT -> next (Home to Work); RIGHT -> previous (Work to Home).
-  const next=Math.max(0,Math.min(choices.length-1,selected+(dx<0?1:-1)));
+  const at=mobileChapters.indexOf(mobileParent(selected));
+  const next=mobileChapters[Math.max(0,Math.min(3,at+(dx<0?1:-1)))];
   if(next===selected)return;
   lastMobileSwipeAt=performance.now();
   choose(next);
@@ -655,7 +691,7 @@ const mobileMenu=document.querySelector('.ars-mobile-menu');
 const mobileHeader=document.querySelector('.ars-mobile-header');
 function syncBalancedMobileMenu(){
   if(!mobileMenu||window.innerWidth>680)return;
-  const current=names[selected];
+  const current=names[mobileParent(selected)];
   mobileMenu.querySelectorAll('[data-mobile-rail]').forEach(button=>{
     const active=button.dataset.mobileRail===current;
     button.setAttribute('aria-current',String(active));
@@ -664,7 +700,7 @@ function syncBalancedMobileMenu(){
       if(x<mobileMenu.scrollLeft||x+button.offsetWidth>mobileMenu.scrollLeft+mobileMenu.clientWidth) mobileMenu.scrollTo({left:Math.max(0,x-12),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
     }
   });
-  mobileHeader.style.setProperty('--ars-mobile-progress',`calc(${selected/Math.max(1,names.length-1)*100}% - ${selected/Math.max(1,names.length-1)*25}px)`);
+  // Active indication belongs directly to the selected word or Connect icon.
 }
 mobileMenu?.querySelectorAll('[data-mobile-rail]').forEach(button=>button.addEventListener('click',()=>choose(names.indexOf(button.dataset.mobileRail))));
 if(explorer){new MutationObserver(syncBalancedMobileMenu).observe(explorer,{attributes:true,attributeFilter:['class']});}
