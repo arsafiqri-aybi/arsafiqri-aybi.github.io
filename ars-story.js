@@ -71,6 +71,18 @@
      slide.append(node('span','ars-case-eyebrow',beat.eyebrow));
      slide.append(node(index===0?'h1':'h2','ars-case-heading',beat.title));
      if(beat.description)slide.append(paragraph(beat.description));
+     // Reuse the already-approved source-derived artwork. This is an
+     // illustration, never presented as a verified product screenshot.
+     if(index===0){
+       const original=body.querySelector('.showcase-art .project-art, .showcase-art .curated-media');
+       if(original){
+         const visual=node('figure','ars-case-visual');
+         visual.append(original.cloneNode(true));
+         const caption=node('figcaption','ars-case-visual-note',
+           original.getAttribute('aria-label')||'Source-derived project visual; see original evidence for details.');
+         visual.append(caption);slide.append(visual);
+       }
+     }
      if(beat.items?.length){
        const list=node('ul','ars-case-contributions');
        for(const value of beat.items){const li=node('li','',value);list.append(li);}
