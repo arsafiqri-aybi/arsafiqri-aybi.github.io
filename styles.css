@@ -1497,3 +1497,46 @@ html.grid-review .ars-grid-guides{display:block}
     letter-spacing:.03em;
   }
 }
+
+
+/* ARS Editorial Typography 26 — finish mobile Home's vertical rhythm.
+   Applied only while Home is the selected preview. The navbar, desktop,
+   font families, content wording, and portrait crop remain untouched. */
+@media(max-width:680px){
+  .home-site .explorer.is-home-preview .home-role{
+    margin:0 0 15px;
+    line-height:1.4;
+  }
+  .home-site .explorer.is-home-preview .identity-copy h1{
+    line-height:1.15;
+    letter-spacing:-.054em;
+  }
+  .home-site .explorer.is-home-preview .identity-copy p{
+    margin-top:17px;
+    line-height:1.58;
+  }
+  /* The photo was vertically centered INSIDE the expandable second row.
+     That created a large gap after the paragraph even with a small grid gap.
+     Aligning the frame to the row start makes the visible spacing intentional. */
+  .home-site .explorer.is-home-preview .home-composition{
+    row-gap:clamp(24px,3.5svh,30px);
+  }
+  .home-site .explorer.is-home-preview .ars-portrait-stage{
+    align-self:start;
+  }
+}
+@media(max-width:680px) and (max-height:680px){
+  .home-site .explorer.is-home-preview .home-role{
+    margin-bottom:12px;
+  }
+  .home-site .explorer.is-home-preview .identity-copy h1{
+    line-height:1.13;
+  }
+  .home-site .explorer.is-home-preview .identity-copy p{
+    margin-top:13px;
+    line-height:1.52;
+  }
+  .home-site .explorer.is-home-preview .home-composition{
+    row-gap:clamp(18px,2.7svh,24px);
+  }
+}
