@@ -375,13 +375,13 @@ function paintSoftArc(position){
   if(window.innerWidth<=680||!choices.length)return;
   const view=explorer?.querySelector('.section-rail .rail-window');
   if(!view)return;
-  const h=view.clientHeight||144,w=view.clientWidth||142;
+  const h=view.clientHeight||172,w=view.clientWidth||142;
   const radius=Math.min(31,w*.23),baseX=Math.max(3,w*.035);
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   choices.forEach((item,i)=>{
     const d=i-position,distance=Math.abs(d);
     const x=baseX+radius*Math.cos(d*.78);
-    const y=h/2+Math.sin(d*.68)*h*.34;
+    const y=h/2+Math.sin(d*.68)*h*.40;
     const near=Math.max(0,1-distance);
     const scale=reduced?1:1+near*.045;
     item.style.transform='translate3d('+x.toFixed(2)+'px,'+(y-19).toFixed(2)+'px,0) scale('+scale.toFixed(3)+')';
