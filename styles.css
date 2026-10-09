@@ -2155,3 +2155,21 @@ body .ars-site-footer nav a:focus-visible{
  }
  html.is-enhanced .home-site .section-preview.is-selected{animation:none!important}
 }
+
+
+/* ARS Seamless Theme Canvas 37 — eliminate dark/light background seams.
+   The html canvas is the only opaque page backdrop on the home portfolio.
+   Previously html snapped to the new --bg while body faded for 420ms,
+   exposing two out-of-sync layers near viewport edges and page bottoms.
+   Let html own the eased color transition; body is transparent above it.
+   Do not change section content, the approved arc wheel, or mobile layout. */
+html{
+  background-color:var(--bg);
+  transition:background-color .42s ease;
+}
+body.home-site{
+  background-color:transparent;
+}
+@media(prefers-reduced-motion:reduce){
+  html{transition:none}
+}
