@@ -925,3 +925,22 @@ html[data-ars-view="section"] .home-site .topbar{
     visibility:hidden;
   }
 }
+
+
+/* Android single-word guarantee 12. Supports slow networks and stale page state:
+   never reveal inactive words; preserve outgoing label during its slide. */
+@media(max-width:680px){
+  html.is-enhanced .home-site .section-rail .rail-choice:not([aria-current=true]):not(.was-active){
+    display:none!important;
+  }
+  html.is-enhanced .home-site .section-rail .rail-choice[aria-current=true]{
+    display:flex!important;
+    left:50%;
+    justify-content:center;
+    text-align:center;
+  }
+  .home-site .section-rail .rail-window{
+    width:100%;
+    margin-inline:auto;
+  }
+}
