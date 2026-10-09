@@ -1815,3 +1815,38 @@ html.grid-review .ars-grid-guides{display:block}
     margin-block-start:5px;
   }
 }
+
+
+/* ARS Editorial Line Rhythm 33 — Home Android only.
+   Role remains close to its underline (5–6px).
+   Divider -> headline: 22px / 18px on short screens.
+   Description -> bottom divider == bottom divider -> portrait: 20px
+   (17px on short screens). Role, text, photo and arc wheel stay intact. */
+@media (max-width:680px){
+  .home-site .explorer.is-home-preview .home-role{
+    margin-block-end:22px;
+  }
+  .home-site .explorer.is-home-preview .home-role::after{
+    margin-block-start:6px;
+  }
+  .home-site .explorer.is-home-preview .identity-copy::after{
+    margin-block-start:20px;
+  }
+  .home-site .explorer.is-home-preview .home-composition{
+    gap:20px;
+  }
+}
+@media (max-width:680px) and (max-height:680px){
+  .home-site .explorer.is-home-preview .home-role{
+    margin-block-end:18px;
+  }
+  .home-site .explorer.is-home-preview .home-role::after{
+    margin-block-start:5px;
+  }
+  .home-site .explorer.is-home-preview .identity-copy::after{
+    margin-block-start:17px;
+  }
+  .home-site .explorer.is-home-preview .home-composition{
+    gap:17px;
+  }
+}
