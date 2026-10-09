@@ -2113,15 +2113,15 @@ body .ars-site-footer nav a:focus-visible{
   .home-site .explorer.is-home-preview>.explore-frame{width:calc(100% - 44px);margin-inline:auto}
 }
 
-/* ARS Soft Arc Wheel Balanced — refinement October 2026.
+/* ARS Soft Arc Wheel Spacious — refinement October 2026.
    A ghosted semicircular path with soft synchronized preview motion.
    Desktop only: retain existing mobile header, links, and page layouts. */
 @media(min-width:681px){
  html.is-enhanced .home-site .section-rail{
-   height:172px;width:142px;max-width:100%;overflow:visible;
+   height:198px;width:142px;max-width:100%;overflow:visible;
  }
  html.is-enhanced .home-site .section-rail .rail-window{
-   position:relative;width:100%;min-width:0;height:172px;max-height:172px;
+   position:relative;width:100%;min-width:0;height:198px;max-height:198px;
    overflow:hidden;overscroll-behavior:contain;
    mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);
  }
