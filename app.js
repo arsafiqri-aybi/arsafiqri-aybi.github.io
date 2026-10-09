@@ -460,14 +460,27 @@ function choose(idx,moveFocus=false,fromMobileScroll=false){
    if(!fromMobileScroll&&!explorer?.classList.contains('is-away')){
      const stage=explorer?.querySelector('.preview-stage');
      const pane=previews[mobileParent(selected)];
-     if(stage&&pane&&Math.abs(stage.scrollTop-pane.offsetTop)>2){
-       stage.scrollTo({top:pane.offsetTop,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+     if(stage&&pane&&Math.abs(stage.scrollLeft-pane.offsetLeft)>2){
+       stage.scrollTo({left:pane.offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
      }
    }
    requestAnimationFrame(centerMobileRail);
  }
 }
-function showFromLocation(){const section=location.hash.replace('#','').toLowerCase();const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+function showFromLocation(){
+ let section=location.hash.replace('#','').toLowerCase();
+ // A return from a case-study on Android resumes the Work carousel,
+ // rather than opening the legacy desktop Work detail page.
+ if(window.innerWidth<=680&&section==='work'){
+   let cameFromCase=false;
+   try{cameFromCase=sessionStorage.getItem(workReturnKey)==='1';}catch{}
+   if(cameFromCase){
+     try{sessionStorage.removeItem(workReturnKey);sessionStorage.setItem('ars-section','1');}catch{}
+     history.replaceState(null,'',location.pathname+location.search);
+     section='';
+   }
+ }
+const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home')choose(0);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
@@ -509,7 +522,7 @@ function restoreWorkContext(){
 }
 if(choices.length){choices.forEach((b,i)=>{b.addEventListener('click',()=>choose(i));b.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=choices.length-1;else n=i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1);choose(n,true);});});const rail=document.querySelector('.rail-window');
 const previewStage=explorer?.querySelector('.preview-stage');
-// Native Android scroll-snap is the motion engine. Keep nav state in sync.
+// Native horizontal Android scroll-snap is the motion engine. Keep nav state in sync.
 let storyScrollFrame=0;
 previewStage?.addEventListener('scroll',()=>{
  if(window.innerWidth>680||explorer?.classList.contains('is-away')||storyScrollFrame)return;
@@ -519,7 +532,7 @@ previewStage?.addEventListener('scroll',()=>{
    let next=selected,near=Infinity;
    for(const id of mobileChapters){
      const pane=previews[id];if(!pane)continue;
-     const d=Math.abs(previewStage.scrollTop-pane.offsetTop);
+     const d=Math.abs(previewStage.scrollLeft-pane.offsetLeft);
      if(d<near){near=d;next=id;}
    }
    if(next!==selected)choose(next,false,true);
@@ -527,10 +540,10 @@ previewStage?.addEventListener('scroll',()=>{
 },{passive:true});
 previewStage?.addEventListener('keydown',e=>{
  if(window.innerWidth>680||e.target!==previewStage)return;
- if(!['ArrowDown','ArrowUp','PageDown','PageUp'].includes(e.key))return;
+ if(!['ArrowRight','ArrowLeft','PageDown','PageUp'].includes(e.key))return;
  e.preventDefault();
  const at=mobileChapters.indexOf(mobileParent(selected));
- choose(mobileChapters[Math.max(0,Math.min(3,at+(['ArrowDown','PageDown'].includes(e.key)?1:-1)))]);
+ choose(mobileChapters[Math.max(0,Math.min(3,at+(['ArrowRight','PageDown'].includes(e.key)?1:-1)))]);
 });
 
 function arrangeMobileRail(){
@@ -560,39 +573,8 @@ function arrangeMobileRail(){
    syncSoftArc(selected);
  }
 }
-// Horizontal swipes from anywhere on a mobile preview; page vertical scroll is native.
-let mobileTouchStart=null,lastMobileSwipeAt=-Infinity;
-const canSwipePreview=()=>window.innerWidth<=680&&
-  root.classList.contains('is-enhanced')&&
-  explorer&&!explorer.classList.contains('is-away');
-document.addEventListener('touchstart',e=>{
-  if(!canSwipePreview()||e.touches.length!==1){mobileTouchStart=null;return;}
-  const finger=e.touches[0];
-  mobileTouchStart={identifier:finger.identifier,x:finger.clientX,y:finger.clientY};
-},{passive:true});
-document.addEventListener('touchend',e=>{
-  if(!mobileTouchStart)return;
-  const start=mobileTouchStart;
-  mobileTouchStart=null;
-  if(!canSwipePreview()||e.touches.length!==0)return;
-  const finger=[...e.changedTouches].find(t=>t.identifier===start.identifier);
-  if(!finger)return;
-  const dx=finger.clientX-start.x,dy=finger.clientY-start.y;
-  if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.5)return;
-  // LEFT -> next (Home to Work); RIGHT -> previous (Work to Home).
-  const at=mobileChapters.indexOf(mobileParent(selected));
-  const next=mobileChapters[Math.max(0,Math.min(3,at+(dx<0?1:-1)))];
-  if(next===selected)return;
-  lastMobileSwipeAt=performance.now();
-  choose(next);
-},{passive:true});
-document.addEventListener('touchcancel',()=>{mobileTouchStart=null},{passive:true});
-document.addEventListener('click',e=>{
-  if(canSwipePreview()&&performance.now()-lastMobileSwipeAt<360){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }
-},true);
+// Native touch-action:pan-x and scroll-snap own horizontal swipes.
+// No touchend click interception: links and nested carousels remain tappable.
 window.addEventListener('resize',()=>requestAnimationFrame(arrangeMobileRail),{passive:true});
 window.addEventListener('orientationchange',()=>requestAnimationFrame(centerMobileRail),{passive:true});
 if(window.visualViewport){
@@ -685,6 +667,48 @@ document.querySelectorAll('[data-motion-player]').forEach(stage=>{
  root.classList.add('motion-enhanced');
 });
 if(reduced.matches)root.classList.add('no-motion');
+
+
+/* About's second-level horizontal carousel is a separate swipe surface.
+   Each About chapter owns its real content and an accessible local tab. */
+const aboutTrack=document.querySelector('.ars-about-track');
+const aboutButtons=[...document.querySelectorAll('[data-about-step]')];
+const aboutPanels=[...document.querySelectorAll('.ars-about-page')];
+let aboutFrame=0;
+function syncAboutCarousel(){
+ if(!aboutTrack||!aboutPanels.length)return;
+ let current=0,closest=Infinity;
+ aboutPanels.forEach((panel,index)=>{
+   const gap=Math.abs(aboutTrack.scrollLeft-panel.offsetLeft);
+   if(gap<closest){closest=gap;current=index;}
+ });
+ aboutButtons.forEach((button,index)=>{
+   if(index===current)button.setAttribute('aria-current','step');
+   else button.removeAttribute('aria-current');
+ });
+ const counter=document.querySelector('[data-about-counter]');
+ if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / 04';
+ const progress=document.querySelector('[data-about-progress]');
+ if(progress)progress.style.transform='scaleX('+((current+1)/aboutPanels.length)+')';
+}
+aboutButtons.forEach((button,index)=>button.addEventListener('click',()=>{
+ const panel=aboutPanels[index];
+ if(panel&&aboutTrack)aboutTrack.scrollTo({left:panel.offsetLeft,behavior:reduced.matches?'instant':'smooth'});
+}));
+aboutTrack?.addEventListener('scroll',()=>{
+ if(aboutFrame)return;
+ aboutFrame=requestAnimationFrame(()=>{aboutFrame=0;syncAboutCarousel();});
+},{passive:true});
+aboutTrack?.addEventListener('keydown',event=>{
+ if(event.target!==aboutTrack||!['ArrowLeft','ArrowRight'].includes(event.key))return;
+ event.preventDefault();
+ let current=0,d=Infinity;
+ aboutPanels.forEach((panel,index)=>{const gap=Math.abs(panel.offsetLeft-aboutTrack.scrollLeft);if(gap<d){d=gap;current=index;}});
+ const next=Math.max(0,Math.min(aboutPanels.length-1,current+(event.key==='ArrowRight'?1:-1)));
+ aboutTrack.scrollTo({left:aboutPanels[next].offsetLeft,behavior:reduced.matches?'instant':'smooth'});
+});
+window.addEventListener('resize',syncAboutCarousel,{passive:true});
+syncAboutCarousel();
 
 // Compact mobile navigation preserves existing preview and swipe behavior.
 const mobileMenu=document.querySelector('.ars-mobile-menu');
