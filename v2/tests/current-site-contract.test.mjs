@@ -103,3 +103,20 @@ test('hash and popstate reuse the same navigation handler',()=>{
  assert.match(js,/addEventListener\('hashchange',handleHistoryNavigation\)/);
  assert.match(js,/addEventListener\('popstate',handleHistoryNavigation\)/);
 });
+
+test('refined Home has a single accessible Work CTA with one direction',()=>{
+ const match=home.match(/<button[^>]*data-explore-work\b[^>]*>([\s\S]*?)<\/button>/);
+ assert.ok(match,'Home Work CTA missing');
+ assert.match(match[1],/Explore Work/);
+ assert.match(match[1],/ars-cue-arrow-right/);
+ assert.doesNotMatch(match[1],/ars-cue-down|ars-cue-left/);
+ assert.match(home,/assets\/ars-portrait-800\.webp/);
+ assert.match(home,/Scroll down · Swipe left/);
+ assert.match(js,/addEventListener\('click',\(\)=>choose\(1\)\)/);
+});
+test('Android Home portrait fits the viewport and CTA respects reduced motion',()=>{
+ assert.match(css,/max-height:min\(38svh,calc\(\(100vw - 44px\)\/1\.16\),360px\)!important/);
+ assert.match(css,/\.ars-main-swipe-cue \.ars-home-explore-action\{[\s\S]*?border-radius:999px/);
+ assert.doesNotMatch(css,/\.ars-cue-down|\.ars-cue-left|@keyframes ars-hint-down/);
+ assert.match(css,/\.ars-main-swipe-cue \.ars-home-explore-action\{transition:none\}/);
+});
