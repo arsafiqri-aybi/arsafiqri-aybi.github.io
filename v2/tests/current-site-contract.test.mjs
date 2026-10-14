@@ -120,3 +120,24 @@ test('Android Home portrait fits the viewport and CTA respects reduced motion',(
  assert.doesNotMatch(css,/\.ars-cue-down|\.ars-cue-left|@keyframes ars-hint-down/);
  assert.match(css,/\.ars-main-swipe-cue \.ars-home-explore-action\{transition:none\}/);
 });
+
+test('isolated mobile visual inspector has live same-origin page and DOM selection',()=>{
+ const inspectorPath=resolve(root,'inspect/index.html');
+ assert.ok(existsSync(inspectorPath),'Inspector endpoint missing');
+ const source=readFileSync(inspectorPath,'utf8');
+ assert.match(source,/name="robots" content="noindex,nofollow,noarchive"/);
+ assert.match(source,/<iframe[^>]+src="\/"/);
+ assert.match(source,/id="boxes"/);
+ assert.match(source,/id="pick"/);
+ assert.match(source,/id="density"/);
+ assert.match(source,/id="properties"/);
+ assert.match(source,/function matchedRules\(/);
+ assert.match(source,/function clickPage\(/);
+ assert.match(source,/function attach\(/);
+ assert.match(source,/page\.addEventListener\('click',clickPage,true\)/);
+ assert.match(source,/prefers-reduced-motion:reduce/);
+ const jsSource=source.match(/<script>([\s\S]*?)<\/script>/);
+ assert.ok(jsSource,'Inspector JavaScript missing');
+ assert.doesNotThrow(()=>new Function(jsSource[1]));
+ assert.doesNotMatch(home,/\/inspect\//);
+});

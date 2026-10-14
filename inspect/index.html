@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#151719">
+<title>ARS · Visual Inspector</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:dark;--bg:#151719;--surface:#22272b;--line:#4a555f;--text:#f0f3f5;--muted:#aebcc5;--accent:#bbccd6;--cyan:#76dbea;--green:#9de7b9}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text)}
+[hidden]{display:none!important}
+#site{display:block;position:fixed;inset:0;width:100%;height:100%;height:100dvh;border:0;background:var(--bg)}
+#boxes{position:fixed;inset:0;z-index:10;pointer-events:none;overflow:hidden}
+.outline{position:absolute;border:1px solid rgba(118,219,234,.76);background:rgba(118,219,234,.045);border-radius:2px;pointer-events:none}
+.outline.layout{border-color:rgba(194,167,250,.8);background:rgba(194,167,250,.03)}
+.outline.action{border-color:rgba(157,231,185,.9);background:rgba(157,231,185,.06)}
+.outline.active{border:2px solid #ffe19a;background:rgba(255,225,154,.12);z-index:2}
+.outline-label{position:absolute;top:-1px;left:-1px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:2px 5px;background:#174e58;color:#f5fcff;border-radius:0 0 4px 0;font:700 9px/1.3 ui-monospace,SFMono-Regular,monospace}
+.outline.layout .outline-label{background:#574477}
+.outline.action .outline-label{background:#245e41}
+.outline.active .outline-label{background:#745d25;color:#fff}
+.toolbar{position:fixed;top:max(9px,env(safe-area-inset-top));left:10px;right:10px;z-index:30;display:flex;align-items:center;gap:6px;max-width:840px;margin:auto;min-height:48px;padding:6px;border:1px solid rgba(207,223,234,.25);border-radius:15px;background:rgba(22,26,30,.94);box-shadow:0 8px 30px rgba(0,0,0,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow-x:auto;scrollbar-width:none}
+.toolbar::-webkit-scrollbar{display:none}
+.brand{font-size:12px;font-weight:800;white-space:nowrap;letter-spacing:-.035em;padding:0 6px}
+.toolbar button,.panel button{appearance:none;border:1px solid #50606c;border-radius:9px;background:#303942;color:var(--text);padding:9px 10px;font:600 11px/1.2 inherit;white-space:nowrap;min-height:36px;cursor:pointer}
+.toolbar button[aria-pressed=true]{background:#c0d6e4;border-color:#c0d6e4;color:#10171d}
+.toolbar button:focus-visible,.panel button:focus-visible,.toolbar a:focus-visible{outline:2px solid white;outline-offset:2px}
+.toolbar a{display:inline-flex;align-items:center;color:var(--muted);text-decoration:none;padding:9px 7px;font-size:11px;white-space:nowrap}
+.toolbar button:disabled{opacity:.45;cursor:not-allowed}
+.spacer{flex:1}
+.status{position:fixed;left:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:30;max-width:calc(100% - 24px);padding:9px 12px;background:rgba(22,26,30,.9);border:1px solid rgba(208,223,232,.2);border-radius:10px;color:var(--muted);font-size:11px;line-height:1.4;pointer-events:none;box-shadow:0 5px 18px #0005}
+.panel{position:fixed;z-index:40;bottom:max(9px,env(safe-area-inset-bottom));left:9px;right:9px;max-width:840px;margin:auto;max-height:min(65dvh,540px);display:flex;flex-direction:column;overflow:hidden;border:1px solid #586975;border-radius:16px;background:rgba(22,27,32,.98);box-shadow:0 18px 50px #0009}
+.panel-head{padding:13px 14px 9px;display:flex;gap:10px;justify-content:space-between;align-items:start;border-bottom:1px solid #39434b}
+.panel-head h1{margin:0;font-size:13px;line-height:1.4}
+.panel-head p{margin:3px 0 0;font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+.panel-head button{flex:0 0 auto}
+.panel-body{padding:12px 14px 14px;overflow-y:auto;overscroll-behavior:contain;font-size:12px}
+.group-title{margin:12px 0 6px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.group-title:first-child{margin-top:0}
+.properties{display:grid;grid-template-columns:minmax(100px,38%) minmax(0,1fr);gap:6px 12px;margin:0}
+.properties dt{color:var(--muted)}
+.properties dd{margin:0;color:var(--text);overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px}
+pre{margin:0;padding:10px;background:#101619;border:1px solid #36434a;border-radius:8px;color:#d7e9f0;font:11px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.rule{border-bottom:1px solid #3b454d;padding:8px 0}
+.rule:last-child{border-bottom:0}
+.rule code{display:block;color:#b7e4f0;overflow-wrap:anywhere;font-size:10px}
+.rule small{color:var(--muted)}
+.rule pre{margin-top:5px;padding:7px;font-size:10px}
+.panel-actions{display:flex;gap:8px;margin-top:12px}
+.panel-actions button{flex:1}
+body.panel-open .status{display:none}
+@media(min-width:680px){.toolbar{left:20px;right:20px}.panel{bottom:16px}.panel-body{padding:16px 18px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<iframe id="site" title="Website ARS asli yang sedang diinspeksi" src="/" loading="eager"></iframe>
+<div id="boxes" aria-hidden="true"></div>
+<div class="toolbar" aria-label="Alat inspect ARS">
+  <span class="brand">ARS Inspect</span>
+  <button id="pick" type="button" aria-pressed="true" title="Ketuk elemen tanpa menjalankan aksinya">Pilih: ON</button>
+  <button id="boxesToggle" type="button" aria-pressed="true">Kotak: ON</button>
+  <button id="density" type="button" aria-pressed="false" title="Ganti antara struktur dan semua elemen">Struktur</button>
+  <button id="home" type="button">Home ↺</button>
+  <span class="spacer"></span>
+  <a href="/" target="_blank" rel="noopener noreferrer" title="Buka halaman website publik">Situs ↗</a>
+</div>
+<div class="status" id="status" role="status" aria-live="polite">Memuat website ARS…</div>
+<section id="panel" class="panel" aria-label="Detail inspect elemen" hidden>
+  <div class="panel-head">
+    <div>
+      <h1 id="elementTitle">Elemen</h1>
+      <p id="elementPath"></p>
+    </div>
+    <button id="closePanel" type="button" aria-label="Tutup detail inspect">Tutup</button>
+  </div>
+  <div class="panel-body">
+    <div class="group-title">Ukuran & CSS terhitung</div>
+    <dl id="properties" class="properties"></dl>
+    <div class="group-title">HTML elemen</div>
+    <pre id="markup"></pre>
+    <div class="group-title" id="rulesTitle">Selector CSS yang cocok</div>
+    <div id="rules"></div>
+    <div class="panel-actions">
+      <button id="copy" type="button">Salin detail elemen</button>
+      <button id="copySelector" type="button">Salin selector</button>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+'use strict';
+const frame=document.getElementById('site');
+const layer=document.getElementById('boxes');
+const status=document.getElementById('status');
+const panel=document.getElementById('panel');
+const pick=document.getElementById('pick');
+const boxesToggle=document.getElementById('boxesToggle');
+const density=document.getElementById('density');
+let page=null,win=null,selected=null,observer=null,resizeObserver=null,scheduled=false;
+let picking=true,showBoxes=true,allElements=false;
+const maxBoxes=280;
+const primary='header,nav,main,section,article,footer,h1,h2,h3,h4,p,figure,img,video,button,a,[data-preview],[data-page],.home-composition,.identity-copy,.ars-main-swipe-cue,.ars-mobile-header,.ars-mobile-menu,.ars-work-mobile,.ars-about-track';
+function nodeLabel(el){
+ const id=el.id?'#'+el.id:'';
+ const classes=typeof el.className==='string'?el.className.trim().split(/\s+/).filter(Boolean).slice(0,2).map(x=>'.'+x).join(''):'';
+ return (el.tagName.toLowerCase()+id+classes).slice(0,48);
+}
+function nodeSelector(el){
+ if(!el||!el.tagName)return '';
+ const chain=[];
+ for(let e=el;e&&e.nodeType===1&&chain.length<6;e=e.parentElement){
+  if(e.id){chain.unshift(e.tagName.toLowerCase()+'#'+CSS.escape(e.id));break}
+  let part=e.tagName.toLowerCase();
+  if(e.parentElement){
+   const siblings=[...e.parentElement.children].filter(x=>x.tagName===e.tagName);
+   if(siblings.length>1)part+=':nth-of-type('+(siblings.indexOf(e)+1)+')';
+  }
+  chain.unshift(part);
+ }
+ return chain.join(' > ');
+}
+function rect(el){
+ const r=el.getBoundingClientRect(),f=frame.getBoundingClientRect();
+ return {left:r.left+f.left,top:r.top+f.top,width:r.width,height:r.height,right:r.right+f.left,bottom:r.bottom+f.top};
+}
+function visible(el){
+ if(!el.isConnected)return false;
+ const r=rect(el);
+ if(r.width<2||r.height<2||r.right<0||r.bottom<0||r.left>innerWidth||r.top>innerHeight)return false;
+ const s=win.getComputedStyle(el);
+ return s.display!=='none'&&s.visibility!=='hidden'&&s.opacity!=='0';
+}
+function kind(el){
+ if(el.matches('button,a,input,select,textarea,[role="button"]'))return 'action';
+ if(el.matches('header,nav,main,section,article,footer,figure,[data-preview],[data-page]'))return 'layout';
+ return '';
+}
+function draw(){
+ scheduled=false;
+ layer.replaceChildren();
+ if(!page||!showBoxes)return;
+ const elements=[...page.body.querySelectorAll('*')];
+ const candidates=[];
+ let total=0;
+ for(const el of elements){
+  if(!allElements&&!el.matches(primary))continue;
+  if(!visible(el))continue;
+  total++;
+  if(candidates.length<maxBoxes)candidates.push(el);
+ }
+ if(selected&&selected.isConnected&&!candidates.includes(selected)&&visible(selected))candidates.push(selected);
+ const fragment=document.createDocumentFragment();
+ let labels=0;
+ for(const el of candidates){
+  const r=rect(el);
+  const b=document.createElement('div');
+  b.className='outline '+kind(el)+(selected===el?' active':'');
+  b.style.left=Math.max(0,r.left)+'px';
+  b.style.top=Math.max(0,r.top)+'px';
+  b.style.width=Math.max(1,Math.min(innerWidth,r.right)-Math.max(0,r.left))+'px';
+  b.style.height=Math.max(1,Math.min(innerHeight,r.bottom)-Math.max(0,r.top))+'px';
+  if((selected===el||(labels<26&&!allElements&&r.width>52&&r.height>20))){
+   const label=document.createElement('span');
+   label.className='outline-label';
+   label.textContent=nodeLabel(el);
+   b.appendChild(label);
+   labels++;
+  }
+  fragment.appendChild(b);
+ }
+ layer.appendChild(fragment);
+ status.textContent=(picking?'Pilih aktif · ':'Navigasi aktif · ')+total+' elemen terlihat'+(total>maxBoxes?' (maks. '+maxBoxes+' kotak)':'')+' · Ketuk elemen untuk detail';
+}
+function schedule(){
+ if(scheduled)return;
+ scheduled=true;
+ requestAnimationFrame(draw);
+}
+function listProps(el){
+ const s=win.getComputedStyle(el),r=el.getBoundingClientRect();
+ const entries=[
+  ['Ukuran',Math.round(r.width)+' × '+Math.round(r.height)+' px'],
+  ['Posisi',Math.round(r.left)+', '+Math.round(r.top)+' px (viewport)'],
+  ['display',s.display],['position',s.position],['z-index',s.zIndex],
+  ['padding',s.padding],['margin',s.margin],['gap',s.gap],
+  ['font',s.fontSize+' / '+s.lineHeight+' / '+s.fontWeight],
+  ['color',s.color],['background',s.backgroundColor],
+  ['border',s.border],['border-radius',s.borderRadius],
+  ['overflow',s.overflowX+' / '+s.overflowY],
+  ['object-fit',s.objectFit],['object-position',s.objectPosition]
+ ];
+ const target=document.getElementById('properties');
+ target.replaceChildren();
+ for(const [key,value] of entries){
+  const dt=document.createElement('dt'),dd=document.createElement('dd');
+  dt.textContent=key;dd.textContent=value;
+  target.append(dt,dd);
+ }
+}
+function matchedRules(el){
+ const found=[];
+ function visit(rules,source){
+  for(const rule of rules){
+   if(rule.type===1){
+    try{if(el.matches(rule.selectorText))found.push({source:source,selector:rule.selectorText,css:rule.style.cssText})}catch{}
+   }else if(rule.cssRules){
+    if(rule.type===4){try{if(!win.matchMedia(rule.conditionText).matches)continue}catch{continue}}
+    if(rule.type===12){try{if(!win.CSS.supports(rule.conditionText))continue}catch{continue}}
+    visit(rule.cssRules,source);
+   }
+  }
+ }
+ for(const sheet of page.styleSheets){
+  try{
+   const source=sheet.href?new URL(sheet.href).pathname.split('/').pop():'inline CSS';
+   visit(sheet.cssRules,source);
+  }catch{}
+ }
+ return found.slice(-14);
+}
+function detail(el){
+ const title=document.getElementById('elementTitle');
+ const pathname=document.getElementById('elementPath');
+ title.textContent=nodeLabel(el);
+ pathname.textContent=nodeSelector(el);
+ listProps(el);
+ document.getElementById('markup').textContent=(el.outerHTML||'').slice(0,900);
+ const target=document.getElementById('rules');
+ target.replaceChildren();
+ const matching=matchedRules(el);
+ document.getElementById('rulesTitle').textContent='Selector CSS yang cocok ('+matching.length+' terakhir)';
+ if(!matching.length){const note=document.createElement('p');note.textContent='Tidak ada rule CSS yang bisa dibaca untuk elemen ini.';target.appendChild(note)}
+ for(const entry of matching){
+  const wrap=document.createElement('div'),code=document.createElement('code'),small=document.createElement('small'),pre=document.createElement('pre');
+  wrap.className='rule';code.textContent=entry.selector;small.textContent=entry.source;pre.textContent=entry.css;
+  wrap.append(code,small,pre);target.appendChild(wrap);
+ }
+}
+function select(el){
+ if(!el||!el.tagName)return;
+ selected=el;
+ detail(el);
+ panel.hidden=false;
+ document.body.classList.add('panel-open');
+ schedule();
+}
+function clickPage(event){
+ if(!picking)return;
+ event.preventDefault();
+ event.stopImmediatePropagation();
+ select(event.target.nodeType===1?event.target:event.target.parentElement);
+}
+function attach(){
+ let nextDoc,nextWin;
+ try{nextDoc=frame.contentDocument;nextWin=frame.contentWindow;if(!nextDoc||!nextWin||!nextDoc.body)throw Error('not ready')}
+ catch{status.textContent='Halaman tidak dapat diinspeksi. Pilih Home ↺ untuk kembali.';return}
+ if(page===nextDoc){schedule();return}
+ if(observer)observer.disconnect();
+ if(resizeObserver)resizeObserver.disconnect();
+ page=nextDoc;win=nextWin;selected=null;
+ panel.hidden=true;document.body.classList.remove('panel-open');
+ page.addEventListener('click',clickPage,true);
+ page.addEventListener('scroll',schedule,{capture:true,passive:true});
+ win.addEventListener('resize',schedule,{passive:true});
+ win.addEventListener('hashchange',schedule);
+ observer=new MutationObserver(schedule);
+ observer.observe(page.documentElement,{attributes:true,childList:true,subtree:true});
+ if(typeof ResizeObserver!=='undefined'){resizeObserver=new ResizeObserver(schedule);resizeObserver.observe(page.documentElement)}
+ schedule();
+}
+function updateControl(button,enabled,label){
+ button.setAttribute('aria-pressed',String(enabled));
+ button.textContent=label+(enabled?': ON':': OFF');
+}
+pick.addEventListener('click',()=>{picking=!picking;updateControl(pick,picking,'Pilih');schedule()});
+boxesToggle.addEventListener('click',()=>{showBoxes=!showBoxes;updateControl(boxesToggle,showBoxes,'Kotak');schedule()});
+density.addEventListener('click',()=>{
+ allElements=!allElements;
+ density.setAttribute('aria-pressed',String(allElements));
+ density.textContent=allElements?'Semua':'Struktur';
+ schedule();
+});
+document.getElementById('home').addEventListener('click',()=>{frame.src='/';panel.hidden=true;document.body.classList.remove('panel-open')});
+document.getElementById('closePanel').addEventListener('click',()=>{panel.hidden=true;document.body.classList.remove('panel-open');schedule()});
+async function copy(value,button){
+ try{
+  await navigator.clipboard.writeText(value);
+  const before=button.textContent;
+  button.textContent='Tersalin';
+  setTimeout(()=>button.textContent=before,1100);
+ }catch{status.textContent='Salin tidak diizinkan browser. Pilih teks detail secara manual.'}
+}
+document.getElementById('copySelector').addEventListener('click',event=>{if(selected)copy(nodeSelector(selected),event.currentTarget)});
+document.getElementById('copy').addEventListener('click',event=>{
+ if(!selected)return;
+ const props=[...document.querySelectorAll('#properties dt,#properties dd')].map(x=>x.textContent).join(' · ');
+ copy('ARS Visual Inspector\nPage: '+(win?win.location.href:'')+'\nSelector: '+nodeSelector(selected)+'\n'+props+'\n'+(selected.outerHTML||'').slice(0,900),event.currentTarget);
+});
+frame.addEventListener('load',attach);
+window.addEventListener('resize',schedule,{passive:true});
+try{if(frame.contentDocument&&frame.contentDocument.readyState==='complete')attach()}catch{}
+})();
+</script>
+</body>
+</html>

@@ -3,4 +3,5 @@ Allow: /
 Disallow: /docs/
 Disallow: /content/
 Disallow: /scripts/
+Disallow: /inspect/
 Sitemap: https://arsafiqri-aybi.github.io/sitemap.xml

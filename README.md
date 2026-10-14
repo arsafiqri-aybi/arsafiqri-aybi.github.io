@@ -102,3 +102,25 @@ The live site is committed static HTML/CSS/JS and does not require a build on Gi
 `node --test v2/tests/current-site-contract.test.mjs` checks the published source's static contracts. The remaining `v2/tests/*.test.mjs` cover reusable release/media/navigation logic and require review when the design changes. Browser automation, physical Android/iOS, Safari/Firefox and screen-reader tests are separate checks; no old release's QA results are evidence of the present layout.
 
 The historical source commits remain in Git history. Inactive debugging layers, superseded reports/checkpoints and obsolete QA harnesses have been removed from the current tree without altering published pages. 
+
+## Mobile visual inspector (isolated route)
+
+Open **https://arsafiqri-aybi.github.io/inspect/** on Chrome Android.
+This is an opt-in developer utility, **not part of the public homepage**.
+It renders the real production site inside a same-origin full-viewport iframe,
+then draws selectable rectangles over the DOM. The **Struktur / Semua** control
+switches between major sections and all visible HTML elements; **Pilih** freezes
+ordinary click navigation for inspection and **Kotak** turns outlines on/off.
+Tapping a node shows its DOM selector, HTML, dimensions, computed CSS, and
+matching same-origin CSS selectors, with copy controls. Turn **Pilih** OFF to
+navigate between live portfolio chapters, then turn it on again.
+
+The inspector uses one dedicated \`inspect/index.html\` for an actual new
+responsibility, with no second copy of the portfolio, no injected script on the
+main domain's normal page, no dependencies, and no changes to \`app.js\` or
+\`styles.css\`. It intentionally has \`noindex,nofollow\` and a
+\`robots.txt\` exclusion. This is a diagnostic overlay: labels identify
+HTML/CSS objects, not the source file line number, and screenshots taken while
+the inspector is open will contain the overlay. A website that blocks
+same-origin framing or cross-origin pages cannot be inspected by this route.
+
