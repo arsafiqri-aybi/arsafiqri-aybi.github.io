@@ -88,6 +88,9 @@ hash and popstate share their restoration handler, and an unused DOM query
 was removed. This is a source-level preservation pass; full browser visual
 and gesture regression checks are still outstanding.
 
+The adjacent identical Android media-query wrappers have also been merged only where directly neighboring. A before/after lexical comparison confirmed the same CSS leaf rules, declaration bodies, ancestry and order; this is **not** a replacement for computed-style or screenshot testing.
+
+
 ## Regeneration safety
 
 `scripts/build.mjs` is **not yet synchronized with the current published mobile markup**. As a safeguard, it now checks generated output against existing files **before writing anything**, and refuses to replace files on drift. Do not use it to overwrite the current production design. Synchronize its templates with the current HTML first. `--allow-layout-overwrite` is a deliberate override that can discard current interface work; it must not be used casually.

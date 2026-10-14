@@ -102,10 +102,12 @@ html.motion-enhanced .motion-play-cover[hidden]{display:none}
 .motion-play-error{display:block;min-height:1px;margin-top:8px;color:var(--sub);font-size:13px}
 /* Earlier stack on tablets prevents narrow About text and oversized Home stages. */
 @media(max-width:900px){.about-layout{grid-template-columns:1fr;gap:35px}.about-story{max-width:730px}.about-portrait{width:min(64%,330px)}.ars-portrait-stage{width:min(64%,345px)}}
-@media(max-width:680px){.about-portrait{width:min(80%,285px)}.ars-portrait-stage{width:min(80%,295px)}.ars-portrait-stage img,.about-portrait img{border-radius:5px}.motion-play-label{padding:11px 16px;font-size:12px}}
+@media(max-width:680px){.about-portrait{width:min(80%,285px)}.ars-portrait-stage{width:min(80%,295px)}.ars-portrait-stage img,.about-portrait img{border-radius:5px}.motion-play-label{padding:11px 16px;font-size:12px}
+
 
 /* CP07B: mobile horizontal rail scroll stays inside viewport */
-@media(max-width:680px){.explore-layout,.section-rail,.rail-window,.preview-stage{min-width:0;max-width:100%}.rail-window{width:100%}}
+
+.explore-layout,.section-rail,.rail-window,.preview-stage{min-width:0;max-width:100%}.rail-window{width:100%}}
 
 /* CP07C: accessible no-JavaScript preview fallback */
 html:not(.is-enhanced) .section-preview:not(.is-selected){display:none}
@@ -887,12 +889,14 @@ html[data-ars-view="section"] .home-site .topbar{
     width:100%;
     margin-inline:auto;
   }
-}
+
+
 
 
 /* Android two-choice navbar v13. Remove empty header; active title centered,
    next title smaller to its right. Gesture left/right changes active preview. */
-@media(max-width:680px){
+
+
  .home-site .explorer{
    display:block;
    width:min(calc(100% - 40px),var(--content));
@@ -982,13 +986,15 @@ html[data-ars-view="section"] .home-site .topbar{
     color:var(--sub);
     animation:none;
   }
-}
+
+
 
 
 /* ARS Android 15 — true device-viewport mathematical centering.
    JS provides --ars-rail-active-x = viewport midpoint minus track's actual left edge.
    The active and its neighbors share this one measured anchor on all phone widths. */
-@media(max-width:680px){
+
+
   .home-site .section-rail .rail-list{
     --ars-rail-active-x:50%;
   }
@@ -998,12 +1004,14 @@ html[data-ars-view="section"] .home-site .topbar{
   html.is-enhanced .home-site .section-rail .rail-choice.is-prev:not([aria-current=true]){
     left:calc(var(--ars-rail-active-x,50%) - clamp(97px,27vw,133px))!important;
   }
-}
+
+
 
 
 /* Android centering 16 — positions from measured glyph/text widths.
    Active text center = visual viewport midpoint (no fixed 100px neighbor offsets). */
-@media(max-width:680px){
+
+
   .home-site .section-rail .rail-list{
     --ars-rail-prev-x:calc(50% - 110px);
     --ars-rail-next-x:calc(50% + 110px);
@@ -1014,13 +1022,15 @@ html[data-ars-view="section"] .home-site .topbar{
   html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
     left:var(--ars-rail-next-x,calc(50% + 110px))!important;
   }
-}
+
+
 
 
 /* ARS Android 17 — equal-width text slots measured from the longest active word.
    Each visible label uses one identical slot; its text is centered within it.
    The active slot midpoint is the screen midpoint, independent of word length. */
-@media(max-width:680px){
+
+
   .home-site .section-rail .rail-list{
     --ars-mobile-slot-width:145px;
   }
@@ -1043,14 +1053,16 @@ html[data-ars-view="section"] .home-site .topbar{
   html.is-enhanced .home-site .section-rail .rail-choice.is-next:not([aria-current=true]){
     left:var(--ars-rail-next-x,calc(50% + 145px))!important;
   }
-}
+
+
 
 
 /* Android v18 — real three-slot structural rail.
    EMPTY LEFT SLOT / ACTIVE CENTER SLOT / NEXT RIGHT SLOT.
    When Work is selected, Home occupies the left slot instead of the spacer.
    Every slot is 1/3 of the same centered rail; no absolute coordinates. */
-@media(max-width:680px){
+
+
   html.is-enhanced .home-site .section-rail{
     position:relative;
     width:100%;
@@ -1374,13 +1386,15 @@ html[data-ars-view="section"] .home-site .topbar{
     font-size:clamp(11px,2.9vw,12px);
     letter-spacing:.03em;
   }
-}
+
+
 
 
 /* ARS Editorial Typography 26 — finish mobile Home's vertical rhythm.
    Applied only while Home is the selected preview. The navbar, desktop,
    font families, content wording, and portrait crop remain untouched. */
-@media(max-width:680px){
+
+
   .home-site .explorer.is-home-preview .home-role{
     margin:0 0 15px;
     line-height:1.4;
@@ -1980,8 +1994,10 @@ body .ars-site-footer nav a:focus-visible{
   .ars-mobile-menu button{flex:0 0 calc((100% - 44px)/3);text-align:left}
   .home-site .explorer.is-home-preview .ars-portrait-stage{max-height:min(45svh,360px)}
   body .site-footer.ars-site-footer{display:flex;align-items:center;justify-content:space-between}
-}
-@media(max-width:680px){
+
+
+
+
   .home-site .explorer.is-home-preview{width:100%}
   .home-site .explorer.is-home-preview>.explore-frame{width:calc(100% - 44px);margin-inline:auto}
 }
