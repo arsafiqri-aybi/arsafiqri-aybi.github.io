@@ -1,5 +1,5 @@
 /* ARS static site generator. Node.js 20+, no dependencies. All text comes from reviewed content JSON. */
-import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {loadV2ReleaseView} from '../v2/scripts/generator-bridge.mjs';
@@ -76,5 +76,10 @@ const buildSite=(items, art, architecture) => {
  items.forEach((p,i)=>files.push({path:`work/${p.id}/index.html`,content:casePage(p,i)}));
  return files;
 };
-for(const f of buildSite(items,art,arch)){const path=resolve(root,f.path);mkdirSync(dirname(path),{recursive:true});writeFileSync(path,f.content);}
+const generatedFiles=buildSite(items,art,arch);
+const drift=generatedFiles.filter(f=>{const path=resolve(root,f.path);return existsSync(path)&&readFileSync(path,'utf8')!==f.content;});
+if(drift.length&&!process.argv.includes('--allow-layout-overwrite')){
+ throw new Error('Refusing to overwrite published markup: generator differs from '+drift.map(f=>f.path).join(', ')+'. Align generator first or explicitly acknowledge the replacement.');
+}
+for(const f of generatedFiles){const path=resolve(root,f.path);mkdirSync(dirname(path),{recursive:true});writeFileSync(path,f.content);}
 console.log('ARS generated: homepage, '+items.length+' case studies, 404, sitemap and robots.');

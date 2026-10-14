@@ -238,62 +238,6 @@ html:not(.is-enhanced){scroll-behavior:auto}
 @media(prefers-reduced-motion:reduce){.quiet-action .action-mark{transition:none}}
 
 
-/* ARS GRID REVIEW MODE — only visible when ?grid=1. No effect on normal portfolio. */
-.grid-review .explore-layout{
-  background-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(8.333333% - 1px),rgba(109,192,235,.18) calc(8.333333% - 1px),rgba(109,192,235,.18) 8.333333%);
-}
-.grid-review .grid-inspect{position:relative;--grid-stroke:#60c8f6;outline:1px dashed var(--grid-stroke);outline-offset:-1px}
-.grid-review .grid-inspect[data-grid-level="area"]{--grid-stroke:#7fdba1}
-.grid-review .grid-inspect[data-grid-level="detail"]{--grid-stroke:#f0c37c}
-.grid-review .grid-inspect[data-grid-level="action"]{--grid-stroke:#bc9cff}
-.grid-review .grid-box-label{
-  position:absolute;top:3px;left:4px;z-index:35;display:block;
-  width:max-content;max-width:calc(100% - 8px);padding:3px 6px;
-  border-radius:3px;background:var(--grid-stroke);color:#102029;
-  font-family:Manrope,system-ui,sans-serif;font-size:9px;
-  font-weight:760;letter-spacing:.025em;line-height:1.25;
-  white-space:nowrap;text-overflow:ellipsis;overflow:hidden;pointer-events:none;
-  text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.18)
-}
-.grid-review .grid-inspect[data-grid-level="action"]>.grid-box-label{
-  top:-18px;left:auto;right:0;max-width:180px;
-}
-.grid-review .rail-window>.grid-box-label{position:sticky;top:0;left:0;z-index:30}
-.grid-review .topbar>.grid-box-label{top:auto;bottom:2px}
-.grid-review .brand>.grid-box-label{top:calc(100% + 5px);left:0}
-.grid-review .section-rail>.grid-box-label{top:-20px}
-.grid-review .preview-stage>.grid-box-label{top:-24px}
-.grid-review .explorer>.grid-box-label{top:0}
-.grid-review .page>.grid-box-label{top:5px}
-.grid-review-controls{
-  position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));
-  z-index:950;display:flex;flex-direction:column;gap:8px;
-  width:min(340px,calc(100vw - 28px));padding:14px 16px;
-  color:#e9f0f3;background:rgba(20,25,29,.96);
-  border:1px solid #65727c;border-radius:12px;
-  box-shadow:0 13px 42px rgba(0,0,0,.28);
-  font-family:Manrope,system-ui,sans-serif
-}
-.grid-review-heading{font-size:12px;letter-spacing:.045em;font-weight:750}
-.grid-review-legend{font-size:10px;line-height:1.5;color:#b7c6ce}
-.grid-review-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.grid-review-actions button,.grid-review-actions a{
-  display:inline-flex;align-items:center;justify-content:center;min-height:35px;
-  border-radius:7px;padding:7px 10px;background:#ecf2f4;color:#172228;
-  border:1px solid #ecf2f4;font-size:11px;font-weight:650;line-height:1.3;cursor:pointer;
-}
-.grid-review-actions a{background:transparent;color:#e9f0f3;border-color:#697985}
-.grid-review-actions button:focus-visible,.grid-review-actions a:focus-visible{outline:2px solid #ffffff;outline-offset:3px}
-@media(max-width:680px){
- .grid-review .explore-layout{background-image:none}
- .grid-review .grid-box-label{font-size:8px;max-width:calc(100% - 4px)}
- .grid-review .section-rail>.grid-box-label,.grid-review .preview-stage>.grid-box-label{top:-13px}
- .grid-review-controls{padding:10px 12px;gap:5px;width:min(305px,calc(100vw - 24px))}
- .grid-review-heading{font-size:11px}
- .grid-review-legend{font-size:9px}
-}
-
-
 /* ARS alignment pass 02: optically centered slim rail and responsive moving wordmark. */
 .rail-top{display:none}
 .explore-layout{
@@ -1254,63 +1198,6 @@ html[data-ars-view="section"] .home-site .topbar{
    inset-inline-start:0!important;
    margin:0!important;
  }
-}
-
-
-/* ARS review 20 — pixel-based grid guides (only ?grid=1).
-   Drawn in a pointer-transparent fixed layer; never modifies navbar layout. */
-.ars-grid-guides{display:none;position:fixed;inset:0;z-index:925;pointer-events:none;overflow:hidden;font:600 9px/1.2 Manrope,system-ui,sans-serif}
-html.grid-review .ars-grid-guides{display:block}
-.ars-guide{
- position:absolute;box-sizing:border-box;pointer-events:none;
- border:1px solid rgba(238,191,92,.94);
- background:rgba(238,191,92,.045);
-}
-.ars-guide.slot{border:1px dashed #57e0cb;background:rgba(65,224,197,.075)}
-.ars-guide.slot.active{border:1.5px solid #67e9ad;background:rgba(103,233,173,.07)}
-.ars-guide.slot.previous,.ars-guide.slot.next{border-color:rgba(87,224,203,.8)}
-.ars-guide.spacer{border:1px dashed #ddacff;background:rgba(221,172,255,.13)}
-.ars-guide.frame{border:1px solid #60c8f6;background:transparent}
-.ars-guide.item{border:1px solid #e4b369;background:rgba(228,179,105,.06)}
-.ars-guide.item.active{border-color:#f8df83}
-.ars-guide.glyph{border:1px dashed #ff82cb;background:rgba(255,130,203,.12)}
-.ars-guide.content{border:1px dotted #9bdafa;background:transparent}
-.ars-guide-caption{
- position:absolute;top:1px;left:2px;display:inline-block;
- max-width:calc(100% - 4px);overflow:hidden;text-overflow:ellipsis;
- white-space:nowrap;border-radius:2px;padding:2px 3px;
- font-size:8px;line-height:1.1;letter-spacing:0;
- font-weight:750;color:#122125;background:#ffdf8a;
- box-shadow:0 1px 4px rgba(0,0,0,.23);
-}
-.ars-guide.slot>.ars-guide-caption{background:#89ebda}
-.ars-guide.slot.active>.ars-guide-caption{background:#82f0b7}
-.ars-guide.spacer>.ars-guide-caption{background:#d7b4ff}
-.ars-guide.frame>.ars-guide-caption{background:#91d9fb}
-.ars-guide.glyph>.ars-guide-caption{background:#ffb1d8;top:auto;bottom:100%;margin-bottom:1px}
-.ars-guide.content>.ars-guide-caption{background:#c8e9ff}
-.ars-guide-line{
- position:absolute;top:0;height:100%;width:0;
- border-left:1px dashed #ff80c0;pointer-events:none;
-}
-.ars-guide-line.viewport{border-left:1px dashed rgba(255,128,192,.85)}
-.ars-guide-line.nav{border-left:1px dotted #70d9ff}
-.ars-guide-line.word{border-left:2px solid #ff80c0}
-.ars-guide-line>span{
- position:absolute;top:2px;left:3px;width:max-content;
- padding:2px 4px;max-width:130px;
- color:#fff;background:#9a3d78;border-radius:3px;font-size:8px;
- white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.28)
-}
-.ars-guide-line.nav>span{background:#245f7e}
-.ars-guide-line.word>span{top:auto;bottom:3px;background:#a33c74}
-.ars-grid-metrics{font:650 10px/1.45 Manrope,system-ui,sans-serif;color:#dce7ec;font-variant-numeric:tabular-nums}
-@media(max-width:680px){
- .ars-grid-guides{font-size:8px}
- .ars-guide-caption{font-size:7px;padding:2px}
- .ars-guide.glyph>.ars-guide-caption{display:none}
- .ars-guide-line.word>span{display:none}
- .ars-grid-metrics{font-size:9px}
 }
 
 

@@ -1,50 +1,32 @@
-# ARS — Digital Builder × Business Strategist
+# ARS — Business Strategist × Digital Builder
 
-Live website: https://arsafiqri-aybi.github.io/
+Live website: https://arsafiqri-aybi.github.io/  
+Source branch: `main` (GitHub Pages, repository root).
 
-A static, evidence-aware personal portfolio for Arsafiqri Ummati Aybi (ARS). Built on GitHub Pages with no required backend or paid service.
+## Published experience
 
-## Experience
+- Static, frontend-only personal portfolio. No runtime backend or paid service is required.
+- Six desktop destinations: Home, Work, Expertise, Approach, About and Connect.
+- Dedicated mobile Home, Work, About and Connect presentations, with horizontal/vertical navigation and a four-chapter About carousel.
+- Six featured work entries; held third-party artwork stays absent. The publicly linked Tari Cookies page is a clearly labelled **case preview**, not a released full case study.
+- Seven documented legacy case-study routes remain available in addition to the Tari Cookies preview.
+- Original portrait on Home/About, source-derived diagrams for relevant projects, and the original manually played motion film.
+- Real GitHub and Instagram links. No invented performance metrics, third-party screenshots, or unsupported contact details.
 
-- Six main destinations: Home, Work, Expertise, Approach, About and Connect.
-- Identity-first composition with a three-visible-item rail on desktop and horizontally browsable navigation on mobile.
-- Curated editorial Work Gallery and **All Work** index. Three documented works link to case studies; Tari Cookies, waai.id, and SarafCare use unlinked placeholders. The original Motion film has separate playback controls and a case-study link.
-- Seven direct-access Project Detail routes with Showcase, editorial Quick Context, Decision-Led Process, scoped Outcome and Architecture Explorer.
-- Dark/Light/Contextual atmosphere preference, keyboard navigation and reduced-motion behavior.
-- No speculative email, résumé or LinkedIn links. Grounded public contact routes: GitHub and Instagram.
-- Hey and Browser Operator use source-derived diagrams. Other authored artwork is labeled as editorial illustration. The Motion film and its extracted poster are original source media.
+## Files serving the live site
 
-## Source of truth and regeneration
+`index.html`, `work/*/index.html`, `404.html`, `styles.css`, `assets/illustrations.css`, `fonts.css`, `app.js`, `ars-story.js`, referenced `assets/*`, and the metadata files (`favicon.svg`, `social.svg`, `robots.txt`, `sitemap.xml`).
 
-Reviewed project content: `content/projects.json`; artwork markup: `content/artwork.json`; architecture summaries: `content/architecture.json`.
+`content/*` and `v2/content/*` hold project and approved-media data. Keep these, related source provenance, license files, and the release-gate modules intact: they are development and evidence dependencies even when not requested by the browser directly.
 
-The canonical generator is `scripts/build.mjs` (Node.js 20+, standard library only). Run:
+## Regeneration safety
 
-```sh
-node scripts/build.mjs
-```
+`scripts/build.mjs` is **not yet synchronized with the current published mobile markup**. As a safeguard, it now checks generated output against existing files **before writing anything**, and refuses to replace files on drift. Do not use it to overwrite the current production design. Synchronize its templates with the current HTML first. `--allow-layout-overwrite` is a deliberate override that can discard current interface work; it must not be used casually.
 
-`python scripts/build.py` remains a compatibility wrapper and requires Node. Serving the committed HTML/CSS/JS requires **no** build step: `python -m http.server 4173`.
+The live site is committed static HTML/CSS/JS and does not require a build on GitHub Pages.
 
-## Validation boundaries
+## Testing and boundaries
 
-See `docs/NEW-PORTFOLIO-IMPLEMENTATION.md`. The earlier `docs/QA-MATRIX.md` and `docs/RELEASE-REPORT.md` document the **previous** design and must not be cited as testing of this release. New live Pages build status is separately verifiable through GitHub's Pages build API. Current release checks are recorded in `v2/FINAL-RELEASE.md`. Automated browser samples are scoped checks, not full WCAG or physical-device certification.
+`node --test v2/tests/current-site-contract.test.mjs` checks the published source's static contracts. The remaining `v2/tests/*.test.mjs` cover reusable release/media/navigation logic and require review when the design changes. Browser automation, physical Android/iOS, Safari/Firefox and screen-reader tests are separate checks; no old release's QA results are evidence of the present layout.
 
-## Routes
-
-- `/` (six integrated sections via URL fragment)
-- `/work/hey/`
-- `/work/personal-browser-operator/`
-- `/work/scale-governor/`
-- `/work/motion/`
-- `/work/skill-builder/`
-- `/work/copywriting/`
-- `/work/website-builder/`
-
-Do not replace authentic project evidence with invented screenshots or make deployment/impact claims unsupported by cited source material.
-
-## Current browser verification
-
-`node --test v2/tests/*.test.mjs` checks content, release boundaries, and legacy-route regressions. `scripts/verify-v2.cjs` performs URL-level Chromium checks on the committed static output. It starts and stops its own local HTTP server. Supply `ARS_BROWSER` (Chromium executable), `ARS_AXE` (axe-core JS), `ARS_MOTION_FILE` (the pinned original MP4), and optionally `ARS_QA_OUT` for private screenshots and reports. These tools are development-only; the public site has no runtime package dependency.
-
-The original six-second film is manually started. Its poster is frame 179 directly extracted from the SHA-256-verified source. Portrait remains limited to Home and About. No third-party WAAI, Tari, or campaign media is copied into this release.
+The historical source commits remain in Git history. Inactive debugging layers, superseded reports/checkpoints and obsolete QA harnesses have been removed from the current tree without altering published pages. 
