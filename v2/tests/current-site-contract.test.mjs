@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
-import {resolve,dirname} from 'node:path';
+import {resolve,dirname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
@@ -44,4 +44,51 @@ test('generator refuses to overwrite a diverged published page by default',()=>{
 test('sitemap preserves seven documented legacy cases',()=>{
  const sitemap=text('sitemap.xml');
  for(const id of caseIds.slice(1))assert.ok(sitemap.includes('/work/'+id+'/'),id);
+});
+
+const publishedPages=['index.html','404.html',...caseIds.map(id=>'work/'+id+'/index.html')];
+
+test('published pages have unique ids and valid local anchor references',()=>{
+ for(const path of publishedPages){
+  const page=text(path);
+  const ids=[...page.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
+  assert.equal(ids.length,new Set(ids).size,path+': duplicate id');
+  const idSet=new Set(ids);
+  for(const [,fragment] of page.matchAll(/\bhref="#([^"]+)"/g)){
+   assert.ok(idSet.has(decodeURIComponent(fragment)),path+': missing #'+fragment);
+  }
+  for(const [,values] of page.matchAll(/\baria-(?:controls|labelledby|describedby)="([^"]+)"/g)){
+   for(const id of values.split(/\s+/).filter(Boolean)){
+    assert.ok(idSet.has(id),path+': missing aria reference '+id);
+   }
+  }
+ }
+});
+
+test('all local published link, media and script URLs resolve within repository',()=>{
+ for(const path of publishedPages){
+  const page=text(path);
+  for(const [tag] of page.matchAll(/<(?:a|link|img|script|source|video|track)\b[^>]*>/gi)){
+   for(const [,url] of tag.matchAll(/\b(?:href|src|poster)="([^"]+)"/gi)){
+    if(/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(url))continue;
+    const targetUrl=url.split(/[?#]/)[0];
+    if(!targetUrl)continue;
+    const destination=targetUrl.startsWith('/')?
+     resolve(root,'.'+targetUrl):resolve(root,dirname(path),targetUrl);
+    assert.ok(destination===root||destination.startsWith(root+sep),path+': outside repository '+url);
+    assert.ok(existsSync(destination),path+': missing local resource '+url);
+   }
+  }
+ }
+});
+
+test('published styles keep focus-visible and reduced-motion fallbacks',()=>{
+ assert.match(css,/:focus-visible/);
+ assert.match(css,/prefers-reduced-motion/);
+ assert.match(home,/class="skip"/);
+ assert.match(home,/name="viewport"/);
+});
+
+test('published JavaScript parses correctly',()=>{
+ assert.doesNotThrow(()=>new Function(js));
 });
