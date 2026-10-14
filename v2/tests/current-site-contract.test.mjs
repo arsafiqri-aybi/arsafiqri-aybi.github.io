@@ -92,3 +92,14 @@ test('published styles keep focus-visible and reduced-motion fallbacks',()=>{
 test('published JavaScript parses correctly',()=>{
  assert.doesNotThrow(()=>new Function(js));
 });
+
+test('responsive navigation uses one synchronized mobile breakpoint',()=>{
+ assert.match(js,/const MOBILE_BREAKPOINT=680/);
+ assert.doesNotMatch(js,/window\.innerWidth(?:<=|>)680/);
+ assert.match(css,/@media\s*\(\s*max-width:\s*680px\s*\)/);
+});
+test('hash and popstate reuse the same navigation handler',()=>{
+ assert.match(js,/function handleHistoryNavigation\(\)/);
+ assert.match(js,/addEventListener\('hashchange',handleHistoryNavigation\)/);
+ assert.match(js,/addEventListener\('popstate',handleHistoryNavigation\)/);
+});

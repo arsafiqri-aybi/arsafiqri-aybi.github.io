@@ -9,6 +9,8 @@ applyTheme();
 
 document.querySelectorAll('[data-theme-switch]').forEach(b=>b.addEventListener('click',()=>{theme=themes[(themes.indexOf(theme)+1)%themes.length];try{localStorage.setItem('ars-theme',theme);}catch{}applyTheme();}));
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+// Shared runtime mobile breakpoint; matches CSS @media(max-width:680px).
+const MOBILE_BREAKPOINT=680;
 const names=['home','work','expertise','approach','about','connect'];
 // Android's top-level chapters; deeper desktop topics live under About.
 const mobileChapters=[0,1,4,5];
@@ -27,13 +29,13 @@ let railMotionReady=false;
 let railHintTimer=0;
 function scheduleRailDiscovery(){
   const nav=explorer?.querySelector('.section-rail');
-  if(!nav||window.innerWidth>680||selected!==0||
+  if(!nav||window.innerWidth>MOBILE_BREAKPOINT||selected!==0||
      matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   // A small motion hint only once per browser tab session.
   try{if(sessionStorage.getItem('ars-arc-hint-seen')==='1')return;}catch{}
   window.clearTimeout(railHintTimer);
   railHintTimer=window.setTimeout(()=>{
-    if(window.innerWidth>680||selected!==0||explorer?.classList.contains('is-away')||
+    if(window.innerWidth>MOBILE_BREAKPOINT||selected!==0||explorer?.classList.contains('is-away')||
        document.visibilityState==='hidden')return;
     nav.classList.add('ars-wheel-hint');
     try{sessionStorage.setItem('ars-arc-hint-seen','1');}catch{}
@@ -41,7 +43,7 @@ function scheduleRailDiscovery(){
 }
 // Optical indicator: one linear progress value across ALL six sections.
 function syncWheelIndicator(){
-  if(window.innerWidth>680||!explorer||!choices.length)return;
+  if(window.innerWidth>MOBILE_BREAKPOINT||!explorer||!choices.length)return;
   const track=explorer.querySelector('.section-rail .rail-list');
   if(!track||track.clientWidth<=0)return;
   const sideInset=18, markerWidth=25;
@@ -54,7 +56,7 @@ function syncWheelIndicator(){
     track.style.setProperty('--ars-wheel-indicator-x',value);
 }
 function centerMobileRail(){
-  if(window.innerWidth>680||!explorer||!choices.length)return;
+  if(window.innerWidth>MOBILE_BREAKPOINT||!explorer||!choices.length)return;
   const track=explorer.querySelector('.section-rail .rail-list');
   if(!track||track.clientWidth<=0)return;
   // There are THREE equal physical columns; the first column is an actual
@@ -94,7 +96,7 @@ let softArcPosition=0,softArcFrom=0,softArcTarget=0;
 let softArcStarted=0,softArcFrameId=0;
 const softArcEase=t=>1-Math.pow(1-t,3);
 function paintSoftArc(position){
-  if(window.innerWidth<=680||!choices.length)return;
+  if(window.innerWidth<=MOBILE_BREAKPOINT||!choices.length)return;
   const view=explorer?.querySelector('.section-rail .rail-window');
   if(!view)return;
   const h=view.clientHeight||198,w=view.clientWidth||142;
@@ -121,7 +123,7 @@ function animateSoftArc(now){
   else{softArcPosition=softArcTarget;softArcFrameId=0;}
 }
 function syncSoftArc(index){
-  if(window.innerWidth<=680||!choices.length)return;
+  if(window.innerWidth<=MOBILE_BREAKPOINT||!choices.length)return;
   if(softArcFrameId)cancelAnimationFrame(softArcFrameId);
   softArcFrameId=0;
   const next=Math.max(0,Math.min(choices.length-1,index));
@@ -144,7 +146,7 @@ function choose(idx,moveFocus=false,fromMobileScroll=false){
  const previous=selected;
  selected=Math.max(0,Math.min(choices.length-1,idx));
  // Keep the Home card mounted and measured when another chapter is active.
- const mobile=window.innerWidth<=680;
+ const mobile=window.innerWidth<=MOBILE_BREAKPOINT;
  explorer?.classList.toggle('is-home-preview',mobile||selected===0);
  const moved=mobile&&railMotionReady&&selected!==previous;
  const railNav=explorer?.querySelector('.section-rail');
@@ -192,10 +194,10 @@ function showFromLocation(){
  locationInitialized=true;
  let section=location.hash.replace('#','').toLowerCase();
  let resumingFromCase=false;
- firstMobileLanding=firstLoad&&window.innerWidth<=680&&!section;
+ firstMobileLanding=firstLoad&&window.innerWidth<=MOBILE_BREAKPOINT&&!section;
  // A return from a case-study on Android resumes the Work carousel,
  // rather than opening the legacy desktop Work detail page.
- if(window.innerWidth<=680&&section==='work'){
+ if(window.innerWidth<=MOBILE_BREAKPOINT&&section==='work'){
    let cameFromCase=false;
    try{cameFromCase=sessionStorage.getItem(workReturnKey)==='1';}catch{}
    if(cameFromCase){
@@ -206,7 +208,29 @@ function showFromLocation(){
      section='';
    }
  }
-const open=names.includes(section)&&section!=='home'?section:null;if(choices.length){if(open)choose(names.indexOf(open));else if(section==='home'||firstMobileLanding)choose(0);else if(resumingFromCase)choose(1);else {let stored=0;try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}choose(stored);} explorer?.classList.toggle('is-away',Boolean(open));pages.forEach(p=>{const visible=p.dataset.page===open;if(visible)p.dataset.visible='';else {delete p.dataset.visible;p.querySelectorAll('video').forEach(v=>v.pause());}});root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';window.scrollTo({top:0,behavior:'instant'});}}
+const open=names.includes(section)&&section!=='home'?section:null;
+ if(choices.length){
+  if(open)choose(names.indexOf(open));
+  else if(section==='home'||firstMobileLanding)choose(0);
+  else if(resumingFromCase)choose(1);
+  else {
+   let stored=0;
+   try{stored=Number(sessionStorage.getItem('ars-section')||0);}catch{}
+   choose(stored);
+  }
+  explorer?.classList.toggle('is-away',Boolean(open));
+  pages.forEach(p=>{
+   const visible=p.dataset.page===open;
+   if(visible)p.dataset.visible='';
+   else {
+    delete p.dataset.visible;
+    p.querySelectorAll('video').forEach(v=>v.pause());
+   }
+  });
+  root.dataset.context=open?(['work','connect'].includes(open)?'dark':'light'):[0,1,5].includes(selected)?'dark':'light';
+  window.scrollTo({top:0,behavior:'instant'});
+ }
+}
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
@@ -273,7 +297,7 @@ function canStepVerticallyFrom(target,direction){
  return true;
 }
 function mobileVerticalStep(direction){
- if(window.innerWidth>680||!explorer||explorer.classList.contains('is-away')||
+ if(window.innerWidth>MOBILE_BREAKPOINT||!explorer||explorer.classList.contains('is-away')||
     verticalStoryRunning||!previewStage)return false;
  const fromIndex=mobileChapters.indexOf(mobileParent(selected));
  const toIndex=fromIndex+direction;
@@ -357,7 +381,7 @@ function mobileVerticalStep(direction){
 }
 let verticalTouchStart=null;
 previewStage?.addEventListener('touchstart',event=>{
- if(window.innerWidth>680||verticalStoryRunning||event.touches.length!==1){
+ if(window.innerWidth>MOBILE_BREAKPOINT||verticalStoryRunning||event.touches.length!==1){
    verticalTouchStart=null;return;
  }
  const finger=event.touches[0];
@@ -368,7 +392,7 @@ previewStage?.addEventListener('touchstart',event=>{
  };
 },{passive:true});
 previewStage?.addEventListener('touchend',event=>{
- if(!verticalTouchStart||window.innerWidth>680||verticalStoryRunning)return;
+ if(!verticalTouchStart||window.innerWidth>MOBILE_BREAKPOINT||verticalStoryRunning)return;
  const start=verticalTouchStart;
  verticalTouchStart=null;
  const finger=[...event.changedTouches].find(t=>t.identifier===start.id);
@@ -380,7 +404,7 @@ previewStage?.addEventListener('touchend',event=>{
 },{passive:true});
 previewStage?.addEventListener('touchcancel',()=>{verticalTouchStart=null;},{passive:true});
 previewStage?.addEventListener('wheel',event=>{
- if(window.innerWidth>680||verticalStoryRunning||event.ctrlKey||event.metaKey||
+ if(window.innerWidth>MOBILE_BREAKPOINT||verticalStoryRunning||event.ctrlKey||event.metaKey||
     event.shiftKey||Math.abs(event.deltaY)<7||
     Math.abs(event.deltaX)>Math.abs(event.deltaY)*.8)return;
  const direction=Math.sign(event.deltaY);
@@ -408,7 +432,7 @@ function closestMobileChapter(){
  return {index,left,dist};
 }
 function finalizeMobileSnap(){
- if(window.innerWidth>680||verticalStoryRunning||explorer?.classList.contains('is-away'))return;
+ if(window.innerWidth>MOBILE_BREAKPOINT||verticalStoryRunning||explorer?.classList.contains('is-away'))return;
  const nearest=closestMobileChapter();
  if(!nearest)return;
  if(nearest.index!==selected)choose(nearest.index,false,true);
@@ -418,7 +442,7 @@ function finalizeMobileSnap(){
  }
 }
 previewStage?.addEventListener('scroll',()=>{
- if(window.innerWidth>680||explorer?.classList.contains('is-away')||verticalStoryRunning)return;
+ if(window.innerWidth>MOBILE_BREAKPOINT||explorer?.classList.contains('is-away')||verticalStoryRunning)return;
  window.clearTimeout(mobileSnapTimer);
  mobileSnapTimer=window.setTimeout(finalizeMobileSnap,200);
  if(storyScrollFrame)return;
@@ -433,7 +457,7 @@ previewStage?.addEventListener('scrollend',()=>{
  finalizeMobileSnap();
 },{passive:true});
 function alignInitialHome(){
- if(!firstMobileLanding||window.innerWidth>680||!previewStage||
+ if(!firstMobileLanding||window.innerWidth>MOBILE_BREAKPOINT||!previewStage||
     explorer?.classList.contains('is-away'))return;
  firstMobileLanding=false;
  const pane=previews[0];
@@ -445,7 +469,7 @@ function alignInitialHome(){
 }
 requestAnimationFrame(()=>requestAnimationFrame(alignInitialHome));
 window.addEventListener('pageshow',event=>{
- if(event.persisted||window.innerWidth>680||location.hash)return;
+ if(event.persisted||window.innerWidth>MOBILE_BREAKPOINT||location.hash)return;
  // A fresh load or reload is Home; bfcache restoration keeps its context.
  if(!locationInitialized||selected!==0)return;
  const navigation=performance.getEntriesByType('navigation')[0];
@@ -457,7 +481,7 @@ window.addEventListener('pageshow',event=>{
  }
 },{passive:true});
 previewStage?.addEventListener('keydown',e=>{
- if(window.innerWidth>680||e.target!==previewStage)return;
+ if(window.innerWidth>MOBILE_BREAKPOINT||e.target!==previewStage)return;
  if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','PageDown','PageUp'].includes(e.key))return;
  e.preventDefault();
  if(e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='PageDown'||e.key==='PageUp'){
@@ -474,7 +498,7 @@ function arrangeMobileRail(){
  rail.scrollLeft=0;
  const nav=rail.closest('.section-rail');
  if(nav){
-   const mobile=window.innerWidth<=680;
+   const mobile=window.innerWidth<=MOBILE_BREAKPOINT;
    nav.classList.toggle('ars-wheel-ready',mobile);
    nav.setAttribute('aria-label',mobile
      ?'Portfolio sections. Swipe left for next and right for previous section.'
@@ -489,7 +513,7 @@ function arrangeMobileRail(){
      });
    }
  }
- if(window.innerWidth>680){
+ if(window.innerWidth>MOBILE_BREAKPOINT){
    choices.forEach(c=>c.classList.remove('was-active'));
    softArcPosition=selected;
    syncSoftArc(selected);
@@ -558,8 +582,10 @@ railMotionReady=true;
 scheduleRailDiscovery();
 
 
-window.addEventListener('hashchange',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
-window.addEventListener('popstate',()=>{showFromLocation();focusLocationTarget();restoreWorkContext()});
+// History events use the same ordered section/focus/work-context restoration.
+function handleHistoryNavigation(){showFromLocation();focusLocationTarget();restoreWorkContext();}
+window.addEventListener('hashchange',handleHistoryNavigation);
+window.addEventListener('popstate',handleHistoryNavigation);
 window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});
 document.querySelectorAll('.brand').forEach(a=>a.addEventListener('click',e=>{if(!choices.length||e.button!==0||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState(null,'',location.pathname+location.search+'#home');showFromLocation();focusLocationTarget();}));
  document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname+location.search);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
@@ -639,12 +665,12 @@ aboutTrack?.addEventListener('keydown',event=>{
 // horizontal swipe continues the portfolio to Work or Connect.
 let aboutBoundaryStart=null;
 aboutTrack?.addEventListener('touchstart',event=>{
- if(window.innerWidth>680||event.touches.length!==1){aboutBoundaryStart=null;return;}
+ if(window.innerWidth>MOBILE_BREAKPOINT||event.touches.length!==1){aboutBoundaryStart=null;return;}
  const finger=event.touches[0];
  aboutBoundaryStart={id:finger.identifier,x:finger.clientX,y:finger.clientY};
 },{passive:true});
 aboutTrack?.addEventListener('touchend',event=>{
- if(!aboutBoundaryStart||window.innerWidth>680)return;
+ if(!aboutBoundaryStart||window.innerWidth>MOBILE_BREAKPOINT)return;
  const initial=aboutBoundaryStart;aboutBoundaryStart=null;
  const finger=[...event.changedTouches].find(t=>t.identifier===initial.id);
  if(!finger)return;
@@ -662,9 +688,8 @@ syncAboutCarousel();
 // Compact mobile navigation preserves existing preview and swipe behavior.
 document.querySelector('[data-explore-work]')?.addEventListener('click',()=>choose(1));
 const mobileMenu=document.querySelector('.ars-mobile-menu');
-const mobileHeader=document.querySelector('.ars-mobile-header');
 function syncBalancedMobileMenu(){
-  if(!mobileMenu||window.innerWidth>680)return;
+  if(!mobileMenu||window.innerWidth>MOBILE_BREAKPOINT)return;
   const current=names[mobileParent(selected)];
   mobileMenu.querySelectorAll('[data-mobile-rail]').forEach(button=>{
     const active=button.dataset.mobileRail===current;

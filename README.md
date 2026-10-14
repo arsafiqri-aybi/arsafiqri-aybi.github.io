@@ -78,6 +78,16 @@ Keep one file per responsibility and refactor in place, not into duplicates.
 The patterns above are research references, not copied source code or evidence
 that all browser tests have already passed.
 
+### In-place CSS and navigation refactor
+
+The seven identical CSS rules found in the same media/scope contexts were
+removed while preserving their later counterparts. The canonical mobile width
+(680px) is now referenced by one JavaScript constant rather than repeated
+magic numbers. Route selection logic was reformatted without changing tokens;
+hash and popstate share their restoration handler, and an unused DOM query
+was removed. This is a source-level preservation pass; full browser visual
+and gesture regression checks are still outstanding.
+
 ## Regeneration safety
 
 `scripts/build.mjs` is **not yet synchronized with the current published mobile markup**. As a safeguard, it now checks generated output against existing files **before writing anything**, and refuses to replace files on drift. Do not use it to overwrite the current production design. Synchronize its templates with the current HTML first. `--allow-layout-overwrite` is a deliberate override that can discard current interface work; it must not be used casually.
