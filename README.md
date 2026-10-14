@@ -19,6 +19,14 @@ Source branch: `main` (GitHub Pages, repository root).
 
 `content/*` and `v2/content/*` hold project and approved-media data. Keep these, related source provenance, license files, and the release-gate modules intact: they are development and evidence dependencies even when not requested by the browser directly.
 
+## Canonical maintenance rule — edit in place
+
+The repository maintains **one canonical file for each responsibility**. All future fixes, UI/UX adjustments, refactors, copy changes, and optimizations must modify the existing file directly, preserving the current working behavior. Do not create parallel versioned copies, `v2`/`v3` replacements, `final`/`final-new` variants, temporary `backup` source files, or legacy duplicate implementations. When superseded code is proven unused, delete it from the current tree rather than keeping it beside the active implementation.
+
+Use Git commits as the change history and rollback mechanism; never retain outdated code or files solely to remember earlier designs. A new file is appropriate **only if a genuinely new responsibility requires a separate module, asset, page, data source, or test**, not to store a revision of an existing feature. Keep supporting data, licenses, evidence, tests, and publishing safety rules when still required; "not browser-loaded" does not automatically mean "unused".
+
+For every change: verify the current `main` state, edit canonical files in place, check dependent pages/modules and responsive behavior, test to the extent available, then commit the final working state to `main` without force pushing or creating duplicate versions. Avoid unrelated deletions. The existing build safety guard remains effective until the generator is synchronized with published markup.
+
 ## Regeneration safety
 
 `scripts/build.mjs` is **not yet synchronized with the current published mobile markup**. As a safeguard, it now checks generated output against existing files **before writing anything**, and refuses to replace files on drift. Do not use it to overwrite the current production design. Synchronize its templates with the current HTML first. `--allow-layout-overwrite` is a deliberate override that can discard current interface work; it must not be used casually.
