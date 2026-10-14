@@ -141,3 +141,15 @@ test('isolated mobile visual inspector has live same-origin page and DOM selecti
  assert.doesNotThrow(()=>new Function(jsSource[1]));
  assert.doesNotMatch(home,/\/inspect\//);
 });
+
+test('visual inspector omits main and home wrapper while keeping header aligned',()=>{
+ const source=readFileSync(resolve(root,'inspect/index.html'),'utf8');
+ assert.match(source,/function isExcluded\(el\)\{return el\.matches\('main#main,section#home'\);\}/);
+ assert.match(source,/for\(const el of elements\)\{\s*if\(isExcluded\(el\)\)continue;/);
+ assert.match(source,/if\(!el\|\|!el\.tagName\|\|isExcluded\(el\)\)return;/);
+ assert.match(source,/selected&&!isExcluded\(selected\)/);
+ assert.match(source,/\.outline\.header,\.outline\.header\.active\{border-top:0\}/);
+ assert.match(source,/if\(el\.matches\('header,\.ars-mobile-header,\.ars-mobile-menu'\)\)return 'layout header'/);
+ assert.match(home,/id="home"/);
+ assert.match(home,/class="ars-mobile-header"/);
+});

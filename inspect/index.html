@@ -21,6 +21,10 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--
 .outline.layout .outline-label{background:#574477}
 .outline.action .outline-label{background:#245e41}
 .outline.active .outline-label{background:#745d25;color:#fff}
+/* Keep the inspector's top strokes away from the website header: only
+   the site's own bottom header rule should define that visual rhythm. */
+.outline.header,.outline.header.active{border-top:0}
+.outline.header .outline-label{top:2px;left:2px}
 .toolbar{position:fixed;top:max(9px,env(safe-area-inset-top));left:10px;right:10px;z-index:30;display:flex;align-items:center;gap:6px;max-width:840px;margin:auto;min-height:48px;padding:6px;border:1px solid rgba(207,223,234,.25);border-radius:15px;background:rgba(22,26,30,.94);box-shadow:0 8px 30px rgba(0,0,0,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow-x:auto;scrollbar-width:none}
 .toolbar::-webkit-scrollbar{display:none}
 .brand{font-size:12px;font-weight:800;white-space:nowrap;letter-spacing:-.035em;padding:0 6px}
@@ -103,6 +107,9 @@ let page=null,win=null,selected=null,observer=null,resizeObserver=null,scheduled
 let picking=true,showBoxes=true,allElements=false;
 const maxBoxes=280;
 const primary='header,nav,main,section,article,footer,h1,h2,h3,h4,p,figure,img,video,button,a,[data-preview],[data-page],.home-composition,.identity-copy,.ars-main-swipe-cue,.ars-mobile-header,.ars-mobile-menu,.ars-work-mobile,.ars-about-track';
+// These broad structural containers produce decorative lines above the
+// mobile header and add no actionable detail. Keep them in the REAL DOM.
+function isExcluded(el){return el.matches('main#main,section#home');}
 function nodeLabel(el){
  const id=el.id?'#'+el.id:'';
  const classes=typeof el.className==='string'?el.className.trim().split(/\s+/).filter(Boolean).slice(0,2).map(x=>'.'+x).join(''):'';
@@ -134,6 +141,7 @@ function visible(el){
  return s.display!=='none'&&s.visibility!=='hidden'&&s.opacity!=='0';
 }
 function kind(el){
+ if(el.matches('header,.ars-mobile-header,.ars-mobile-menu'))return 'layout header';
  if(el.matches('button,a,input,select,textarea,[role="button"]'))return 'action';
  if(el.matches('header,nav,main,section,article,footer,figure,[data-preview],[data-page]'))return 'layout';
  return '';
@@ -146,12 +154,13 @@ function draw(){
  const candidates=[];
  let total=0;
  for(const el of elements){
+  if(isExcluded(el))continue;
   if(!allElements&&!el.matches(primary))continue;
   if(!visible(el))continue;
   total++;
   if(candidates.length<maxBoxes)candidates.push(el);
  }
- if(selected&&selected.isConnected&&!candidates.includes(selected)&&visible(selected))candidates.push(selected);
+ if(selected&&!isExcluded(selected)&&selected.isConnected&&!candidates.includes(selected)&&visible(selected))candidates.push(selected);
  const fragment=document.createDocumentFragment();
  let labels=0;
  for(const el of candidates){
@@ -240,7 +249,7 @@ function detail(el){
  }
 }
 function select(el){
- if(!el||!el.tagName)return;
+ if(!el||!el.tagName||isExcluded(el))return;
  selected=el;
  detail(el);
  panel.hidden=false;

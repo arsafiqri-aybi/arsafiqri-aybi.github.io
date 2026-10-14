@@ -115,6 +115,13 @@ Tapping a node shows its DOM selector, HTML, dimensions, computed CSS, and
 matching same-origin CSS selectors, with copy controls. Turn **Pilih** OFF to
 navigate between live portfolio chapters, then turn it on again.
 
+Inspector overlay refinement: `main#main` and `section#home` remain
+present in production HTML but have **no inspector outline or selectable
+wrapper label** in either density mode; inspecting their descendants continues
+normally. The inspector also avoids drawing an extra upper border around the
+mobile header/menu. The original website header divider and active-tab underline
+remain unchanged.
+
 The inspector uses one dedicated \`inspect/index.html\` for an actual new
 responsibility, with no second copy of the portfolio, no injected script on the
 main domain's normal page, no dependencies, and no changes to \`app.js\` or
