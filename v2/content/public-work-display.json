@@ -1,17 +1,16 @@
 {
   "schemaVersion": 1,
-  "intent": "Owner-authorized public presentation of six portfolio concepts and documented work, 2026-10-09. Public placeholders are not case-study or media release approvals.",
+  "intent": "Public presentation metadata. Tari Cookies case study and live website screenshots authorized by the owner on 25 October 2026. Other records retain their documented release scopes; currently published HTML remains canonical.",
   "items": [
     {
       "id": "tari-cookies",
       "name": "Tari Cookies",
-      "display": "placeholder",
+      "display": "released",
       "variant": "primary",
-      "category": "Customer Research · UX Design · Digital Experience",
-      "headline": "Designing a clearer ordering journey.",
-      "description": "A collaborative academic project translating customer research into high-fidelity designs for exploring hampers, reviewing orders, and continuing to WhatsApp for confirmation.",
-      "status": "Academic Team Project · 2026",
-      "visualLabel": "UX case visuals in preparation"
+      "category": "Customer Research · UX Design · Frontend",
+      "headline": "A little more clarity. A more personal gift.",
+      "description": "From customer research to a working website: explore cookies, personalise a hamper, review the order, and continue to WhatsApp.",
+      "status": "Live Website · Academic Team Project · 2026"
     },
     {
       "id": "hey",

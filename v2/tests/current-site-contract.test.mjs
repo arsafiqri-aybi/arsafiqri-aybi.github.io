@@ -180,6 +180,26 @@ test('DSARS semantic appearances and accessible motion are wired',()=>{
  assert.doesNotMatch(css,/\*,\*:before,\*:after\{[^}]*transform:none!important/);
  assert.match(js,/reduced\.addEventListener\?\.\('change',syncReducedMotion\)/);
  assert.match(js,/if\(reduced\.matches\)\{softArcPosition=softArcTarget/);
- assert.match(home,/styles\.css\?build=dsars-motion-1/);
+ assert.match(home,/styles\.css\?build=[a-z0-9-]+/);
  assert.match(home,/app\.js\?v=dsars-motion-1/);
+});
+
+// A public case must keep its actual screenshots available and unaltered.
+test('Tari website screenshots match provenance and the released story has destinations',async()=>{
+ const {createHash}=await import('node:crypto');
+ const project=JSON.parse(text('content/tari-cookies.json'));
+ const page=text('work/tari-cookies/index.html');
+ assert.equal(project.website,'https://taricookies.pages.dev/');
+ assert.equal(project.chapters.length,8);
+ for(const image of project.screenshots){
+  const bytes=readFileSync(resolve(root,image.path));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),image.sha256);
+  assert.equal(bytes.length,image.bytes);
+  assert.ok(page.includes('../../'+image.path));
+ }
+ assert.equal(project.screenshots.length,4);
+ assert.ok(project.chapters.every(ch=>!ch.media||project.screenshots.some(image=>image.id===ch.media)));
+ assert.ok(home.includes('data-gallery-project="tari-cookies"'));
+ assert.match(page,/href="https:\/\/taricookies\.pages\.dev\/"/);
+ assert.doesNotMatch(page,/Case Preview|visuals in preparation|pending publication/);
 });

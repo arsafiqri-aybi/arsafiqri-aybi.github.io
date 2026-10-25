@@ -3227,3 +3227,86 @@ body.home-site{
  .home-site .ars-mobile-menu button[aria-current=true],
  .home-site .rail-choice[aria-current=true]{text-decoration:underline;text-underline-offset:.26em}
 }
+
+/* Tari Cookies: owner-authorized case study with screenshots of the live site.
+   Scoped to this project; shared DSARS colors, type and motion stay canonical. */
+.tari-topline{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.tari-topline>span{font-size:10px;letter-spacing:.12em;color:var(--sub)}
+.tari-case .showcase-title{margin:78px 0 30px}
+.tari-case .showcase-title>p{font-size:clamp(27px,4vw,47px);line-height:1.2;letter-spacing:-.04em;color:var(--fg)}
+.tari-hero-intro{display:flex;align-items:center;justify-content:space-between;gap:40px;margin-bottom:48px}
+.tari-hero-intro>p{max-width:560px;font-size:15px;line-height:1.8;color:var(--sub)}
+.tari-live-link{display:inline-flex;align-items:center;justify-content:space-between;gap:38px;padding:14px 20px;min-height:50px;border:1px solid var(--rule);border-radius:3px;font-size:13px;font-weight:600;white-space:nowrap;transition:background var(--ars-motion-feedback) var(--ars-motion-ease),border-color var(--ars-motion-feedback) var(--ars-motion-ease)}
+.tari-live-link:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:var(--accent)}
+.tari-screen img{display:block;width:100%;height:auto;border-radius:5px;border:1px solid var(--rule)}
+.tari-browser{border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:#fdf5f8}
+.tari-browser img{border:0;border-radius:0}
+.tari-browser-bar{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;background:#e9dce2;color:#624651;font-size:10px;letter-spacing:.035em}
+.tari-browser-bar>span:first-child{letter-spacing:3px;font-size:8px;color:#9e7b8b}
+.tari-screen figcaption{font-size:11px;color:var(--sub);line-height:1.6;margin-top:12px}
+.tari-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin:45px 0 0;padding:30px 0 0;border-top:1px solid var(--rule)}
+.tari-facts dt{color:var(--sub);font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.tari-facts dd{margin:0;font-size:12px;line-height:1.9}
+.tari-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:50px}
+.tari-insights article{border-top:1px solid var(--rule);padding-top:20px}
+.tari-insights article>span{color:var(--sub);font-size:11px}
+.tari-insights h3{font-size:24px;margin:22px 0 14px}
+.tari-insights p,.tari-process p{font-size:14px;color:var(--sub);line-height:1.8}
+.tari-research-note{font-size:12px;line-height:1.8;color:var(--sub);max-width:750px;margin-top:36px}
+.tari-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;list-style:none;padding:0;margin:50px 0 0;counter-reset:process}
+.tari-process li{border-top:1px solid var(--rule);padding-top:22px;counter-increment:process}
+.tari-process li:before{content:'0' counter(process);color:var(--sub);font-size:11px;display:block;margin-bottom:14px}
+.tari-process span{font-size:19px;font-weight:550;display:block;margin-bottom:10px}
+.tari-journey{list-style:none;padding:0;margin:45px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--rule)}
+.tari-journey li{padding:20px 14px 20px 0;font-size:13px}
+.tari-journey small{display:block;font-size:10px;color:var(--sub);margin-bottom:8px}
+.tari-feature{margin-top:86px}
+.tari-feature-copy{display:grid;grid-template-columns:1fr 1fr;gap:12px 60px;align-items:start;margin-bottom:30px}
+.tari-feature-copy>.overline{grid-column:1/-1;margin-bottom:5px}
+.tari-feature-copy h3{font-size:clamp(27px,3vw,36px);margin:0}
+.tari-feature-copy p{font-size:15px;line-height:1.8;color:var(--sub)}
+.tari-final-cta{margin-top:65px;padding:35px 0;border-block:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:28px}
+.tari-final-cta h3{margin:0;font-size:30px}
+.tari-final-cta .overline{font-size:11px;margin-bottom:12px}
+.tari-gallery-screen img{display:block;width:100%;height:auto;border-radius:5px;transition:transform var(--ars-motion-settle) var(--ars-motion-ease)}
+.curated-work:hover .tari-gallery-screen img{transform:translateY(-3px)}
+.tari-work-cover{display:block;overflow:hidden;border:1px solid var(--rule);border-radius:7px}
+.tari-work-cover>img{display:block;width:100%;height:auto}
+.tari-work-cover-label{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;font-size:12px}
+.tari-work-cover-label>span{color:var(--sub);font-size:10px}
+.ars-work-tari-preview{display:none}
+@media(max-width:680px){
+ .tari-case .showcase-title{margin-top:45px}
+ .tari-topline{padding-top:14px}
+ .tari-topline>span{font-size:9px}
+ .tari-hero-intro{flex-direction:column;align-items:start;gap:22px;margin-bottom:28px}
+ .tari-facts{grid-template-columns:1fr 1fr;gap:25px 20px;margin-top:28px;padding-top:23px}
+ .tari-insights,.tari-process{grid-template-columns:1fr;gap:24px;margin-top:35px}
+ .tari-insights h3{margin-top:13px}
+ .tari-journey{grid-template-columns:1fr 1fr}
+ .tari-feature{margin-top:55px}
+ .tari-feature-copy{grid-template-columns:1fr;gap:15px}
+ .tari-feature-copy>.overline{grid-column:auto}
+ .tari-final-cta{flex-direction:column;align-items:start}
+ .home-site .explorer:not(.is-away) .preview-stage>[data-preview="work"]{justify-content:flex-start}
+ .home-site .ars-work-mobile{flex:0 0 auto}
+ .home-site .ars-work-tari-preview{display:block;border:1px solid var(--rule);border-radius:5px;overflow:hidden;flex:none}
+ .ars-work-tari-preview>img{display:block;width:100%;height:clamp(110px,19svh,165px);object-fit:cover;object-position:center 37%}
+ .ars-work-tari-preview>span{display:flex;justify-content:space-between;padding:8px 11px;font-size:10px;line-height:1.4;color:var(--sub)}
+ .tari-case .ars-case-slide{justify-content:flex-start;padding-top:clamp(24px,5svh,42px);gap:18px}
+ .tari-case .tari-case-visual{margin-top:3px;flex:none}
+ .tari-case .tari-case-visual>img{width:100%;height:auto;max-height:none;aspect-ratio:1.456;object-fit:contain;border-radius:4px}
+ .tari-case .ars-case-description{font-size:13px;line-height:1.65}
+ .tari-case .ars-case-heading{font-size:clamp(30px,9vw,42px)}
+ .tari-case .ars-case-evidence-link{padding:11px 0;min-height:44px}
+}
+@media(max-width:680px) and (max-height:650px){
+ .ars-work-tari-preview>img{height:100px}
+ .tari-case .ars-case-slide{padding:22px;gap:13px}
+ .tari-case .ars-case-heading{font-size:30px}
+ .tari-case .tari-case-visual>img{max-height:160px;object-fit:contain}
+}
+@media(prefers-reduced-motion:reduce){
+ .tari-live-link,.tari-gallery-screen img{transition:none}
+ .curated-work:hover .tari-gallery-screen img{transform:none}
+}

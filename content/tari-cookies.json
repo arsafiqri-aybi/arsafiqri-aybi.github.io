@@ -1,0 +1,155 @@
+{
+  "id": "tari-cookies",
+  "name": "Tari Cookies",
+  "category": "Customer Research · UX Design · Frontend",
+  "status": "Live Website · Academic Team Project",
+  "year": "2026",
+  "headline": "A little more clarity. A more personal gift.",
+  "description": "From customer research to a working website: explore cookies, personalise a hamper, review the order, and continue to WhatsApp.",
+  "role": "Team coordination, Lo-Fi and Hi-Fi design, website implementation, presentation, and feedback-led revisions.",
+  "website": "https://taricookies.pages.dev/",
+  "chapters": [
+    {
+      "key": "Overview",
+      "title": "Tari Cookies.",
+      "eyebrow": "CUSTOMER RESEARCH → LIVE WEBSITE · 2026",
+      "description": "A clearer path from discovering cookies to choosing a personal gift. An academic team project brought to life as a working website.",
+      "media": "home",
+      "caption": "Actual website · Beranda",
+      "links": [
+        {
+          "label": "Open live website",
+          "url": "https://taricookies.pages.dev/"
+        }
+      ]
+    },
+    {
+      "key": "The Challenge",
+      "title": "Confidence before the first message.",
+      "eyebrow": "01 / CUSTOMER CONTEXT",
+      "description": "The team's research followed the questions a new buyer brings from Instagram: what is available, how pre-order works, and what happens after choosing a product.",
+      "items": [
+        "Timing: ready stock, production, and arrival.",
+        "Trust: reviews, brand identity, and payment clarity.",
+        "Ordering: a clear next step toward WhatsApp."
+      ],
+      "foot": "Research scope: 6 interview participants and 8 questionnaire responses. Exploratory findings, not a representative market estimate."
+    },
+    {
+      "key": "My Contribution",
+      "title": "Connecting the team, design, and build.",
+      "eyebrow": "02 / MY CONTRIBUTION",
+      "description": "I coordinated task allocation and reviewed the team's work, then connected the design direction to the website people can explore.",
+      "items": [
+        "Created the Lo-Fi and Hi-Fi designs.",
+        "Built the website and final presentation.",
+        "Collected website feedback and implemented revisions."
+      ],
+      "foot": "Collaborative project · Group 3, Universitas Cakrawala. The research and wider coursework were team work."
+    },
+    {
+      "key": "Decisions",
+      "title": "Browse first. Start a clearer conversation.",
+      "eyebrow": "03 / DESIGN DECISIONS",
+      "description": "Give product selection its own space. Keep imagery, flavour, size, price, and the add-to-cart action together, then leave final scheduling and delivery confirmation to WhatsApp.",
+      "media": "catalog",
+      "caption": "Actual website · Product catalogue",
+      "foot": "The website prepares the order; the seller confirms it."
+    },
+    {
+      "key": "The Experience",
+      "title": "Make the gift feel personal.",
+      "eyebrow": "04 / HAMPER EXPERIENCE",
+      "description": "Choose an occasion, pick Duo or Trio, then select the cookies for each jar. Add an optional greeting before reviewing the order.",
+      "media": "hampers",
+      "caption": "Actual website · Hamper configuration",
+      "foot": "Hamper product imagery in the website uses AI-created illustrations."
+    },
+    {
+      "key": "Iteration",
+      "title": "Feedback becomes a working revision.",
+      "eyebrow": "05 / BUILD & ITERATION",
+      "description": "My contribution included gathering criticism of the website and putting revisions into the build. The result connects the visual design to product selection, hamper choices, and an editable cart.",
+      "items": [
+        "Lo-Fi and Hi-Fi as part of the design work.",
+        "Responsive HTML, CSS, and JavaScript implementation.",
+        "Order details visible before the WhatsApp handoff."
+      ],
+      "foot": "This case presents the design and implementation. It does not claim a measured conversion or usability improvement."
+    },
+    {
+      "key": "The Outcome",
+      "title": "An order you can review.",
+      "eyebrow": "06 / WORKING OUTPUT",
+      "description": "The live website brings together a product catalogue, configurable hampers, quantity controls, and a subtotal. Buyers can review their choices before continuing to the seller.",
+      "media": "cart",
+      "caption": "Actual website · Editable order summary",
+      "foot": "Production schedule and delivery fees are confirmed with the seller. The website is not a payment gateway."
+    },
+    {
+      "key": "Explore",
+      "title": "See the work in motion.",
+      "eyebrow": "07 / EXPLORE THE WEBSITE",
+      "description": "Explore the finished interface, browse the catalogue, or try configuring a hamper. These screenshots were captured from the live website on 25 October 2026.",
+      "links": [
+        {
+          "label": "Open Tari Cookies",
+          "url": "https://taricookies.pages.dev/"
+        },
+        {
+          "label": "Browse the catalogue",
+          "url": "https://taricookies.pages.dev/#cookies"
+        },
+        {
+          "label": "Explore hampers",
+          "url": "https://taricookies.pages.dev/#hampers"
+        }
+      ],
+      "foot": "The main lesson: connect the information a customer needs to the next decision they have to make."
+    }
+  ],
+  "screenshots": [
+    {
+      "id": "home",
+      "path": "assets/tari-cookies/home.webp",
+      "sourceUrl": "https://taricookies.pages.dev/",
+      "capturedOn": "2026-10-25",
+      "kind": "live-browser-screenshot",
+      "sha256": "9bee05e45eccfd4dc802ee2c9d26f115039a8e8df5ac0b6db09a556e8e8589a7",
+      "bytes": 80266
+    },
+    {
+      "id": "catalog",
+      "path": "assets/tari-cookies/catalog.webp",
+      "sourceUrl": "https://taricookies.pages.dev/",
+      "capturedOn": "2026-10-25",
+      "kind": "live-browser-screenshot",
+      "sha256": "0fdc1fdfba01ef424a5a5b192362a6d04de05d34a44d2499e0928139fb0a2445",
+      "bytes": 108686
+    },
+    {
+      "id": "hampers",
+      "path": "assets/tari-cookies/hampers.webp",
+      "sourceUrl": "https://taricookies.pages.dev/",
+      "capturedOn": "2026-10-25",
+      "kind": "live-browser-screenshot",
+      "sha256": "cc6d15f1f5be003ad375e297d8547f775d3a545b3010f67b6c21861a1b19d8ab",
+      "bytes": 139220
+    },
+    {
+      "id": "cart",
+      "path": "assets/tari-cookies/cart.webp",
+      "sourceUrl": "https://taricookies.pages.dev/",
+      "capturedOn": "2026-10-25",
+      "kind": "live-browser-screenshot",
+      "sha256": "9ea09894ada13258ce2828f4c8dc56f6a82d45838092917b9238c5c8186f6110",
+      "bytes": 115066
+    }
+  ],
+  "sourceNotes": {
+    "publication": "Owner explicitly requested this case study and website screenshots for the portfolio on 25 October 2026.",
+    "research": "Previously published Arsafiqri portfolio records 6 interviews and 8 questionnaire responses.",
+    "contribution": "Owner contribution review dated 30 September 2026: task allocation, team coordination, website, Lo-Fi and Hi-Fi, final presentation, feedback and revisions.",
+    "website": "Live Tari Cookies website inspected on 25 October 2026; original deployment ZIP README identifies hampers imagery as AI-created illustrations."
+  }
+}

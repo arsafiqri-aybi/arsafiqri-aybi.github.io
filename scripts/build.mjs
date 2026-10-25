@@ -14,6 +14,7 @@ const items=releaseView.items;
 const art=JSON.parse(readFileSync(resolve(root,'content/artwork.json'),'utf8'));
 const arch=JSON.parse(readFileSync(resolve(root,'content/architecture.json'),'utf8'));
 const mediaRegistry=JSON.parse(readFileSync(resolve(root,'v2/content/approved-media.json'),'utf8'));
+const tariCase=JSON.parse(readFileSync(resolve(root,'content/tari-cookies.json'),'utf8'));
 const publicDisplay=JSON.parse(readFileSync(resolve(root,'v2/content/public-work-display.json'),'utf8'));
 const homePortrait=resolveApprovedMedia(mediaRegistry,'ars-portrait','home');
 const aboutPortrait=resolveApprovedMedia(mediaRegistry,'ars-portrait','about');
@@ -36,8 +37,8 @@ const buildSite=(items, art, architecture) => {
  const galleryPlan=planEditorialGallery(items,releaseView.selectedIds);
  const selected=galleryPlan.selected.map(entry=>items.find(p=>p.id===entry.id));
  const previewWork=selected[0]??items[0];
- const displayedWork=planPublicWorkDisplay(publicDisplay,items);
- const featuredCards=renderPublicWorkDisplayCards(displayedWork,items,art,esc,artEl,artCaption,{video:galleryMotion,poster:galleryPoster});
+ const displayedWork=planPublicWorkDisplay(publicDisplay,[...items,tariCase]);
+ const featuredCards=renderPublicWorkDisplayCards(displayedWork,[...items,tariCase],art,esc,artEl,artCaption,{video:galleryMotion,poster:galleryPoster});
  const indexRows=galleryPlan.allWork.map(p=>`<a class="index-row" href="${workHref(p)}" data-gallery-project="${esc(p.id)}"><span class="index-title">${esc(p.name)}</span><span class="index-category">${esc(p.category)}</span><span class="index-status">${esc(p.status)}</span></a>`).join("");
  const previews=[
  `<article class="section-preview is-selected" data-preview="home"><div class="home-composition"><div class="identity-copy"><span class="home-role">Business Strategist <span aria-hidden="true">×</span> Digital Builder</span><h1>Where thinking becomes <em>experience.</em></h1><p>I bring together business strategy, creative thinking, and technology to design and build meaningful digital experiences.</p></div><figure class="side-artwork ars-portrait-stage"><img src="./${esc(homePortrait.path)}" width="${homePortrait.width}" height="${homePortrait.height}" alt="${esc(homePortrait.alt)}" fetchpriority="high" decoding="async"></figure></div></article>`,

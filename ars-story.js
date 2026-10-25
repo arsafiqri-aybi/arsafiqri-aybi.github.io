@@ -24,6 +24,7 @@
    }catch{return null;}
  }
  function beats(p,isPreview){
+   if(p.id==='tari-cookies'&&Array.isArray(p.chapters)&&p.chapters.length===8)return p.chapters;
    const status=p.status||'Documented project';
    const limitations=p.limitation||'No additional verification has been published.';
    const contributions=Array.isArray(p.contribution)?p.contribution.filter(Boolean):[];
@@ -73,7 +74,18 @@
      if(beat.description)slide.append(paragraph(beat.description));
      // Reuse the already-approved source-derived artwork. This is an
      // illustration, never presented as a verified product screenshot.
-     if(index===0){
+     if(beat.media&&caseId==='tari-cookies'&&['home','catalog','hampers','cart'].includes(beat.media)){
+       const visual=node('figure','ars-case-visual tari-case-visual');
+       const image=node('img');
+       image.src='../../assets/tari-cookies/'+beat.media+'.webp';
+       image.alt=beat.caption||'Tari Cookies live website';
+       image.width=beat.media==='home'?1363:1353;
+       image.height=beat.media==='home'?936:929;
+       image.decoding='async';
+       image.loading=index===0?'eager':'lazy';
+       visual.append(image,node('figcaption','ars-case-visual-note',beat.caption));
+       slide.append(visual);
+     }else if(index===0){
        const original=body.querySelector('.showcase-art .project-art, .showcase-art .curated-media');
        if(original){
          const visual=node('figure','ars-case-visual');
@@ -155,24 +167,11 @@
    if(built||!mobile.matches)return;
    try{
      if(caseId==='tari-cookies'){
-       const response=await fetch('../../v2/content/public-work-display.json');
+       const response=await fetch('../../content/tari-cookies.json');
        if(!response.ok)throw Error('Public preview source unavailable');
-       const publicData=await response.json();
-       const item=publicData.items?.find(p=>p.id==='tari-cookies');
-       if(!item)throw Error('Tari preview data unavailable');
-       initFromProject({
-         id:item.id,name:item.name,status:item.status,category:item.category,
-         headline:item.headline,
-         summary:item.description,
-         description:item.description,
-         role:'Collaborative academic team project. Specific individual contributions require verification.',
-         problem:'The academic project explored ways to make the Tari Cookies hamper browsing and order journey clearer.',
-         decision:'High-fidelity designs were prepared for exploring hampers, reviewing an order, and continuing to WhatsApp for confirmation.',
-         intro:'A customer-research-informed high-fidelity UX design concept for a hamper ordering journey.',
-         limitation:'Detailed research, contribution records, final UX media, and any usability measurements have not yet been released.',
-         result:'The publicly described output is a high-fidelity design concept. No measured customer or business improvement is claimed.',
-         links:[]
-       },true);
+       const project=await response.json();
+       if(project.id!=='tari-cookies'||project.chapters?.length!==8)throw Error('Tari case data unavailable');
+       initFromProject(project,false);
      }else{
        const response=await fetch('../../content/projects.json');
        if(!response.ok)throw Error('Project data unavailable');
