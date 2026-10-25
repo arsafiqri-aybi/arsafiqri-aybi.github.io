@@ -8,10 +8,14 @@ Source branch: `main` (GitHub Pages, repository root).
 - Static, frontend-only personal portfolio. No runtime backend or paid service is required.
 - Six desktop destinations: Home, Work, Expertise, Approach, About and Connect.
 - Dedicated mobile Home, Work, About and Connect presentations, with horizontal/vertical navigation and a four-chapter About carousel.
-- Six featured work entries; held third-party artwork stays absent. The publicly linked Tari Cookies page is a clearly labelled **case preview**, not a released full case study.
-- Seven documented legacy case-study routes remain available in addition to the Tari Cookies preview.
-- Original portrait on Home/About, source-derived diagrams for relevant projects, and the original manually played motion film.
-- Real GitHub and Instagram links. No invented performance metrics, third-party screenshots, or unsupported contact details.
+- Three featured work entries (Tari Cookies, waai.id, and SarafCare); held third-party artwork stays absent. The publicly linked Tari Cookies page is a clearly labelled **case preview**, not a released full case study.
+- Four legacy technical case-study routes remain available in addition to the Tari Cookies preview. Hey by Ars, Personal Browser Operator and Motion Render Video are unpublished from the portfolio.
+- Original portrait on Home/About and source-derived illustrations for the remaining featured work. The former motion film is no longer publicly showcased.
+- Real GitHub, LinkedIn (linkedin.com/in/arsafiqri-ua) and Instagram links. No invented performance metrics, third-party screenshots, or unsupported contact details.
+
+## Portfolio content revision (2026-10-25)
+
+Removed the Hey by Ars, Personal Browser Operator and Motion Render Video public cards, archive entries, linked expertise/approach references, and dedicated published HTML routes. Their research and source records are retained under `content/*` for provenance rather than displayed as portfolio projects. Removed the three URLs from the sitemap and added the Tari Cookies preview route. The mobile Work collection and desktop featured work each show Tari Cookies, waai.id and SarafCare, with accurate pending-case labels. Arsafiqri's documented LinkedIn URL is linked in mobile/desktop Connect, About and the footer.
 
 ## Files serving the live site
 
