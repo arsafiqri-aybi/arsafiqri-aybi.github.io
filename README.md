@@ -97,6 +97,14 @@ The adjacent identical Android media-query wrappers have also been merged only w
 
 The live site is committed static HTML/CSS/JS and does not require a build on GitHub Pages.
 
+## DSARS and code-driven motion adaptation (2026-10-25)
+
+The portfolio consumes the independent `arsafiqri-aybi/dsars` ARS Interface System Foundation Candidate's semantic light/dark palette, and its 120/180ms feedback/settle motion tokens, through the existing canonical `styles.css`. The design system itself remains a **foundation candidate**; this is a scoped portfolio mapping, not a production certification or an import of the web component adapter.
+
+[Code-Driven Motion](https://github.com/arsafiqri-aybi/motion)'s web interaction track informs chapter transitions and interruption handling. Rich chapter travel retains its measured 460ms pacing. Reduced-motion preference changes stop movement without removing transforms needed for layout. Forced-color mode keeps a visible focus indicator and selection cue.
+
+Source-contract checks now cover these changes. Actual Android, desktop, forced-colors, assistive technology, and screenshot regressions are **not yet verified**. Project evidence, authentic imagery, routes and responsive chapter architecture stay unchanged.
+
 ## Testing and boundaries
 
 `node --test v2/tests/current-site-contract.test.mjs` checks the published source's static contracts. The remaining `v2/tests/*.test.mjs` cover reusable release/media/navigation logic and require review when the design changes. Browser automation, physical Android/iOS, Safari/Firefox and screen-reader tests are separate checks; no old release's QA results are evidence of the present layout.
