@@ -116,6 +116,8 @@ function paintSoftArc(position){
   });
 }
 function animateSoftArc(now){
+  // Preference changes interrupt travel without hiding the current state.
+  if(reduced.matches){softArcPosition=softArcTarget;softArcFrameId=0;paintSoftArc(softArcTarget);return;}
   const t=Math.min(1,(now-softArcStarted)/460);
   softArcPosition=softArcFrom+(softArcTarget-softArcFrom)*softArcEase(t);
   paintSoftArc(softArcPosition);
@@ -614,7 +616,17 @@ document.querySelectorAll('[data-motion-player]').forEach(stage=>{
  video.querySelectorAll('source').forEach(source=>source.addEventListener('error',mediaFailed));
  root.classList.add('motion-enhanced');
 });
-if(reduced.matches)root.classList.add('no-motion');
+function syncReducedMotion(){
+ root.classList.toggle('no-motion',reduced.matches);
+ if(reduced.matches&&softArcFrameId){
+  cancelAnimationFrame(softArcFrameId);
+  softArcFrameId=0;
+  softArcPosition=softArcTarget;
+ }
+ paintSoftArc(softArcPosition);
+}
+reduced.addEventListener?.('change',syncReducedMotion);
+syncReducedMotion();
 
 
 /* About's second-level horizontal carousel is a separate swipe surface.
