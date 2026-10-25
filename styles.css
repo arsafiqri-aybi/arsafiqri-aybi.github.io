@@ -2761,21 +2761,6 @@ body.home-site{
    margin:0 0 4px;font-size:12px!important;
    line-height:1.55!important;color:var(--sub);
  }
- .home-site .ars-connect-links .ars-connect-profile-pending{
-   display:flex;align-items:center;gap:15px;
-   min-height:57px;padding:9px 0;opacity:.65;
-   border-bottom:1px solid var(--rule);
-   color:var(--fg);
- }
- .home-site .ars-connect-profile-pending>span{
-   width:26px;text-align:center;font-size:18px;font-weight:650;
- }
- .home-site .ars-connect-profile-pending small{
-   display:flex;flex-direction:column;font-size:13px;font-weight:650;line-height:1.5;
- }
- .home-site .ars-connect-profile-pending i{
-   color:var(--sub);font-size:10px;font-style:normal;font-weight:400;
- }
  body.project-page.ars-case-slide-ready .ars-case-track{
    touch-action:pan-x pinch-zoom;
  }
