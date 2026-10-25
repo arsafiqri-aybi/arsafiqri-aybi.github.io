@@ -162,10 +162,10 @@ test('DSARS semantic appearances and accessible motion are wired',()=>{
    '--ars-motion-feedback','--ars-motion-settle','--ars-motion-ease']){
   assert.ok(css.includes(role),'missing DSARS role '+role);
  }
- assert.match(css,/@media\\(forced-colors:active\\)/);
- assert.doesNotMatch(css,/\\*,\\*:before,\\*:after\\{[^}]*transform:none!important/);
- assert.match(js,/reduced\\.addEventListener\\?\\.\\('change',syncReducedMotion\\)/);
- assert.match(js,/if\\(reduced\\.matches\\)\\{softArcPosition=softArcTarget/);
- assert.match(home,/styles\\.css\\?build=dsars-motion-1/);
- assert.match(home,/app\\.js\\?v=dsars-motion-1/);
+ assert.match(css,/@media\(forced-colors:active\)/);
+ assert.doesNotMatch(css,/\*,\*:before,\*:after\{[^}]*transform:none!important/);
+ assert.match(js,/reduced\.addEventListener\?\.\('change',syncReducedMotion\)/);
+ assert.match(js,/if\(reduced\.matches\)\{softArcPosition=softArcTarget/);
+ assert.match(home,/styles\.css\?build=dsars-motion-1/);
+ assert.match(home,/app\.js\?v=dsars-motion-1/);
 });
