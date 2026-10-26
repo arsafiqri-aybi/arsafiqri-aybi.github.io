@@ -8,13 +8,47 @@ import {planPublicWorkDisplay,renderPublicWorkDisplayCards} from '../v2/scripts/
 import {planCaseStudy} from '../v2/scripts/case-study-plan.mjs';
 import {resolveApprovedMedia} from '../v2/scripts/media-plan.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+// Targeted publishing path for the three owner-approved, evidence-based cases.
+// It leaves the established homepage and legacy generator drift guard intact.
+if(process.argv.includes('--reviewed-cases-only')){
+ const escape=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+ const ids=['tari-cookies','waai-id','sarafcare'];
+ const safeMedia=path=>/^assets\/(?:tari-cookies|waai-id|sarafcare)\/[a-z0-9-]+\.webp$/.test(path??'');
+ const links=items=>(items??[]).map(l=>{if(!/^https:\/\//.test(l.url))throw Error('Unsafe case destination');return `<a class="tari-live-link" href="${escape(l.url)}" target="_blank" rel="noopener noreferrer">${escape(l.label)}</a>`}).join('');
+ const metrics=items=>items?.length?`<dl class="case-metrics">${items.map(m=>`<div><dt>${escape(m.label)}</dt><dd>${escape(m.value)}</dd></div>`).join('')}</dl>`:'';
+ const picture=(m,hero=false)=>{
+  if(!m)return '';
+  if(!safeMedia(m.src)||!existsSync(resolve(root,m.src)))throw Error('Missing case asset '+m.src);
+  return `<figure class="case-figure case-figure--${escape(m.kind??'landscape')}${hero?' showcase-art':''}"><a href="../../${escape(m.src)}" target="_blank" rel="noopener" aria-label="Open full image: ${escape(m.alt)}"><img src="../../${escape(m.src)}" width="${m.width}" height="${m.height}" alt="${escape(m.alt)}" ${hero?'fetchpriority="high"':'loading="lazy"'} decoding="async"></a><figcaption>${escape(m.caption)}</figcaption></figure>`;
+ };
+ const grid=items=>items?.length?`<div class="case-insight-grid">${items.map(c=>`<article><h3>${escape(c.title)}</h3><p>${escape(c.text)}</p></article>`).join('')}</div>`:'';
+ const dataTable=t=>t?`<div class="case-table-scroll" tabindex="0" role="region" aria-label="${escape(t.caption??'Case study data')}"><table class="case-table">${t.caption?`<caption>${escape(t.caption)}</caption>`:''}<thead><tr>${t.headers.map(h=>`<th scope="col">${escape(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(row=>`<tr>${row.map((cell,i)=>`<${i===0?'th scope="row"':'td'}>${escape(cell)}</${i===0?'th':'td'}>`).join('')}</tr>`).join('')}</tbody></table></div>`:'';
+ const quote=q=>q?`<blockquote class="case-quote"><p>“${escape(q.text)}”</p><footer>${escape(q.by)}</footer></blockquote>`:'';
+ for(const id of ids){
+  const p=JSON.parse(readFileSync(resolve(root,'content/'+id+'.json'),'utf8'));
+  if(p.id!==id||!p.sections?.length||!p.chapters?.length)throw Error('Invalid reviewed case '+id);
+  const hero=picture(p.hero,true);
+  const sections=p.sections.map(s=>`<section class="reading-section" id="${escape(s.id)}"><div class="editorial-width"><span class="overline">${escape(s.label)}</span><h2>${escape(s.title)}</h2><div class="case-reading-copy">${s.body.map(t=>`<p>${escape(t)}</p>`).join('')}</div>${s.bullets?.length?`<ul class="case-list">${s.bullets.map(t=>`<li>${escape(t)}</li>`).join('')}</ul>`:''}${grid(s.cards)}${dataTable(s.table)}${metrics(s.metrics)}${quote(s.quote)}${picture(s.media)}${s.note?`<p class="case-note">${escape(s.note)}</p>`:''}${s.links?.length?`<div class="case-section-links">${links(s.links)}</div>`:''}</div></section>`).join('\n');
+  const facts=`<dl class="tari-facts">${p.facts.map(f=>`<div><dt>${escape(f.label)}</dt><dd>${escape(f.value)}</dd></div>`).join('')}</dl>`;
+  const sourceNotes=Object.entries(p.sourceNotes).filter(([key])=>key!=='publication').map(([,value])=>`<li>${escape(value)}</li>`).join('');
+  const next=ids.filter(x=>x!==id).map(other=>{const c=JSON.parse(readFileSync(resolve(root,'content/'+other+'.json'),'utf8'));return `<a href="../${other}/">${escape(c.name)}</a>`}).join('');
+  const page=`<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#141b17">
+<title>${escape(p.name)} — Case Study — Arsafiqri UA</title><meta name="description" content="${escape(p.description)}"><meta property="og:title" content="${escape(p.name)} — ${escape(p.headline)}"><meta property="og:description" content="${escape(p.description)}"><meta property="og:type" content="website"><meta property="og:url" content="https://arsafiqri-aybi.github.io/work/${id}/"><meta property="og:image" content="https://arsafiqri-aybi.github.io/${escape(p.hero.src)}"><link rel="canonical" href="https://arsafiqri-aybi.github.io/work/${id}/"><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../fonts.css"><link rel="stylesheet" href="../../assets/illustrations.css"><link rel="stylesheet" href="../../styles.css?v=reviewed-cases-2"><script defer src="../../app.js?v=dsars-motion-1"></script><script defer src="../../ars-story.js?v=reviewed-cases-2"></script></head>
+<body class="project-page reviewed-case ${id==='tari-cookies'?'tari-case':''}" data-case="${id}"><a class="skip" href="#main">Skip to content</a><main id="main"><section class="showcase"><div class="showcase-inside"><div class="tari-topline"><a class="back-action" href="../../#work" data-return-to-work>All Work</a><span>${escape(p.status)}</span></div><div class="showcase-title"><span class="overline">${escape(p.category)} · ${escape(p.year)}</span><h1>${escape(p.name)}<span>.</span></h1><p>${escape(p.headline)}</p></div><div class="tari-hero-intro"><p>${escape(p.description)}</p>${links(p.links.slice(0,1))}</div>${p.hero.kind==='portrait'?`<div class="case-cover case-cover--${id}">${hero}<div class="case-cover-note"><span>${escape(p.name)}</span><h2>${escape(p.coverSummary)}</h2>${metrics(p.metrics)}<p>${escape(p.metricsNote)}</p></div></div>`:hero}${facts}</div></section><div class="reader" data-reader><nav class="story-nav" aria-label="Case study sections">${p.sections.map(s=>`<a href="#${escape(s.id)}">${escape(s.label)}</a>`).join('')}</nav>${sections}<div class="case-provenance"><details><summary>Sources behind this case</summary><ul>${sourceNotes}</ul></details></div><div class="next-work"><span>Explore another case</span><div class="case-next-links">${next}</div><a href="../../#work" data-return-to-work>All Work</a></div></div></main><footer class="site-footer ars-site-footer"><span class="ars-footer-mark">© 2026 Arsafiqri UA</span></footer><script type="application/json" id="reviewed-case-data">${JSON.stringify(p).replaceAll('<','\\u003c')}</script></body></html>`;
+  const target=resolve(root,'work/'+id+'/index.html');mkdirSync(dirname(target),{recursive:true});writeFileSync(target,page);
+ }
+ console.log('Published markup prepared for Tari Cookies, waai.id and SarafCare.');
+ process.exit(0);
+}
+
 const fullCatalog=JSON.parse(readFileSync(resolve(root,'content/projects.json'),'utf8'));
 const releaseView=loadV2ReleaseView({root,catalog:fullCatalog,manifestPath:process.env.ARS_V2_CANDIDATE_MANIFEST??null});
 const items=releaseView.items;
 const art=JSON.parse(readFileSync(resolve(root,'content/artwork.json'),'utf8'));
 const arch=JSON.parse(readFileSync(resolve(root,'content/architecture.json'),'utf8'));
 const mediaRegistry=JSON.parse(readFileSync(resolve(root,'v2/content/approved-media.json'),'utf8'));
-const tariCase=JSON.parse(readFileSync(resolve(root,'content/tari-cookies.json'),'utf8'));
+const reviewedCases=['tari-cookies','waai-id','sarafcare'].map(id=>JSON.parse(readFileSync(resolve(root,'content/'+id+'.json'),'utf8')));
 const publicDisplay=JSON.parse(readFileSync(resolve(root,'v2/content/public-work-display.json'),'utf8'));
 const homePortrait=resolveApprovedMedia(mediaRegistry,'ars-portrait','home');
 const aboutPortrait=resolveApprovedMedia(mediaRegistry,'ars-portrait','about');
@@ -37,8 +71,8 @@ const buildSite=(items, art, architecture) => {
  const galleryPlan=planEditorialGallery(items,releaseView.selectedIds);
  const selected=galleryPlan.selected.map(entry=>items.find(p=>p.id===entry.id));
  const previewWork=selected[0]??items[0];
- const displayedWork=planPublicWorkDisplay(publicDisplay,[...items,tariCase]);
- const featuredCards=renderPublicWorkDisplayCards(displayedWork,[...items,tariCase],art,esc,artEl,artCaption,{video:galleryMotion,poster:galleryPoster});
+ const displayedWork=planPublicWorkDisplay(publicDisplay,[...items,...reviewedCases]);
+ const featuredCards=renderPublicWorkDisplayCards(displayedWork,[...items,...reviewedCases],art,esc,artEl,artCaption,{video:galleryMotion,poster:galleryPoster});
  const indexRows=galleryPlan.allWork.map(p=>`<a class="index-row" href="${workHref(p)}" data-gallery-project="${esc(p.id)}"><span class="index-title">${esc(p.name)}</span><span class="index-category">${esc(p.category)}</span><span class="index-status">${esc(p.status)}</span></a>`).join("");
  const previews=[
  `<article class="section-preview is-selected" data-preview="home"><div class="home-composition"><div class="identity-copy"><span class="home-role">Business Strategist <span aria-hidden="true">×</span> Digital Builder</span><h1>Where thinking becomes <em>experience.</em></h1><p>I bring together business strategy, creative thinking, and technology to design and build meaningful digital experiences.</p></div><figure class="side-artwork ars-portrait-stage"><img src="./${esc(homePortrait.path)}" width="${homePortrait.width}" height="${homePortrait.height}" alt="${esc(homePortrait.alt)}" fetchpriority="high" decoding="async"></figure></div></article>`,

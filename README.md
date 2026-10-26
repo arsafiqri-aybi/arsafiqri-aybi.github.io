@@ -9,7 +9,7 @@ Source branch: `main` (GitHub Pages, repository root).
 - Six desktop destinations: Home, Work, Expertise, Approach, About and Connect.
 - Dedicated mobile Home, Work, About and Connect presentations, with horizontal/vertical navigation and a four-chapter About carousel.
 - Three featured work entries (Tari Cookies, waai.id, and SarafCare); held third-party artwork stays absent. Tari Cookies has a full, owner-authorized case study with actual live-website screenshots and a direct website link.
-- Four legacy technical case-study routes remain available in addition to the Tari Cookies case study. Hey by Ars, Personal Browser Operator and Motion Render Video are unpublished from the portfolio.
+- Four legacy technical case-study routes remain available alongside the Tari Cookies, waai.id and SarafCare case studies. Hey by Ars, Personal Browser Operator and Motion Render Video are unpublished from the portfolio.
 - Original portrait on Home/About and source-derived illustrations for the remaining featured work. The former motion film is no longer publicly showcased.
 - Real GitHub, LinkedIn (linkedin.com/in/arsafiqri-ua) and Instagram links. No invented performance metrics, third-party screenshots, or unsupported contact details.
 
@@ -163,3 +163,33 @@ Research scope (6 interviews, 8 questionnaire responses) comes from the previous
 portfolio record. Individual contributions come from the owner's 30 September
 review. The case makes no measured usability or conversion claim. The shared
 legacy generator still refuses to overwrite divergent published markup.
+
+## Research-led case publication (2026-10-26)
+
+Tari Cookies now connects its original brief, participant criteria, interview
+method/date, questionnaire averages and design decisions to the implemented
+journey. The owner confirmed the WhatsApp response is directly from the business
+owner. Its crop preserves both question and answer and removes the contact
+header and unrelated messages. The impact is described as workflow changes and
+qualitative owner feedback; planned task-test targets are not claimed as results.
+
+waai.id and SarafCare are published with their own approved source assets and
+detailed records under `content/waai-id.json` and `content/sarafcare.json`. waai.id
+separates its August content evaluation from its September historical account
+snapshot. SarafCare separates planned budget, spend, platform conversations,
+owner-reported customers, and received revenue; no medical efficacy claim is
+made by the case. Future work is distinguished from delivered work.
+
+The three JSON records own desktop and mobile case content. Run
+`node scripts/build.mjs --reviewed-cases-only` to regenerate only those reviewed
+pages; the general legacy generator's overwrite guard stays active. Embedded
+JSON lets the mobile story load without a content fetch. Chapter buttons use
+text labels, meaningful result figures remain visible, and decorative project
+numbers and repeated arrows were removed from Work. DSARS semantic palette,
+8/16 px edge roles, measured spacing, 120/180ms feedback, and reduced-motion
+fallbacks guide this scoped implementation. It does not certify the DSARS
+foundation as production-ready across platforms.
+
+Validation: current-source and original-media checks pass (43 assertions at this
+revision). The old broader navigation suite has three assertions already failing
+at the pre-change baseline; no legacy navigation behaviour was rewritten.

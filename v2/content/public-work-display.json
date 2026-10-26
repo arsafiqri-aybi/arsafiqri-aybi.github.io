@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "intent": "Public presentation metadata. Tari Cookies case study and live website screenshots authorized by the owner on 25 October 2026. Other records retain their documented release scopes; currently published HTML remains canonical.",
+  "intent": "The owner authorized full Tari Cookies, waai.id and SarafCare publication and their scoped project assets on 26 October 2026. Previously retired projects remain absent from current published HTML. The full legacy generator stays guarded against layout drift.",
   "items": [
     {
       "id": "tari-cookies",
@@ -8,9 +8,9 @@
       "display": "released",
       "variant": "primary",
       "category": "Customer Research · UX Design · Frontend",
-      "headline": "A little more clarity. A more personal gift.",
-      "description": "From customer research to a working website: explore cookies, personalise a hamper, review the order, and continue to WhatsApp.",
-      "status": "Live Website · Academic Team Project · 2026"
+      "headline": "From finding a product to feeling ready to order.",
+      "description": "An Instagram-to-WhatsApp ordering journey shaped by customer research, made tangible through a responsive website and reviewed by the business owner.",
+      "status": "Live website · Academic team project"
     },
     {
       "id": "hey",
@@ -25,13 +25,12 @@
     {
       "id": "waai-id",
       "name": "waai.id",
-      "display": "placeholder",
+      "display": "released",
       "variant": "feature",
       "category": "Content Strategy · Creative Direction · Audience Insights",
-      "headline": "Stories shaped by human understanding.",
-      "description": "An editorial content initiative connecting audience insights, writing, creative direction, publishing, and performance review through original storytelling and documented audience response.",
-      "status": "Published Creative Work · 2026",
-      "visualLabel": "Storytelling visuals in preparation"
+      "headline": "A content practice that learns from its audience.",
+      "description": "Building an organic reflection-led media project, from brand direction and original content to a repeatable production and evaluation process.",
+      "status": "Independent media project"
     },
     {
       "id": "personal-browser-operator",
@@ -46,13 +45,12 @@
     {
       "id": "sarafcare",
       "name": "SarafCare",
-      "display": "placeholder",
+      "display": "released",
       "variant": "editorial",
       "category": "Campaign Strategy · Meta Ads · Customer Journey",
-      "headline": "From paid attention to real conversations.",
-      "description": "A short local-service marketing experiment connecting offer messaging, geographic targeting, paid advertising, and a WhatsApp-led enquiry journey.",
-      "status": "Historical Experiment · 2026",
-      "visualLabel": "Campaign case visuals in preparation"
+      "headline": "From an ad to a conversation—and a service that can be delivered.",
+      "description": "A small local-service campaign connecting offer framing, geographic targeting, Meta Ads, and a WhatsApp enquiry journey, with the operational lessons alongside the results.",
+      "status": "Independent marketing experiment"
     },
     {
       "id": "motion",

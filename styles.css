@@ -3228,85 +3228,155 @@ body.home-site{
  .home-site .rail-choice[aria-current=true]{text-decoration:underline;text-underline-offset:.26em}
 }
 
-/* Tari Cookies: owner-authorized case study with screenshots of the live site.
-   Scoped to this project; shared DSARS colors, type and motion stay canonical. */
-.tari-topline{display:flex;align-items:center;justify-content:space-between;gap:20px}
-.tari-topline>span{font-size:10px;letter-spacing:.12em;color:var(--sub)}
-.tari-case .showcase-title{margin:78px 0 30px}
-.tari-case .showcase-title>p{font-size:clamp(27px,4vw,47px);line-height:1.2;letter-spacing:-.04em;color:var(--fg)}
-.tari-hero-intro{display:flex;align-items:center;justify-content:space-between;gap:40px;margin-bottom:48px}
-.tari-hero-intro>p{max-width:560px;font-size:15px;line-height:1.8;color:var(--sub)}
-.tari-live-link{display:inline-flex;align-items:center;justify-content:space-between;gap:38px;padding:14px 20px;min-height:50px;border:1px solid var(--rule);border-radius:3px;font-size:13px;font-weight:600;white-space:nowrap;transition:background var(--ars-motion-feedback) var(--ars-motion-ease),border-color var(--ars-motion-feedback) var(--ars-motion-ease)}
-.tari-live-link:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:var(--accent)}
-.tari-screen img{display:block;width:100%;height:auto;border-radius:5px;border:1px solid var(--rule)}
-.tari-browser{border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:#fdf5f8}
-.tari-browser img{border:0;border-radius:0}
-.tari-browser-bar{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;background:#e9dce2;color:#624651;font-size:10px;letter-spacing:.035em}
-.tari-browser-bar>span:first-child{letter-spacing:3px;font-size:8px;color:#9e7b8b}
-.tari-screen figcaption{font-size:11px;color:var(--sub);line-height:1.6;margin-top:12px}
-.tari-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin:45px 0 0;padding:30px 0 0;border-top:1px solid var(--rule)}
-.tari-facts dt{color:var(--sub);font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.tari-facts dd{margin:0;font-size:12px;line-height:1.9}
-.tari-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:50px}
-.tari-insights article{border-top:1px solid var(--rule);padding-top:20px}
-.tari-insights article>span{color:var(--sub);font-size:11px}
-.tari-insights h3{font-size:24px;margin:22px 0 14px}
-.tari-insights p,.tari-process p{font-size:14px;color:var(--sub);line-height:1.8}
-.tari-research-note{font-size:12px;line-height:1.8;color:var(--sub);max-width:750px;margin-top:36px}
-.tari-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;list-style:none;padding:0;margin:50px 0 0;counter-reset:process}
-.tari-process li{border-top:1px solid var(--rule);padding-top:22px;counter-increment:process}
-.tari-process li:before{content:'0' counter(process);color:var(--sub);font-size:11px;display:block;margin-bottom:14px}
-.tari-process span{font-size:19px;font-weight:550;display:block;margin-bottom:10px}
-.tari-journey{list-style:none;padding:0;margin:45px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--rule)}
-.tari-journey li{padding:20px 14px 20px 0;font-size:13px}
-.tari-journey small{display:block;font-size:10px;color:var(--sub);margin-bottom:8px}
-.tari-feature{margin-top:86px}
-.tari-feature-copy{display:grid;grid-template-columns:1fr 1fr;gap:12px 60px;align-items:start;margin-bottom:30px}
-.tari-feature-copy>.overline{grid-column:1/-1;margin-bottom:5px}
-.tari-feature-copy h3{font-size:clamp(27px,3vw,36px);margin:0}
-.tari-feature-copy p{font-size:15px;line-height:1.8;color:var(--sub)}
-.tari-final-cta{margin-top:65px;padding:35px 0;border-block:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:28px}
-.tari-final-cta h3{margin:0;font-size:30px}
-.tari-final-cta .overline{font-size:11px;margin-bottom:12px}
-.tari-gallery-screen img{display:block;width:100%;height:auto;border-radius:5px;transition:transform var(--ars-motion-settle) var(--ars-motion-ease)}
-.curated-work:hover .tari-gallery-screen img{transform:translateY(-3px)}
-.tari-work-cover{display:block;overflow:hidden;border:1px solid var(--rule);border-radius:7px}
+/* Reviewed portfolio cases. DSARS measured space, semantic edges and feedback;
+   source assets keep their own brand colours. No decorative project counters. */
+:root{
+ --ars-space-related:.5rem;--ars-space-group:1rem;--ars-space-section:2rem;
+ --ars-space-region:3rem;--ars-radius-control:.5rem;--ars-radius-panel:1rem;
+ --ars-reading-measure:45rem;--ars-body-line:1.55;
+}
+.tari-topline{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.tari-topline>span{font-size:11px;color:var(--sub);text-align:right}
+.reviewed-case .showcase-title{margin:64px 0 28px}
+.reviewed-case .showcase-title>p{max-width:850px;color:var(--fg);font-size:clamp(28px,3.7vw,46px);line-height:1.2;letter-spacing:-.045em}
+.tari-hero-intro{display:flex;justify-content:space-between;align-items:center;gap:48px;margin-bottom:48px}
+.tari-hero-intro>p{max-width:620px;color:var(--sub);font-size:16px;line-height:1.75}
+.tari-live-link{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:12px 20px;border:1px solid var(--rule);border-radius:var(--ars-radius-control);font-size:14px;font-weight:600;white-space:normal;text-align:center;transition:background var(--ars-motion-feedback) var(--ars-motion-ease),border-color var(--ars-motion-feedback) var(--ars-motion-ease)}
+.tari-live-link:hover{background:color-mix(in srgb,var(--accent) 10%,transparent);border-color:var(--accent)}
+.case-figure{margin:40px 0 0;min-width:0}
+.case-figure a{display:block;border-radius:var(--ars-radius-control)}
+.case-figure img{display:block;width:100%;height:auto;border-radius:var(--ars-radius-control);border:1px solid var(--rule)}
+.case-figure figcaption{font-size:12px;line-height:1.65;color:var(--sub);margin-top:12px;max-width:750px}
+.reviewed-case .showcase-art{margin-top:0}
+.case-figure--portrait{max-width:420px;margin-inline:auto}
+.case-figure--evidence{max-width:660px}
+.case-figure--evidence img{border-radius:8px}
+.case-cover{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:72px;align-items:center;padding:40px;background:color-mix(in srgb,var(--fg) 4%,transparent);border:1px solid var(--rule);border-radius:var(--ars-radius-panel)}
+.case-cover>.case-figure{margin:0;width:100%;max-width:360px;justify-self:center}
+.case-cover>.case-figure img{max-height:560px;object-fit:contain;border:0;border-radius:4px}
+.case-cover-note>span{font-size:14px;color:var(--sub)}
+.case-cover-note>h2{font-size:clamp(28px,3.2vw,42px);line-height:1.2;margin:18px 0 32px;max-width:500px}
+.case-cover-note>p{font-size:12px;line-height:1.8;color:var(--sub);margin-top:24px}
+.tari-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;margin:40px 0 0;padding:28px 0 0;border-top:1px solid var(--rule)}
+.tari-facts dt{color:var(--sub);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.tari-facts dd{margin:0;font-size:13px;line-height:1.8;max-width:240px}
+.reviewed-case .reader>.reading-section>.editorial-width{max-width:990px!important}
+.reviewed-case .story-nav{gap:28px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.reviewed-case .story-nav a{min-height:44px;display:inline-flex;align-items:center;flex:none;font-size:12px}
+.reviewed-case .reading-section{padding-block:88px}
+.reviewed-case .reading-section+.reading-section{border-top:1px solid var(--rule)}
+.reviewed-case .reading-section h2{max-width:850px;margin:18px 0 32px;font-size:clamp(35px,4.5vw,54px);line-height:1.13}
+.case-reading-copy{max-width:var(--ars-reading-measure)}
+.case-reading-copy>p{font-size:16px;line-height:1.8;color:var(--sub)}
+.case-reading-copy>p+p{margin-top:22px}
+.case-list{max-width:var(--ars-reading-measure);padding-left:21px;margin-top:28px;color:var(--sub);font-size:15px;line-height:1.8}
+.case-list li+li{margin-top:10px}
+.case-insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:32px;margin-top:40px}
+.case-insight-grid article{border-top:1px solid var(--rule);padding-top:22px}
+.case-insight-grid h3{font-size:23px;line-height:1.2;margin-bottom:14px}
+.case-insight-grid p{font-size:14px;line-height:1.8;color:var(--sub)}
+.case-table-scroll{width:100%;overflow:auto;margin:36px 0 0;overscroll-behavior-x:contain;scrollbar-width:thin}
+.case-table{border-collapse:collapse;width:100%;text-align:left;font-size:14px;line-height:1.7}
+.case-table caption{text-align:left;caption-side:bottom;padding-top:14px;color:var(--sub);font-size:12px;line-height:1.7}
+.case-table th,.case-table td{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.case-table thead th{font-size:11px;letter-spacing:.035em;text-transform:uppercase;color:var(--sub);font-weight:600}
+.case-table tbody th{font-weight:550;min-width:150px;max-width:310px}
+.case-table td{color:var(--sub)}
+.case-note{font-size:12px;line-height:1.85;color:var(--sub);max-width:var(--ars-reading-measure);margin-top:28px}
+.case-quote{margin:38px 0 0;padding:8px 0 8px 25px;border-left:2px solid var(--accent);max-width:var(--ars-reading-measure)}
+.case-quote>p{font-size:clamp(22px,2.8vw,30px);line-height:1.5;letter-spacing:-.025em;color:var(--fg)}
+.case-quote>footer{font-size:12px;color:var(--sub);margin-top:18px}
+.case-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px;padding:0;margin:35px 0 0}
+.case-metrics>div{display:flex;flex-direction:column-reverse;gap:8px;min-width:0}
+.case-metrics dt{font-size:12px;color:var(--sub);line-height:1.6}
+.case-metrics dd{font-size:clamp(28px,3.2vw,42px);font-weight:500;letter-spacing:-.045em;line-height:1.15;margin:0;color:var(--fg)}
+.case-section-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:32px}
+.case-provenance{width:min(calc(100% - 64px),990px);margin:28px auto 0;color:var(--sub);font-size:12px;line-height:1.85}
+.case-provenance details{border-block:1px solid var(--rule);padding:20px 0}
+.case-provenance summary{cursor:pointer;font-size:13px;min-height:28px;color:var(--fg)}
+.case-provenance ul{padding-left:18px;margin-top:16px;max-width:var(--ars-reading-measure)}
+.case-provenance li+li{margin-top:12px}
+.case-next-links{display:flex;gap:32px;flex-wrap:wrap;font-size:clamp(24px,3vw,36px);letter-spacing:-.035em}
+.case-gallery-media>img{display:block;width:100%;height:auto;border-radius:var(--ars-radius-control);transition:transform var(--ars-motion-settle) var(--ars-motion-ease)}
+.case-gallery-portrait{background:color-mix(in srgb,var(--fg) 4%,transparent);border:1px solid var(--rule);border-radius:var(--ars-radius-panel);padding:28px}
+.case-gallery-portrait>img{height:440px;object-fit:contain}
+.case-gallery-proof{display:block;margin-top:20px;color:var(--accent);font-size:12px;line-height:1.8}
+.curated-work:hover .case-gallery-media>img{transform:translateY(-3px)}
+.tari-work-cover{display:block;overflow:hidden;border:1px solid var(--rule);border-radius:var(--ars-radius-control)}
 .tari-work-cover>img{display:block;width:100%;height:auto}
 .tari-work-cover-label{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;font-size:12px}
 .tari-work-cover-label>span{color:var(--sub);font-size:10px}
 .ars-work-tari-preview{display:none}
+.home-site .ars-about-heading>[data-about-counter],.ars-cue-arrow-right{display:none}
+/* Labelled native chapter buttons serve both discovery and precise navigation. */
+.ars-case-progress{position:relative}
+.ars-case-progress-button{font-size:11px;line-height:1.3;white-space:nowrap}
 @media(max-width:680px){
- .tari-case .showcase-title{margin-top:45px}
- .tari-topline{padding-top:14px}
- .tari-topline>span{font-size:9px}
+ .reviewed-case .showcase-title{margin-top:38px}
+ .tari-topline{padding-top:14px;gap:16px}
+ .tari-topline>span{max-width:55%;font-size:10px}
  .tari-hero-intro{flex-direction:column;align-items:start;gap:22px;margin-bottom:28px}
- .tari-facts{grid-template-columns:1fr 1fr;gap:25px 20px;margin-top:28px;padding-top:23px}
- .tari-insights,.tari-process{grid-template-columns:1fr;gap:24px;margin-top:35px}
- .tari-insights h3{margin-top:13px}
- .tari-journey{grid-template-columns:1fr 1fr}
- .tari-feature{margin-top:55px}
- .tari-feature-copy{grid-template-columns:1fr;gap:15px}
- .tari-feature-copy>.overline{grid-column:auto}
- .tari-final-cta{flex-direction:column;align-items:start}
+ .tari-facts{grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;padding-top:24px}
+ .case-cover{grid-template-columns:1fr;gap:28px;padding:24px}
+ .case-cover-note>h2{font-size:28px}
+ .case-cover>.case-figure{max-width:290px}
+ .case-cover>.case-figure img{max-height:420px}
+ .case-insight-grid{grid-template-columns:1fr;gap:24px;margin-top:30px}
+ .reviewed-case .reading-section{padding-block:56px}
+ .case-table{font-size:13px;min-width:430px}
+ .case-table th,.case-table td{padding:13px 18px 13px 0}
+ .case-table tbody th{min-width:130px}
+ .case-quote{padding-left:18px}
+ .case-provenance{width:calc(100% - 40px)}
+ .case-gallery-portrait>img{height:350px}
  .home-site .explorer:not(.is-away) .preview-stage>[data-preview="work"]{justify-content:flex-start}
  .home-site .ars-work-mobile{flex:0 0 auto}
- .home-site .ars-work-tari-preview{display:block;border:1px solid var(--rule);border-radius:5px;overflow:hidden;flex:none}
- .ars-work-tari-preview>img{display:block;width:100%;height:clamp(110px,19svh,165px);object-fit:cover;object-position:center 37%}
- .ars-work-tari-preview>span{display:flex;justify-content:space-between;padding:8px 11px;font-size:10px;line-height:1.4;color:var(--sub)}
- .tari-case .ars-case-slide{justify-content:flex-start;padding-top:clamp(24px,5svh,42px);gap:18px}
- .tari-case .tari-case-visual{margin-top:3px;flex:none}
- .tari-case .tari-case-visual>img{width:100%;height:auto;max-height:none;aspect-ratio:1.456;object-fit:contain;border-radius:4px}
- .tari-case .ars-case-description{font-size:13px;line-height:1.65}
- .tari-case .ars-case-heading{font-size:clamp(30px,9vw,42px)}
- .tari-case .ars-case-evidence-link{padding:11px 0;min-height:44px}
+ .home-site .ars-work-project{grid-template-columns:1fr;gap:0;min-height:78px;padding-block:14px}
+ .home-site .ars-work-info strong{font-size:16px}
+ .home-site .ars-work-info small{font-size:11px}
+ .home-site .ars-work-info em{font-size:11px;color:var(--accent);opacity:1}
+ .home-site .ars-work-tari-preview{display:block;flex:none;border:1px solid var(--rule);border-radius:var(--ars-radius-control);overflow:hidden}
+ .ars-work-tari-preview>img{display:block;width:100%;height:clamp(100px,17svh,150px);object-fit:cover;object-position:center 37%}
+ .ars-work-tari-preview>span{display:block;padding:9px 12px;font-size:11px;line-height:1.5;color:var(--sub)}
+ body.project-page.ars-case-slide-ready .ars-case-track{position:relative}
+ body.project-page.ars-case-slide-ready .ars-case-slide{justify-content:flex-start;padding:30px 24px;gap:20px}
+ .ars-case-visual{flex:none}
+ .ars-case-count{font-size:11px;letter-spacing:0;text-transform:none}
+ .ars-case-progress-button::after{display:none}
+ .ars-case-progress-button{height:44px;min-height:44px;flex:0 0 auto;padding:10px 13px;color:#b3c4b7;border:1px solid transparent;border-radius:var(--ars-radius-control)}
+ .ars-case-progress-button[aria-current=step]{color:#edf4eb;border-color:#849b8a;background:#24332a}
+ body.project-page.ars-case-slide-ready .ars-case-deck-footer{height:76px;min-height:76px;padding-inline:16px}
+ .ars-case-footer-label{display:none}
+ .ars-case-progress{display:flex;max-width:100%;width:100%;flex:1;justify-content:flex-start;gap:4px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}
+ .reviewed-case .ars-case-deck{background:var(--ars-color-canvas-dark)!important;color:var(--ars-color-text-dark)!important}
+ .reviewed-case .ars-case-deck-header,.reviewed-case .ars-case-deck-footer{border-color:#3d5044!important}
+ .reviewed-case .ars-case-heading{font-size:clamp(30px,8.8vw,40px);line-height:1.14;color:#edf4eb}
+ .reviewed-case .ars-case-description{font-size:15px;line-height:1.75;color:#b3c4b7}
+ .reviewed-case .ars-case-eyebrow{font-size:11px;color:#b3c4b7;letter-spacing:.06em}
+ .reviewed-case .ars-case-footnote{font-size:12px;line-height:1.8;color:#b3c4b7;border-color:#3d5044}
+ .reviewed-case .ars-case-contributions{font-size:14px;line-height:1.75;color:#b3c4b7;gap:14px}
+ .reviewed-case .ars-case-visual-note{font-size:11px;line-height:1.7;color:#b3c4b7}
+ .case-mobile-figure>a>img{display:block;width:100%;height:auto;max-height:none;border-radius:var(--ars-radius-control)}
+ .case-mobile-figure--portrait>a>img{max-height:310px;object-fit:contain}
+ .case-mobile-figure--evidence>a>img{max-height:none}
+ .reviewed-case .case-table-scroll{margin:0;flex:none}
+ .reviewed-case .case-table{color:#edf4eb}
+ .reviewed-case .case-table td,.reviewed-case .case-table caption,.reviewed-case .case-table thead th{color:#b3c4b7}
+ .reviewed-case .case-table th,.reviewed-case .case-table td{border-color:#3d5044}
+ .case-mobile-card h3{font-size:21px;margin-bottom:10px;color:#edf4eb}
+ .reviewed-case .case-quote{margin:0;border-color:#abd1bd}
+ .reviewed-case .case-quote>p{font-size:21px;color:#edf4eb}
+ .reviewed-case .case-quote>footer{color:#b3c4b7}
+ .reviewed-case .case-metrics{margin:0}
+ .reviewed-case .case-metrics dd{color:#edf4eb}
+ .reviewed-case .case-metrics dt{color:#b3c4b7}
 }
 @media(max-width:680px) and (max-height:650px){
- .ars-work-tari-preview>img{height:100px}
- .tari-case .ars-case-slide{padding:22px;gap:13px}
- .tari-case .ars-case-heading{font-size:30px}
- .tari-case .tari-case-visual>img{max-height:160px;object-fit:contain}
+ .ars-work-tari-preview>img{height:94px}
+ .reviewed-case .ars-case-slide{padding:24px;gap:17px}
+ .case-mobile-figure--portrait>a>img{max-height:240px}
 }
 @media(prefers-reduced-motion:reduce){
- .tari-live-link,.tari-gallery-screen img{transition:none}
- .curated-work:hover .tari-gallery-screen img{transform:none}
+ .tari-live-link,.case-gallery-media>img{transition:none}
+ .curated-work:hover .case-gallery-media>img{transform:none}
 }

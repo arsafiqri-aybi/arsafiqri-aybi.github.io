@@ -4,7 +4,7 @@
  */
 export const PUBLIC_DISPLAY_ORDER=Object.freeze(['tari-cookies','hey','waai-id','personal-browser-operator','sarafcare','motion']);
 const PLACEHOLDER_NAMES=Object.freeze({'tari-cookies':'Tari Cookies','waai-id':'waai.id',sarafcare:'SarafCare'});
-const RELEASED_NAMES=Object.freeze({'tari-cookies':'Tari Cookies',hey:'Hey by Ars','personal-browser-operator':'Personal Browser Operator',motion:'Motion Render Video'});
+const RELEASED_NAMES=Object.freeze({'tari-cookies':'Tari Cookies','waai-id':'waai.id',sarafcare:'SarafCare',hey:'Hey by Ars','personal-browser-operator':'Personal Browser Operator',motion:'Motion Render Video'});
 const VARIANTS=new Set(['primary','feature','editorial']);
 const safeText=s=>typeof s==='string'&&s.trim().length>0&&s.length<900&&!/[<>]/.test(s);
 const fail=reason=>{throw new Error('PUBLIC_WORK_DISPLAY:'+reason)};
@@ -34,8 +34,8 @@ export function renderPublicWorkDisplayCards(displayed,items,art,esc,artEl,artCa
   const p=entry.href?items.find(x=>x.id===entry.id):null;
   const playable=entry.id==='motion'&&motion;
   const pending=entry.display==='placeholder';
-  const tariPicture=entry.id==='tari-cookies'&&p?'<span class="curated-media tari-gallery-screen"><img src="./assets/tari-cookies/home.webp" width="1363" height="936" alt="Actual Tari Cookies website homepage" loading="lazy"><span class="curated-media-caption">Actual website · taricookies.pages.dev</span></span>':null;
-  const picture=tariPicture??(p&&art[p.id]?'<span class="curated-media">'+artEl(p)+'<span class="curated-media-caption">'+esc(artCaption(p))+'</span></span>':null);
+  const approvedPicture=['tari-cookies','waai-id','sarafcare'].includes(entry.id)&&p?.hero&&/^assets\/(?:tari-cookies|waai-id|sarafcare)\/[a-z0-9-]+\.webp$/.test(p.hero.src)?'<span class="curated-media case-gallery-media"><img src="./'+esc(p.hero.src)+'" alt="'+esc(p.hero.alt)+'" loading="lazy"><span class="curated-media-caption">'+esc(p.hero.caption)+'</span></span>':null;
+  const picture=approvedPicture??(p&&art[p.id]?'<span class="curated-media">'+artEl(p)+'<span class="curated-media-caption">'+esc(artCaption(p))+'</span></span>':null);
   const film=playable?'<div class="curated-media curated-film"><div class="motion-player" data-motion-player><video controls preload="none" playsinline poster="'+esc(motion.poster.dataUrl)+'" aria-label="Original six-second motion study"><source src="'+esc(motion.video.url)+'" type="video/mp4"><track kind="captions" src="./assets/motion-captions.vtt" srclang="en" label="English"></video><button class="motion-play-cover" type="button" data-motion-play aria-label="Play original six-second motion study"><span class="motion-direct-frame" aria-hidden="true"><img src="'+esc(motion.poster.dataUrl)+'" width="640" height="360" alt="" loading="lazy"></span><span class="motion-play-label" aria-hidden="true">Play film <span>▶</span></span></button></div><span class="motion-play-error" role="status" data-motion-error></span><span class="curated-media-caption">Original render · Six seconds · Sound on play</span><details class="film-description"><summary>Film description</summary><p>A red circle follows a curved path, changes into a square, and settles. Labels introduce Form, Time, and Sound with four sound cues.</p></details></div>':null;
   const visual=film??(pending?
    '<span class="curated-media curated-media--pending pending--'+esc(entry.id)+'" role="img" aria-label="'+esc(entry.visualLabel)+'">'+

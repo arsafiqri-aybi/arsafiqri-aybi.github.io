@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 const text=path=>readFileSync(resolve(root,path),'utf8');
 const home=text('index.html'),css=text('styles.css'),js=text('app.js');
-const caseIds=['tari-cookies','scale-governor','skill-builder','copywriting','website-builder'];
+const caseIds=['tari-cookies','waai-id','sarafcare','scale-governor','skill-builder','copywriting','website-builder'];
 const unpublishedCaseIds=['hey','personal-browser-operator','motion'];
 
 test('published mobile navigation and Home remain intact',()=>{
@@ -57,7 +57,7 @@ test('retired featured projects are absent from the published portfolio',()=>{
  }
  assert.match(home,/https:\/\/www\.linkedin\.com\/in\/arsafiqri-ua/);
  assert.doesNotMatch(home,/Personal profile link pending/);
- assert.match(home,/01 — 03/);
+ assert.doesNotMatch(home,/01 — 03|class="ars-work-no"/);
 });
 
 const publishedPages=['index.html','404.html',...caseIds.map(id=>'work/'+id+'/index.html')];
@@ -190,7 +190,7 @@ test('Tari website screenshots match provenance and the released story has desti
  const project=JSON.parse(text('content/tari-cookies.json'));
  const page=text('work/tari-cookies/index.html');
  assert.equal(project.website,'https://taricookies.pages.dev/');
- assert.equal(project.chapters.length,8);
+ assert.equal(project.chapters.length,project.sections.length+1);
  for(const image of project.screenshots){
   const bytes=readFileSync(resolve(root,image.path));
   assert.equal(createHash('sha256').update(bytes).digest('hex'),image.sha256);
@@ -198,8 +198,36 @@ test('Tari website screenshots match provenance and the released story has desti
   assert.ok(page.includes('../../'+image.path));
  }
  assert.equal(project.screenshots.length,4);
- assert.ok(project.chapters.every(ch=>!ch.media||project.screenshots.some(image=>image.id===ch.media)));
+ assert.ok(project.chapters.every(ch=>!ch.media||project.mediaAssets.some(image=>image.path===ch.media.src)));
  assert.ok(home.includes('data-gallery-project="tari-cookies"'));
  assert.match(page,/href="https:\/\/taricookies\.pages\.dev\/"/);
  assert.doesNotMatch(page,/Case Preview|visuals in preparation|pending publication/);
+});
+
+// Publishing a case must not conceal missing media or turn reported results into live data.
+test('all reviewed cases publish complete sections and exact project assets',async()=>{
+ const {createHash}=await import('node:crypto');
+ for(const id of ['tari-cookies','waai-id','sarafcare']){
+  const record=JSON.parse(text('content/'+id+'.json'));
+  const page=text('work/'+id+'/index.html');
+  assert.ok(record.sections.length>=7);
+  assert.ok(page.includes('id="reviewed-case-data"'));
+  assert.ok(page.includes('class="project-page reviewed-case'));
+  for(const section of record.sections)assert.ok(page.includes('id="'+section.id+'"'));
+  for(const asset of record.mediaAssets){
+   const bytes=readFileSync(resolve(root,asset.path));
+   assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.sha256);
+   assert.ok(page.includes('../../'+asset.path));
+  }
+  assert.ok(home.includes('href="./work/'+id+'/"'));
+ }
+ const tari=text('work/tari-cookies/index.html');
+ assert.ok(tari.includes('Direct owner response'));
+ assert.ok(tari.includes('3.50'));
+ const waai=text('work/waai-id/index.html');
+ assert.ok(waai.includes('Historical'));
+ assert.ok(waai.includes('23 August 2026'));
+ const saraf=text('work/sarafcare/index.html');
+ assert.ok(saraf.includes('not calculated profit'));
+ assert.ok(saraf.includes('Planned budget'));
 });

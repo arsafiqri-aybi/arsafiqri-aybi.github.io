@@ -24,7 +24,7 @@
    }catch{return null;}
  }
  function beats(p,isPreview){
-   if(p.id==='tari-cookies'&&Array.isArray(p.chapters)&&p.chapters.length===8)return p.chapters;
+   if(Array.isArray(p.chapters)&&p.chapters.length>=2&&p.chapters.length<=12)return p.chapters;
    const status=p.status||'Documented project';
    const limitations=p.limitation||'No additional verification has been published.';
    const contributions=Array.isArray(p.contribution)?p.contribution.filter(Boolean):[];
@@ -46,12 +46,12 @@
    const deck=node('section','ars-case-deck');
    deck.setAttribute('aria-label',p.name+' case study — swipe chapters');
    const header=node('header','ars-case-deck-header');
-   const back=node('a','ars-case-back','←  All Work');
+   const back=node('a','ars-case-back','All Work');
    back.href='../../#work';back.setAttribute('data-return-to-work','');
    back.addEventListener('click',()=>{
      try{sessionStorage.setItem('ars-v2-work-return','1');sessionStorage.setItem('ars-section','1');}catch{}
    });
-   const count=node('span','ars-case-count','01 / '+String(slides.length).padStart(2,'0'));
+   const count=node('span','ars-case-count',p.name);
    header.append(back,count);
    const progress=node('nav','ars-case-progress');
    progress.setAttribute('aria-label','Story chapters');
@@ -72,29 +72,34 @@
      slide.append(node('span','ars-case-eyebrow',beat.eyebrow));
      slide.append(node(index===0?'h1':'h2','ars-case-heading',beat.title));
      if(beat.description)slide.append(paragraph(beat.description));
-     // Reuse the already-approved source-derived artwork. This is an
-     // illustration, never presented as a verified product screenshot.
-     if(beat.media&&caseId==='tari-cookies'&&['home','catalog','hampers','cart'].includes(beat.media)){
-       const visual=node('figure','ars-case-visual tari-case-visual');
+     for(const text of beat.paragraphs??[])slide.append(paragraph(text));
+     if(beat.media&&typeof beat.media==='object'&&/^assets\/(?:tari-cookies|waai-id|sarafcare)\/[a-z0-9-]+\.webp$/.test(beat.media.src)){
+       const visual=node('figure','ars-case-visual case-mobile-figure case-mobile-figure--'+(beat.media.kind||'landscape'));
        const image=node('img');
-       image.src='../../assets/tari-cookies/'+beat.media+'.webp';
-       image.alt=beat.caption||'Tari Cookies live website';
-       image.width=beat.media==='home'?1363:1353;
-       image.height=beat.media==='home'?936:929;
-       image.decoding='async';
-       image.loading=index===0?'eager':'lazy';
-       visual.append(image,node('figcaption','ars-case-visual-note',beat.caption));
-       slide.append(visual);
+       image.src='../../'+beat.media.src;image.alt=beat.media.alt;
+       image.width=beat.media.width;image.height=beat.media.height;
+       image.decoding='async';image.loading=index===0?'eager':'lazy';
+       const open=node('a');open.href=image.src;open.target='_blank';open.rel='noopener';
+       open.setAttribute('aria-label','Open full image: '+beat.media.alt);open.append(image);
+       visual.append(open,node('figcaption','ars-case-visual-note',beat.media.caption));slide.append(visual);
      }else if(index===0){
        const original=body.querySelector('.showcase-art .project-art, .showcase-art .curated-media');
-       if(original){
-         const visual=node('figure','ars-case-visual');
-         visual.append(original.cloneNode(true));
-         const caption=node('figcaption','ars-case-visual-note',
-           original.getAttribute('aria-label')||'Source-derived project visual; see original evidence for details.');
-         visual.append(caption);slide.append(visual);
-       }
+       if(original){const visual=node('figure','ars-case-visual');visual.append(original.cloneNode(true));slide.append(visual);}
      }
+     if(beat.table){
+       const wrap=node('div','case-table-scroll');wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label',beat.table.caption||beat.key+' data');
+       const table=node('table','case-table');
+       if(beat.table.caption)table.append(node('caption','',beat.table.caption));
+       const head=node('thead'),headRow=node('tr');
+       for(const value of beat.table.headers){const th=node('th','',value);th.scope='col';headRow.append(th)}
+       head.append(headRow);table.append(head);
+       const tbody=node('tbody');
+       for(const row of beat.table.rows){const tr=node('tr');row.forEach((value,i)=>{const cell=node(i===0?'th':'td','',value);if(i===0)cell.scope='row';tr.append(cell)});tbody.append(tr)}
+       table.append(tbody);wrap.append(table);slide.append(wrap);
+     }
+     for(const card of beat.cards??[]){const item=node('div','case-mobile-card');item.append(node('h3','',card.title),paragraph(card.text));slide.append(item);}
+     if(beat.quote){const quote=node('blockquote','case-quote');quote.append(paragraph('“'+beat.quote.text+'”'),node('footer','',beat.quote.by));slide.append(quote);}
+     if(beat.stats?.length){const stats=node('dl','case-metrics');for(const m of beat.stats){const item=node('div');item.append(node('dt','',m.label),node('dd','',m.value));stats.append(item)}slide.append(stats);}
      if(beat.items?.length){
        const list=node('ul','ars-case-contributions');
        for(const value of beat.items){const li=node('li','',value);list.append(li);}
@@ -105,16 +110,16 @@
        for(const item of beat.links){
          const safe=safeExternalLink(item.url);
          if(!safe)continue;
-         const a=node('a','ars-case-evidence-link',item.label+' ↗');
+         const a=node('a','ars-case-evidence-link',item.label);
          a.href=safe;a.target='_blank';a.rel='noopener noreferrer';
          wrap.append(a);
        }
        slide.append(wrap);
      }
      if(beat.foot)slide.append(node('p','ars-case-footnote',beat.foot));
-     if(index===0)slide.append(node('span','ars-case-swipe-instruction','←  Swipe sideways to read the story'));
+     if(index===0)slide.append(node('span','ars-case-swipe-instruction','Swipe between chapters or choose one below'));
      track.append(slide);frames.push(slide);
-     const button=node('button','ars-case-progress-button');
+     const button=node('button','ars-case-progress-button',beat.key);
      button.type='button';
      button.setAttribute('aria-label',String(index+1)+': '+beat.key);
      button.title=beat.key;
@@ -139,9 +144,12 @@
        const dist=Math.abs(track.scrollLeft-slide.offsetLeft);
        if(dist<least){least=dist;chosen=index;}
      });
-     count.textContent=String(chosen+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+     count.textContent=p.name;
+     frames.forEach((frame,index)=>{frame.inert=index!==chosen;frame.setAttribute('aria-hidden',String(index!==chosen));});
      buttons.forEach((button,index)=>{
-       if(index===chosen)button.setAttribute('aria-current','step');
+       if(index===chosen){button.setAttribute('aria-current','step');
+        if(progress.scrollWidth>progress.clientWidth)progress.scrollTo({left:button.offsetLeft-progress.clientWidth/2+button.offsetWidth/2,behavior:'instant'});
+       }
        else button.removeAttribute('aria-current');
      });
    }
@@ -166,11 +174,11 @@
  async function start(){
    if(built||!mobile.matches)return;
    try{
-     if(caseId==='tari-cookies'){
-       const response=await fetch('../../content/tari-cookies.json');
-       if(!response.ok)throw Error('Public preview source unavailable');
-       const project=await response.json();
-       if(project.id!=='tari-cookies'||project.chapters?.length!==8)throw Error('Tari case data unavailable');
+     if(['tari-cookies','waai-id','sarafcare'].includes(caseId)){
+       const embedded=document.getElementById('reviewed-case-data');
+       if(!embedded)throw Error('Reviewed case data missing');
+       const project=JSON.parse(embedded.textContent);
+       if(project.id!==caseId||!project.chapters?.length)throw Error('Invalid reviewed case record');
        initFromProject(project,false);
      }else{
        const response=await fetch('../../content/projects.json');

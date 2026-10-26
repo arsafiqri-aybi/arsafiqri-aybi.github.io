@@ -1,0 +1,452 @@
+{
+  "id": "waai-id",
+  "name": "waai.id",
+  "category": "Content Strategy · Creative Direction · Audience Insights",
+  "status": "Independent media project",
+  "year": "2026",
+  "headline": "A content practice that learns from its audience.",
+  "description": "Building an organic reflection-led media project, from brand direction and original content to a repeatable production and evaluation process.",
+  "role": "Founder and creative lead: positioning, trend research, copy, visual direction, AI-assisted production, publishing, and weekly review.",
+  "hero": {
+    "src": "assets/waai-id/content-adaptation.webp",
+    "alt": "Original waai.id creative about feeling out of place during the first days in a new environment.",
+    "caption": "Project creative · An early published reflection on adapting to a new environment.",
+    "kind": "portrait",
+    "width": 720,
+    "height": 1280
+  },
+  "coverSummary": "A quiet visual identity. One clear thought at a time.",
+  "facts": [
+    {
+      "label": "Role",
+      "value": "Founder & creative lead"
+    },
+    {
+      "label": "Started",
+      "value": "April 2026"
+    },
+    {
+      "label": "Scope",
+      "value": "Positioning, content, production & evaluation"
+    },
+    {
+      "label": "Approach",
+      "value": "Organic publishing · AI-assisted workflow"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "22",
+      "label": "Organic posts"
+    },
+    {
+      "value": "85.7K",
+      "label": "Views / 90-day snapshot"
+    },
+    {
+      "value": "9.9K",
+      "label": "Reported interactions"
+    },
+    {
+      "value": "97%",
+      "label": "Views from non-followers"
+    }
+  ],
+  "metricsNote": "Historical Instagram snapshot reported in September 2026, not live account performance. Views are not unique people.",
+  "links": [
+    {
+      "label": "Visit waai.id on Instagram",
+      "url": "https://www.instagram.com/waai.id/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "brief",
+      "label": "The brief",
+      "title": "Build meaning beyond a single quote.",
+      "body": [
+        "waai.id began as a personally managed media project using quotes and Reels to reflect on everyday life. Its intended value was to help people recognise a situation, name something difficult to express, or see a choice more clearly.",
+        "The owner’s direction later widened toward reflective video, an inclusive community, and connections between people and business. Those remain a direction for development; this case focuses on the content practice and results that were actually documented."
+      ],
+      "cards": [
+        {
+          "title": "Audience through situations",
+          "text": "Relationships, family, work, ambition, comparison, mistakes, responsibility, and everyday choices—rather than an unverified demographic persona."
+        },
+        {
+          "title": "Editorial promise",
+          "text": "One recognisable situation, one main meaning, and an ending that leaves room to think."
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "label": "Research & editorial choices",
+      "title": "Find a signal. Keep a point of view.",
+      "body": [
+        "I used AI to scan trends and topics across social platforms, then filtered ideas through waai.id’s values and the experience I wanted the content to address. Personal observations sometimes became the starting point.",
+        "A popular topic was an input, not an instruction to publish. The editorial work was choosing the human situation, the distinction worth making, and the message that could stand on its own."
+      ],
+      "bullets": [
+        "Identify a situation people can recognise without a long explanation.",
+        "Choose one meaning before writing the final lines.",
+        "Check the wording for clarity, tone, repetition, and unsupported promises.",
+        "Review the audience response and carry a specific question into the next cycle."
+      ],
+      "note": "This is a documented editorial research process. It is not a claim of formal audience interviews or a representative audience survey."
+    },
+    {
+      "id": "craft",
+      "label": "Creative direction",
+      "title": "Make the words easy to meet.",
+      "body": [
+        "The production system used a warm, restrained identity: Warm Obsidian (#181714), Soft Ivory (#E3DED5), and Antique Gold (#C4A35F), with Plus Jakarta Sans as the brand typeface. Gold was reserved for a single emphasis.",
+        "One content package connected the idea, Reels wording and line breaks, a visual, sound choices, and platform-specific captions. AI assisted research, drafting, and assets; I reviewed the result and made the publication decision.",
+        "The sample shown here is the early “new place” creative. It is useful evidence of the work produced, including work that did not become the strongest performer."
+      ],
+      "media": {
+        "src": "assets/waai-id/content-adaptation.webp",
+        "alt": "waai.id creative reading “Rasa asing di hari-hari pertama bukan bukti kamu salah tempat. Beri dirimu waktu untuk mengenal ritmenya sebelum menyimpulkan.”",
+        "caption": "Original project asset · Early adaptation content, not the later top-performing Reel.",
+        "kind": "portrait",
+        "width": 720,
+        "height": 1280
+      }
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation in practice",
+      "title": "Different signals lead to different questions.",
+      "body": [
+        "A saved evaluation on 23 August 2026 compared five early Reels. It separated distribution from saving and sharing, and recorded the age of each post before interpreting the results.",
+        "The comparison creative had the most views in this small set. The attention creative had the highest saves per displayed viewer: 7 from 439, around 1.59%. These answered different questions; the most distributed post was not automatically the most saved.",
+        "The working hypothesis was to make the opening situation easier to recognise and test text density against viewing time. Missing duration, skip rate, and audience-source information meant the evaluation could not establish why one post performed better."
+      ],
+      "table": {
+        "headers": [
+          "Early creative",
+          "Views",
+          "Average watch",
+          "Saves",
+          "Age at snapshot"
+        ],
+        "rows": [
+          [
+            "New place / adaptation",
+            "130",
+            "4 seconds",
+            "1",
+            "3 days"
+          ],
+          [
+            "Attention before asking",
+            "498",
+            "8 seconds",
+            "7",
+            "2 days"
+          ],
+          [
+            "Same age, different paths",
+            "782",
+            "8 seconds",
+            "6",
+            "1 day"
+          ]
+        ],
+        "caption": "Selected rows from the five-Reel evaluation · 23 August 2026. Different post ages prevent a controlled like-for-like comparison."
+      },
+      "note": "Displayed viewers were not relabelled as reach. The early August set is separate from the later 90-day account snapshot."
+    },
+    {
+      "id": "results",
+      "label": "Reported results",
+      "title": "Reach beyond the existing audience.",
+      "body": [
+        "By the September report, I had produced 22 posts end to end without paid advertising. The saved portfolio record reports 85.7K views across a 90-day window, 9.9K interactions, and 97% of views from non-followers.",
+        "The documented top Reel reached about 73.8K views, 1.5K saves, and 682 shares. I used its response as a signal for subsequent content, while avoiding the conclusion that one successful topic should determine the entire account."
+      ],
+      "metrics": [
+        {
+          "value": "73.8K",
+          "label": "Top Reel views"
+        },
+        {
+          "value": "1.5K",
+          "label": "Top Reel saves"
+        },
+        {
+          "value": "682",
+          "label": "Top Reel shares"
+        }
+      ],
+      "note": "Historical figures from owner reports and saved portfolio/CV records. Raw Instagram Insights for this later snapshot have not been independently re-audited here. The top Reel is part of the account performance, not an additional total."
+    },
+    {
+      "id": "contribution",
+      "label": "My contribution",
+      "title": "One connected creative workflow.",
+      "body": [
+        "I developed and managed waai.id end to end: the project direction, topic research, original writing, visual direction, production with AI assistance, publishing, and weekly performance review.",
+        "I checked high-performing content each week and looked for patterns worth carrying forward. The reusable content system kept production decisions, approved work, publication status, and learning distinct."
+      ],
+      "bullets": [
+        "Positioning and editorial selection.",
+        "Copywriting, visual direction, and production review.",
+        "Publishing and adapting captions to their platform.",
+        "Performance analysis and the next content decision."
+      ]
+    },
+    {
+      "id": "reflection",
+      "label": "What I learned",
+      "title": "Use performance to improve the work.",
+      "body": [
+        "The most useful distinction was between attention and the action a piece of content prompted. Views, saves, shares, and viewing time provide different clues; a single number cannot explain whether the message worked.",
+        "The next development is to test one meaningful variable at a time—such as a direct opening versus a metaphor-led one—while keeping the other conditions as comparable as possible. That remains an experiment direction, not a proven causal finding.",
+        "The wider community vision gives waai.id a direction. This case presents the content, working method, and historical results already recorded, rather than treating future products or a community as launched outcomes."
+      ],
+      "links": [
+        {
+          "label": "Explore waai.id on Instagram",
+          "url": "https://www.instagram.com/waai.id/"
+        }
+      ]
+    }
+  ],
+  "sourceNotes": {
+    "strategy": "WAAI project summary dated 4 October 2026 and its source documents; plans distinguished from delivered work.",
+    "evaluation": "WAAI evaluation of content 01–05, snapshot 23 August 2026 at 22:35 WIB.",
+    "performance": "Owner statements and saved Arsafiqri portfolio/CV: September historical snapshot, not current metrics.",
+    "creative": "Owner project asset WAAI-2026W34-01-MASTER-COMPOSITE-v1.png.",
+    "publication": "User explicitly requested detailed waai.id portfolio publication on 26 October 2026."
+  },
+  "chapters": [
+    {
+      "key": "Overview",
+      "title": "waai.id",
+      "eyebrow": "Content Strategy · Creative Direction · Audience Insights",
+      "description": "Building an organic reflection-led media project, from brand direction and original content to a repeatable production and evaluation process.",
+      "media": {
+        "src": "assets/waai-id/content-adaptation.webp",
+        "alt": "Original waai.id creative about feeling out of place during the first days in a new environment.",
+        "caption": "Project creative · An early published reflection on adapting to a new environment.",
+        "kind": "portrait",
+        "width": 720,
+        "height": 1280
+      },
+      "links": [
+        {
+          "label": "Visit waai.id on Instagram",
+          "url": "https://www.instagram.com/waai.id/"
+        }
+      ]
+    },
+    {
+      "key": "The brief",
+      "title": "Build meaning beyond a single quote.",
+      "eyebrow": "The brief",
+      "description": "waai.id began as a personally managed media project using quotes and Reels to reflect on everyday life. Its intended value was to help people recognise a situation, name something difficult to express, or see a choice more clearly.",
+      "paragraphs": [
+        "The owner’s direction later widened toward reflective video, an inclusive community, and connections between people and business. Those remain a direction for development; this case focuses on the content practice and results that were actually documented."
+      ],
+      "items": [],
+      "cards": [
+        {
+          "title": "Audience through situations",
+          "text": "Relationships, family, work, ambition, comparison, mistakes, responsibility, and everyday choices—rather than an unverified demographic persona."
+        },
+        {
+          "title": "Editorial promise",
+          "text": "One recognisable situation, one main meaning, and an ending that leaves room to think."
+        }
+      ],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "Research & editorial choices",
+      "title": "Find a signal. Keep a point of view.",
+      "eyebrow": "Research & editorial choices",
+      "description": "I used AI to scan trends and topics across social platforms, then filtered ideas through waai.id’s values and the experience I wanted the content to address. Personal observations sometimes became the starting point.",
+      "paragraphs": [
+        "A popular topic was an input, not an instruction to publish. The editorial work was choosing the human situation, the distinction worth making, and the message that could stand on its own."
+      ],
+      "items": [
+        "Identify a situation people can recognise without a long explanation.",
+        "Choose one meaning before writing the final lines.",
+        "Check the wording for clarity, tone, repetition, and unsupported promises.",
+        "Review the audience response and carry a specific question into the next cycle."
+      ],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "This is a documented editorial research process. It is not a claim of formal audience interviews or a representative audience survey."
+    },
+    {
+      "key": "Creative direction",
+      "title": "Make the words easy to meet.",
+      "eyebrow": "Creative direction",
+      "description": "The production system used a warm, restrained identity: Warm Obsidian (#181714), Soft Ivory (#E3DED5), and Antique Gold (#C4A35F), with Plus Jakarta Sans as the brand typeface. Gold was reserved for a single emphasis.",
+      "paragraphs": [
+        "One content package connected the idea, Reels wording and line breaks, a visual, sound choices, and platform-specific captions. AI assisted research, drafting, and assets; I reviewed the result and made the publication decision.",
+        "The sample shown here is the early “new place” creative. It is useful evidence of the work produced, including work that did not become the strongest performer."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": {
+        "src": "assets/waai-id/content-adaptation.webp",
+        "alt": "waai.id creative reading “Rasa asing di hari-hari pertama bukan bukti kamu salah tempat. Beri dirimu waktu untuk mengenal ritmenya sebelum menyimpulkan.”",
+        "caption": "Original project asset · Early adaptation content, not the later top-performing Reel.",
+        "kind": "portrait",
+        "width": 720,
+        "height": 1280
+      },
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "Evaluation in practice",
+      "title": "Different signals lead to different questions.",
+      "eyebrow": "Evaluation in practice",
+      "description": "A saved evaluation on 23 August 2026 compared five early Reels. It separated distribution from saving and sharing, and recorded the age of each post before interpreting the results.",
+      "paragraphs": [
+        "The comparison creative had the most views in this small set. The attention creative had the highest saves per displayed viewer: 7 from 439, around 1.59%. These answered different questions; the most distributed post was not automatically the most saved.",
+        "The working hypothesis was to make the opening situation easier to recognise and test text density against viewing time. Missing duration, skip rate, and audience-source information meant the evaluation could not establish why one post performed better."
+      ],
+      "items": [],
+      "cards": [],
+      "table": {
+        "headers": [
+          "Early creative",
+          "Views",
+          "Average watch",
+          "Saves",
+          "Age at snapshot"
+        ],
+        "rows": [
+          [
+            "New place / adaptation",
+            "130",
+            "4 seconds",
+            "1",
+            "3 days"
+          ],
+          [
+            "Attention before asking",
+            "498",
+            "8 seconds",
+            "7",
+            "2 days"
+          ],
+          [
+            "Same age, different paths",
+            "782",
+            "8 seconds",
+            "6",
+            "1 day"
+          ]
+        ],
+        "caption": "Selected rows from the five-Reel evaluation · 23 August 2026. Different post ages prevent a controlled like-for-like comparison."
+      },
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "Displayed viewers were not relabelled as reach. The early August set is separate from the later 90-day account snapshot."
+    },
+    {
+      "key": "Reported results",
+      "title": "Reach beyond the existing audience.",
+      "eyebrow": "Reported results",
+      "description": "By the September report, I had produced 22 posts end to end without paid advertising. The saved portfolio record reports 85.7K views across a 90-day window, 9.9K interactions, and 97% of views from non-followers.",
+      "paragraphs": [
+        "The documented top Reel reached about 73.8K views, 1.5K saves, and 682 shares. I used its response as a signal for subsequent content, while avoiding the conclusion that one successful topic should determine the entire account."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": [
+        {
+          "value": "73.8K",
+          "label": "Top Reel views"
+        },
+        {
+          "value": "1.5K",
+          "label": "Top Reel saves"
+        },
+        {
+          "value": "682",
+          "label": "Top Reel shares"
+        }
+      ],
+      "links": [],
+      "foot": "Historical figures from owner reports and saved portfolio/CV records. Raw Instagram Insights for this later snapshot have not been independently re-audited here. The top Reel is part of the account performance, not an additional total."
+    },
+    {
+      "key": "My contribution",
+      "title": "One connected creative workflow.",
+      "eyebrow": "My contribution",
+      "description": "I developed and managed waai.id end to end: the project direction, topic research, original writing, visual direction, production with AI assistance, publishing, and weekly performance review.",
+      "paragraphs": [
+        "I checked high-performing content each week and looked for patterns worth carrying forward. The reusable content system kept production decisions, approved work, publication status, and learning distinct."
+      ],
+      "items": [
+        "Positioning and editorial selection.",
+        "Copywriting, visual direction, and production review.",
+        "Publishing and adapting captions to their platform.",
+        "Performance analysis and the next content decision."
+      ],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "What I learned",
+      "title": "Use performance to improve the work.",
+      "eyebrow": "What I learned",
+      "description": "The most useful distinction was between attention and the action a piece of content prompted. Views, saves, shares, and viewing time provide different clues; a single number cannot explain whether the message worked.",
+      "paragraphs": [
+        "The next development is to test one meaningful variable at a time—such as a direct opening versus a metaphor-led one—while keeping the other conditions as comparable as possible. That remains an experiment direction, not a proven causal finding.",
+        "The wider community vision gives waai.id a direction. This case presents the content, working method, and historical results already recorded, rather than treating future products or a community as launched outcomes."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [
+        {
+          "label": "Explore waai.id on Instagram",
+          "url": "https://www.instagram.com/waai.id/"
+        }
+      ],
+      "foot": null
+    }
+  ],
+  "mediaAssets": [
+    {
+      "path": "assets/waai-id/content-adaptation.webp",
+      "sha256": "d1cadca4d5a23c61fadf69b0e6f87f2e20b6e378f2c59d642d63714e889fba2d",
+      "bytes": 75784,
+      "width": 720,
+      "height": 1280
+    }
+  ]
+}

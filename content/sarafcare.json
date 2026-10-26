@@ -1,0 +1,476 @@
+{
+  "id": "sarafcare",
+  "name": "SarafCare",
+  "category": "Campaign Strategy · Meta Ads · Customer Journey",
+  "status": "Independent marketing experiment",
+  "year": "2026",
+  "headline": "From an ad to a conversation—and a service that can be delivered.",
+  "description": "A small local-service campaign connecting offer framing, geographic targeting, Meta Ads, and a WhatsApp enquiry journey, with the operational lessons alongside the results.",
+  "role": "Campaign direction, offer and copy, visual direction, geographic targeting, budget planning, and the WhatsApp lead journey.",
+  "hero": {
+    "src": "assets/sarafcare/campaign-creative.webp",
+    "alt": "SarafCare project advertising creative showing a home-visit massage scene, service description, and an invitation to check area, cost, and schedule.",
+    "caption": "Project advertising creative · AI-assisted illustration; not a photograph of a patient or clinical evidence.",
+    "kind": "portrait",
+    "width": 960,
+    "height": 1200
+  },
+  "coverSummary": "Local relevance, a direct enquiry path, and a capacity constraint.",
+  "facts": [
+    {
+      "label": "Role",
+      "value": "Independent campaign planning & execution"
+    },
+    {
+      "label": "Period",
+      "value": "September 2026 experiment"
+    },
+    {
+      "label": "Area",
+      "value": "Jabodetabek, including Jakarta & Cikarang"
+    },
+    {
+      "label": "Journey",
+      "value": "Meta Ads, WhatsApp enquiry & home visit"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "~Rp59K",
+      "label": "Actual ad spend"
+    },
+    {
+      "value": "64",
+      "label": "WhatsApp conversations"
+    },
+    {
+      "value": "2",
+      "label": "Reported paying customers"
+    },
+    {
+      "value": "Rp2.7M",
+      "label": "Revenue received"
+    }
+  ],
+  "metricsNote": "Historical campaign snapshot reported by the owner. Conversations are a platform metric; revenue is money received, not calculated profit.",
+  "links": [],
+  "sections": [
+    {
+      "id": "brief",
+      "label": "The brief",
+      "title": "Find demand for a local home-visit service.",
+      "body": [
+        "SarafCare was an independent marketing experiment for a home-visit service. The project tested whether a locally relevant offer and a direct WhatsApp route could generate real enquiries and paying customers with a small advertising outlay.",
+        "My work connected the service proposition, creative and copy, geographic targeting, planned budget, and the conversation that followed the ad."
+      ],
+      "note": "This is a marketing case study. It does not evaluate or endorse treatment effectiveness or clinical outcomes."
+    },
+    {
+      "id": "strategy",
+      "label": "Campaign decisions",
+      "title": "Match the offer to a practical next step.",
+      "body": [
+        "The recorded targeting focused on Jakarta, Cikarang, and the wider Jabodetabek area. Geography mattered because the service had to be delivered at the customer’s home.",
+        "The creative made the visit format visible and invited people to check service area, cost, and schedule. WhatsApp was the enquiry channel for resolving those details before a booking."
+      ],
+      "cards": [
+        {
+          "title": "Local relevance",
+          "text": "Keep the advertised area connected to where a home visit can be delivered."
+        },
+        {
+          "title": "An understandable offer",
+          "text": "Make the home-visit format and the next information to check explicit."
+        },
+        {
+          "title": "A direct conversation",
+          "text": "Let a prospective customer ask about area, cost, and timing before committing."
+        }
+      ],
+      "note": "The available record supports these campaign decisions. It does not document a formal market survey or a controlled comparison of ad variants."
+    },
+    {
+      "id": "creative",
+      "label": "Creative & message",
+      "title": "Show the service. Clarify the enquiry.",
+      "body": [
+        "The saved project creative uses a recognisable home setting and a clear SarafCare identity, followed by the service format and a WhatsApp invitation to check area, cost, and timing.",
+        "AI helped produce the visual asset. The scene is an advertising illustration, not a record of an actual patient or practitioner. This portfolio presents it as work created for the project; the exact served-ad variant is not established by the available record."
+      ],
+      "media": {
+        "src": "assets/sarafcare/campaign-creative.webp",
+        "alt": "SarafCare advertising creative with the message “Pijat saraf datang ke rumah” and a WhatsApp enquiry prompt.",
+        "caption": "Historical project creative · Illustrative imagery, not evidence of treatment efficacy.",
+        "kind": "portrait",
+        "width": 960,
+        "height": 1200
+      }
+    },
+    {
+      "id": "journey",
+      "label": "From enquiry to delivery",
+      "title": "An ad starts the journey; it does not complete it.",
+      "body": [
+        "The campaign moved from Meta/Facebook advertising to a WhatsApp conversation, then booking and a home visit. A chat created an opportunity to confirm fit and availability; it was not the same as a completed sale.",
+        "The practical constraint surfaced after people responded: some requested evening appointments, while my college schedule limited the times I could handle. The experiment was paused rather than treating more enquiries as success on their own."
+      ],
+      "table": {
+        "headers": [
+          "Stage",
+          "Decision to resolve"
+        ],
+        "rows": [
+          [
+            "See the ad",
+            "Does the service format and area match the enquiry?"
+          ],
+          [
+            "Open WhatsApp",
+            "What are the area, cost, and available times?"
+          ],
+          [
+            "Arrange the visit",
+            "Can the service be scheduled and delivered?"
+          ],
+          [
+            "Paying customer",
+            "Did the enquiry lead to a paid service?"
+          ]
+        ],
+        "caption": null
+      }
+    },
+    {
+      "id": "results",
+      "label": "Historical results",
+      "title": "Track the whole path, not only the chat count.",
+      "body": [
+        "The two paying customers and received revenue show that the experiment went beyond clicks and conversations. They do not establish repeatable performance at a larger budget or isolate the effect of any one creative choice."
+      ],
+      "table": {
+        "headers": [
+          "Measure",
+          "Recorded result",
+          "How to read it"
+        ],
+        "rows": [
+          [
+            "Prepared budget",
+            "Rp220,000",
+            "Planned budget, not the amount spent."
+          ],
+          [
+            "Actual spend",
+            "About Rp59,000",
+            "Partial campaign spend, reported at roughly Rp59,003–60,000."
+          ],
+          [
+            "Reach",
+            "2,434",
+            "Reported platform reach."
+          ],
+          [
+            "Impressions",
+            "3,094",
+            "Ad displays, not distinct people."
+          ],
+          [
+            "WhatsApp conversations",
+            "64",
+            "Platform conversation count, not 64 confirmed customers."
+          ],
+          [
+            "Cost per conversation",
+            "About Rp922",
+            "Reported platform figure."
+          ],
+          [
+            "Paying customers",
+            "2",
+            "Owner-reported conversions."
+          ],
+          [
+            "Received revenue",
+            "Rp2,700,000",
+            "Payment received, not profit after costs."
+          ]
+        ],
+        "caption": "September 2026 campaign snapshot reported by the owner. Exact daily campaign dates and raw Ads Manager export are not available in this case."
+      }
+    },
+    {
+      "id": "contribution",
+      "label": "My contribution",
+      "title": "Connect acquisition with the real service.",
+      "body": [
+        "I framed the offer, worked on copy and visual direction, selected the geographic focus, prepared the budget, and connected Meta Ads to the WhatsApp-led enquiry process.",
+        "I also reviewed the response against the ability to handle the resulting appointments. The constraint was not only how cheaply the ad could generate a conversation; it was whether the next stage could be delivered."
+      ],
+      "bullets": [
+        "Offer and campaign message.",
+        "Creative direction with AI-assisted asset production.",
+        "Geographic targeting and budget planning.",
+        "Enquiry-to-service journey and operational review."
+      ]
+    },
+    {
+      "id": "reflection",
+      "label": "What I learned",
+      "title": "Demand has to fit the capacity to respond.",
+      "body": [
+        "The clearest lesson was that a promising acquisition signal can still expose an operational mismatch. The evening requests mattered because the service depended on someone being available to fulfil them.",
+        "A future run should begin with a service-area and appointment-capacity decision, then communicate those boundaries in the enquiry journey. This is the next improvement suggested by the experiment, not a change claimed to have been tested already.",
+        "The case keeps planned budget separate from spend, conversations separate from customers, and received revenue separate from profit. Those distinctions make the result useful for deciding what to do next."
+      ]
+    }
+  ],
+  "sourceNotes": {
+    "campaign": "Owner reports on 23 September 2026: actual spend around Rp59,003–60,000, prepared budget Rp220,000, reach 2,434, impressions 3,094, 64 WhatsApp conversations and about Rp922 each.",
+    "revenue": "Owner explicitly confirmed two paying customers and Rp2,700,000 already received; not calculated profit or a projection.",
+    "constraint": "Owner described pausing because of college and requests for evening appointments.",
+    "creative": "Owner project image Iklan SarafCare dengan dua terapis.png; exact live ad variant not established.",
+    "publication": "User explicitly requested detailed SarafCare portfolio publication on 26 October 2026."
+  },
+  "chapters": [
+    {
+      "key": "Overview",
+      "title": "SarafCare",
+      "eyebrow": "Campaign Strategy · Meta Ads · Customer Journey",
+      "description": "A small local-service campaign connecting offer framing, geographic targeting, Meta Ads, and a WhatsApp enquiry journey, with the operational lessons alongside the results.",
+      "media": {
+        "src": "assets/sarafcare/campaign-creative.webp",
+        "alt": "SarafCare project advertising creative showing a home-visit massage scene, service description, and an invitation to check area, cost, and schedule.",
+        "caption": "Project advertising creative · AI-assisted illustration; not a photograph of a patient or clinical evidence.",
+        "kind": "portrait",
+        "width": 960,
+        "height": 1200
+      },
+      "links": []
+    },
+    {
+      "key": "The brief",
+      "title": "Find demand for a local home-visit service.",
+      "eyebrow": "The brief",
+      "description": "SarafCare was an independent marketing experiment for a home-visit service. The project tested whether a locally relevant offer and a direct WhatsApp route could generate real enquiries and paying customers with a small advertising outlay.",
+      "paragraphs": [
+        "My work connected the service proposition, creative and copy, geographic targeting, planned budget, and the conversation that followed the ad."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "This is a marketing case study. It does not evaluate or endorse treatment effectiveness or clinical outcomes."
+    },
+    {
+      "key": "Campaign decisions",
+      "title": "Match the offer to a practical next step.",
+      "eyebrow": "Campaign decisions",
+      "description": "The recorded targeting focused on Jakarta, Cikarang, and the wider Jabodetabek area. Geography mattered because the service had to be delivered at the customer’s home.",
+      "paragraphs": [
+        "The creative made the visit format visible and invited people to check service area, cost, and schedule. WhatsApp was the enquiry channel for resolving those details before a booking."
+      ],
+      "items": [],
+      "cards": [
+        {
+          "title": "Local relevance",
+          "text": "Keep the advertised area connected to where a home visit can be delivered."
+        },
+        {
+          "title": "An understandable offer",
+          "text": "Make the home-visit format and the next information to check explicit."
+        },
+        {
+          "title": "A direct conversation",
+          "text": "Let a prospective customer ask about area, cost, and timing before committing."
+        }
+      ],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "The available record supports these campaign decisions. It does not document a formal market survey or a controlled comparison of ad variants."
+    },
+    {
+      "key": "Creative & message",
+      "title": "Show the service. Clarify the enquiry.",
+      "eyebrow": "Creative & message",
+      "description": "The saved project creative uses a recognisable home setting and a clear SarafCare identity, followed by the service format and a WhatsApp invitation to check area, cost, and timing.",
+      "paragraphs": [
+        "AI helped produce the visual asset. The scene is an advertising illustration, not a record of an actual patient or practitioner. This portfolio presents it as work created for the project; the exact served-ad variant is not established by the available record."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": {
+        "src": "assets/sarafcare/campaign-creative.webp",
+        "alt": "SarafCare advertising creative with the message “Pijat saraf datang ke rumah” and a WhatsApp enquiry prompt.",
+        "caption": "Historical project creative · Illustrative imagery, not evidence of treatment efficacy.",
+        "kind": "portrait",
+        "width": 960,
+        "height": 1200
+      },
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "From enquiry to delivery",
+      "title": "An ad starts the journey; it does not complete it.",
+      "eyebrow": "From enquiry to delivery",
+      "description": "The campaign moved from Meta/Facebook advertising to a WhatsApp conversation, then booking and a home visit. A chat created an opportunity to confirm fit and availability; it was not the same as a completed sale.",
+      "paragraphs": [
+        "The practical constraint surfaced after people responded: some requested evening appointments, while my college schedule limited the times I could handle. The experiment was paused rather than treating more enquiries as success on their own."
+      ],
+      "items": [],
+      "cards": [],
+      "table": {
+        "headers": [
+          "Stage",
+          "Decision to resolve"
+        ],
+        "rows": [
+          [
+            "See the ad",
+            "Does the service format and area match the enquiry?"
+          ],
+          [
+            "Open WhatsApp",
+            "What are the area, cost, and available times?"
+          ],
+          [
+            "Arrange the visit",
+            "Can the service be scheduled and delivered?"
+          ],
+          [
+            "Paying customer",
+            "Did the enquiry lead to a paid service?"
+          ]
+        ],
+        "caption": null
+      },
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "Historical results",
+      "title": "Track the whole path, not only the chat count.",
+      "eyebrow": "Historical results",
+      "description": "The two paying customers and received revenue show that the experiment went beyond clicks and conversations. They do not establish repeatable performance at a larger budget or isolate the effect of any one creative choice.",
+      "paragraphs": [],
+      "items": [],
+      "cards": [],
+      "table": {
+        "headers": [
+          "Measure",
+          "Recorded result",
+          "How to read it"
+        ],
+        "rows": [
+          [
+            "Prepared budget",
+            "Rp220,000",
+            "Planned budget, not the amount spent."
+          ],
+          [
+            "Actual spend",
+            "About Rp59,000",
+            "Partial campaign spend, reported at roughly Rp59,003–60,000."
+          ],
+          [
+            "Reach",
+            "2,434",
+            "Reported platform reach."
+          ],
+          [
+            "Impressions",
+            "3,094",
+            "Ad displays, not distinct people."
+          ],
+          [
+            "WhatsApp conversations",
+            "64",
+            "Platform conversation count, not 64 confirmed customers."
+          ],
+          [
+            "Cost per conversation",
+            "About Rp922",
+            "Reported platform figure."
+          ],
+          [
+            "Paying customers",
+            "2",
+            "Owner-reported conversions."
+          ],
+          [
+            "Received revenue",
+            "Rp2,700,000",
+            "Payment received, not profit after costs."
+          ]
+        ],
+        "caption": "September 2026 campaign snapshot reported by the owner. Exact daily campaign dates and raw Ads Manager export are not available in this case."
+      },
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "My contribution",
+      "title": "Connect acquisition with the real service.",
+      "eyebrow": "My contribution",
+      "description": "I framed the offer, worked on copy and visual direction, selected the geographic focus, prepared the budget, and connected Meta Ads to the WhatsApp-led enquiry process.",
+      "paragraphs": [
+        "I also reviewed the response against the ability to handle the resulting appointments. The constraint was not only how cheaply the ad could generate a conversation; it was whether the next stage could be delivered."
+      ],
+      "items": [
+        "Offer and campaign message.",
+        "Creative direction with AI-assisted asset production.",
+        "Geographic targeting and budget planning.",
+        "Enquiry-to-service journey and operational review."
+      ],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "What I learned",
+      "title": "Demand has to fit the capacity to respond.",
+      "eyebrow": "What I learned",
+      "description": "The clearest lesson was that a promising acquisition signal can still expose an operational mismatch. The evening requests mattered because the service depended on someone being available to fulfil them.",
+      "paragraphs": [
+        "A future run should begin with a service-area and appointment-capacity decision, then communicate those boundaries in the enquiry journey. This is the next improvement suggested by the experiment, not a change claimed to have been tested already.",
+        "The case keeps planned budget separate from spend, conversations separate from customers, and received revenue separate from profit. Those distinctions make the result useful for deciding what to do next."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    }
+  ],
+  "mediaAssets": [
+    {
+      "path": "assets/sarafcare/campaign-creative.webp",
+      "sha256": "59067940d3fb69780fad99c61d282ef2e273ffdbf264db1c04eb28c33b7ab14d",
+      "bytes": 145154,
+      "width": 960,
+      "height": 1200
+    }
+  ]
+}

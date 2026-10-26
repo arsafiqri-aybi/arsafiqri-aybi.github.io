@@ -2,20 +2,297 @@
   "id": "tari-cookies",
   "name": "Tari Cookies",
   "category": "Customer Research · UX Design · Frontend",
-  "status": "Live Website · Academic Team Project",
+  "status": "Live website · Academic team project",
   "year": "2026",
-  "headline": "A little more clarity. A more personal gift.",
-  "description": "From customer research to a working website: explore cookies, personalise a hamper, review the order, and continue to WhatsApp.",
+  "headline": "From finding a product to feeling ready to order.",
+  "description": "An Instagram-to-WhatsApp ordering journey shaped by customer research, made tangible through a responsive website and reviewed by the business owner.",
   "role": "Team coordination, Lo-Fi and Hi-Fi design, website implementation, presentation, and feedback-led revisions.",
   "website": "https://taricookies.pages.dev/",
+  "hero": {
+    "src": "assets/tari-cookies/home.webp",
+    "alt": "Actual Tari Cookies homepage showing cookies, pink branding, and catalogue entry points.",
+    "caption": "Actual website · taricookies.pages.dev",
+    "kind": "landscape",
+    "width": 1363,
+    "height": 936
+  },
+  "facts": [
+    {
+      "label": "My contribution",
+      "value": "Team coordination, UX design & website build"
+    },
+    {
+      "label": "Context",
+      "value": "Universitas Cakrawala · Group 3"
+    },
+    {
+      "label": "Research",
+      "value": "6 interview participants · 8 questionnaire responses"
+    },
+    {
+      "label": "Output",
+      "value": "Lo-Fi, Hi-Fi, responsive website & presentation"
+    }
+  ],
+  "links": [
+    {
+      "label": "Open live website",
+      "url": "https://taricookies.pages.dev/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "brief",
+      "label": "The brief",
+      "title": "Make pre-order easier to understand.",
+      "body": [
+        "Tari Cookies is a small cookies business using a pre-order model. The initial brief was to improve its Instagram catalogue and WhatsApp ordering journey, from finding information to the seller confirming an order.",
+        "The main audience was a first-time buyer arriving from Instagram, shopping for themselves, their family, a gift, or an occasion. They needed to understand the products, prices, sizes, pre-order schedule, and how to order.",
+        "The original catalogue already contained product, price, and size information. The early gap was less visible pre-order timing and expected receipt. Repeated questions or delayed orders were a hypothesis to investigate, not a proven result at the briefing stage."
+      ],
+      "cards": [
+        {
+          "title": "For the customer",
+          "text": "Understand the offer, cost, and timing; send an order with the information the seller needs."
+        },
+        {
+          "title": "For the business",
+          "text": "Receive clearer order details and reduce repeated questions about products, pre-order, and the next step."
+        }
+      ],
+      "note": "Scope: customer research, catalogue and journey design, prototype, testing plans, and revisions. Automated inventory, production, delivery, and payment processing were outside the brief."
+    },
+    {
+      "id": "research",
+      "label": "Research approach",
+      "title": "Test the assumption before choosing the interface.",
+      "body": [
+        "The research objective was to understand what a prospective buyer needed before feeling confident enough to order. Four questions guided it: what information they sought, what confused them, what created trust or doubt, and what would make the Instagram-to-WhatsApp transition clearer.",
+        "The team combined six interviews with eight questionnaire responses. Interviews used open questions and a catalogue walkthrough to explore the reasons behind decisions. The digital questionnaire looked for patterns in information needs and ease of finding details.",
+        "Participants were selected for experience buying food or cookies online and using social media or marketplaces to find products. Interviews took place on 18 September 2026; documentation included interview notes, questionnaire recaps, and interview video."
+      ],
+      "bullets": [
+        "Describe the last time you bought food online. How did the process work?",
+        "What information do you need before deciding to buy?",
+        "Have you delayed or cancelled a purchase? What made you stop?",
+        "If you wanted to order Tari Cookies now, what would you do?"
+      ],
+      "note": "This was small, exploratory research. It identifies issues worth designing for; it does not estimate the whole market or establish a causal effect."
+    },
+    {
+      "id": "findings",
+      "label": "What we found",
+      "title": "Visuals drew attention. Timing still raised questions.",
+      "body": [
+        "All six interview participants first noticed photos, catalogue design, or packaging. The design did not need to start by assuming the existing catalogue was visually unsuccessful. The next priority was the information customers checked after their first impression.",
+        "The questionnaire used a 1–5 scale for ease of finding information. Pre-order information had the lowest average, while the ordering instructions were already relatively easy to find. That pointed toward clarifying timing rather than replacing everything."
+      ],
+      "table": {
+        "headers": [
+          "Information",
+          "Average ease of finding / 5"
+        ],
+        "rows": [
+          [
+            "How to order",
+            "4.75"
+          ],
+          [
+            "Price",
+            "4.63"
+          ],
+          [
+            "Products",
+            "4.50"
+          ],
+          [
+            "Size",
+            "4.50"
+          ],
+          [
+            "Pre-order period",
+            "3.50"
+          ]
+        ],
+        "caption": "Eight questionnaire responses · averages describe information findability in the original catalogue."
+      },
+      "cards": [
+        {
+          "title": "Status & timing",
+          "text": "Is it ready stock or pre-order? When is it ready, and when might it arrive?"
+        },
+        {
+          "title": "Trust",
+          "text": "Reviews, an active contact, location, payment, and delivery information."
+        },
+        {
+          "title": "Product details",
+          "text": "Size and contents, ingredients, variants, and packaging."
+        }
+      ]
+    },
+    {
+      "id": "decisions",
+      "label": "Research into design",
+      "title": "Give information and selection a shared home.",
+      "body": [
+        "The initial concept centred on improving Instagram and WhatsApp. The developed solution added a website between discovery and conversation, so customers could explore the products, configure a gift, and check their choices in one place.",
+        "The catalogue keeps product imagery, flavour, size, price, and the selection control together. Ordering guidance and FAQs explain production estimates and make clear which details still need seller confirmation.",
+        "WhatsApp remains the confirmation channel. The website prepares the order summary; the customer reviews and sends it, and the seller confirms the production schedule and delivery fees."
+      ],
+      "table": {
+        "headers": [
+          "Research need",
+          "Design response"
+        ],
+        "rows": [
+          [
+            "Clarify timing",
+            "Ordering guidance and FAQs explain pre-order and seller confirmation."
+          ],
+          [
+            "Reduce uncertainty about the product",
+            "A catalogue groups product details with selection controls."
+          ],
+          [
+            "Make the next action clear",
+            "An editable cart prepares a structured WhatsApp handoff."
+          ],
+          [
+            "Make gifts easier to specify",
+            "Occasion, Duo/Trio, cookie choices, and an optional greeting are explicit."
+          ]
+        ],
+        "caption": null
+      },
+      "media": {
+        "src": "assets/tari-cookies/catalog.webp",
+        "alt": "Tari Cookies catalogue with flavours, size, price, and add-to-cart controls.",
+        "caption": "The catalogue groups the information needed for a product decision.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      }
+    },
+    {
+      "id": "contribution",
+      "label": "My contribution",
+      "title": "Carry the design through to a working experience.",
+      "body": [
+        "I allocated tasks, coordinated the group, and reviewed the work produced by the team. I created the Lo-Fi and Hi-Fi designs, built the website, and prepared the final presentation.",
+        "I also collected criticism of the website and implemented revisions. The research and coursework were collaborative; my contribution connected that work to the design and implementation."
+      ],
+      "media": {
+        "src": "assets/tari-cookies/hampers.webp",
+        "alt": "Hamper configurator showing occasions, Duo and Trio packages, and cookie selection.",
+        "caption": "Actual website · Hamper configuration. The product imagery uses AI-created illustrations.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      },
+      "note": "The website uses HTML, CSS, and JavaScript and is hosted on Cloudflare Pages."
+    },
+    {
+      "id": "changes",
+      "label": "What changed",
+      "title": "From a catalogue and chat to a guided order.",
+      "body": [
+        "The change is visible in the journey: customers can review information and assemble their choices before opening WhatsApp. The owner’s response supports a qualitative improvement in information access and ordering clarity."
+      ],
+      "table": {
+        "headers": [
+          "Before the website",
+          "With the website"
+        ],
+        "rows": [
+          [
+            "Information was found in the Instagram catalogue, with timing and other questions continuing in chat.",
+            "Products, ordering guidance, and FAQs can be explored in one place before the conversation."
+          ],
+          [
+            "The buyer described their product or gift choices through conversation.",
+            "Cookies and hampers can be selected and reviewed in a cart first."
+          ],
+          [
+            "The seller needed the buyer to communicate the order details.",
+            "The website prepares a structured summary for the buyer to review and send."
+          ],
+          [
+            "The initial design questions were based on a brief and exploratory research.",
+            "A working website and direct owner feedback provide concrete output and qualitative validation."
+          ]
+        ],
+        "caption": null
+      },
+      "media": {
+        "src": "assets/tari-cookies/cart.webp",
+        "alt": "Editable Tari Cookies order summary with quantity, subtotal, and a WhatsApp handoff.",
+        "caption": "Actual website · Review the selected items before continuing to the seller.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      },
+      "note": "These are changes to the interface and workflow. No before-and-after sales, conversion, or timed task-completion study is available."
+    },
+    {
+      "id": "owner-feedback",
+      "label": "Owner response",
+      "title": "“Sangat membantu pemesanan.”",
+      "body": [
+        "Asked about the website’s appearance, satisfaction, and ordering workflow, the owner said it helped ordering, made information easier for customers to find, and presented the business with an aesthetic, elegant design."
+      ],
+      "quote": {
+        "text": "Untuk website yang di buat untuk tari cookies ini sangat membantu pemesanan, customer tidak susah untuk mencari informasi",
+        "by": "Tari Cookies owner · Direct feedback supplied by Arsafiqri"
+      },
+      "media": {
+        "src": "assets/tari-cookies/owner-feedback.webp",
+        "alt": "Cropped WhatsApp exchange containing the question about the website and the Tari Cookies owner’s positive response.",
+        "caption": "Direct owner response · Cropped to retain the question and answer; contact header and unrelated messages omitted.",
+        "kind": "evidence",
+        "width": 668,
+        "height": 601
+      },
+      "note": "The owner’s phrase “langsung memesan di website” describes the selection journey. The implemented flow still sends the prepared order to WhatsApp for seller confirmation."
+    },
+    {
+      "id": "reflection",
+      "label": "What the evidence establishes",
+      "title": "A working solution, with a clear next test.",
+      "body": [
+        "The project establishes a research-informed design, a functioning website, and positive qualitative feedback from the owner. It also shows my work across coordination, design, implementation, and revision.",
+        "The initial brief proposed targets: at least four of five participants completing each task without help, finding product details within 60 seconds, and an average ease score of at least four out of five. These were planned success criteria, not results achieved by the final website.",
+        "The next useful test would compare the old and new journeys on the same tasks: finding pre-order information, choosing a hamper, and preparing a complete order. Until then, the owner response should remain qualitative evidence, rather than a conversion claim."
+      ],
+      "links": [
+        {
+          "label": "Explore Tari Cookies",
+          "url": "https://taricookies.pages.dev/"
+        }
+      ]
+    }
+  ],
+  "sourceNotes": {
+    "brief": "Tari Cookies project brief, Digital Visual Communication session 2.",
+    "research": "Tari Cookies session 3 research plan and findings: interviews on 18 September 2026.",
+    "contribution": "Arsafiqri contribution review dated 30 September 2026.",
+    "ownerFeedback": "User-supplied WhatsApp screenshot; user confirmed on 26 October 2026 that the response is directly from the business owner. Deterministic crop only; wording unchanged.",
+    "publication": "Owner of portfolio requested publication of detailed research and this screenshot on 26 October 2026."
+  },
   "chapters": [
     {
       "key": "Overview",
-      "title": "Tari Cookies.",
-      "eyebrow": "CUSTOMER RESEARCH → LIVE WEBSITE · 2026",
-      "description": "A clearer path from discovering cookies to choosing a personal gift. An academic team project brought to life as a working website.",
-      "media": "home",
-      "caption": "Actual website · Beranda",
+      "title": "Tari Cookies",
+      "eyebrow": "Customer Research · UX Design · Frontend",
+      "description": "An Instagram-to-WhatsApp ordering journey shaped by customer research, made tangible through a responsive website and reviewed by the business owner.",
+      "media": {
+        "src": "assets/tari-cookies/home.webp",
+        "alt": "Actual Tari Cookies homepage showing cookies, pink branding, and catalogue entry points.",
+        "caption": "Actual website · taricookies.pages.dev",
+        "kind": "landscape",
+        "width": 1363,
+        "height": 936
+      },
       "links": [
         {
           "label": "Open live website",
@@ -24,132 +301,350 @@
       ]
     },
     {
-      "key": "The Challenge",
-      "title": "Confidence before the first message.",
-      "eyebrow": "01 / CUSTOMER CONTEXT",
-      "description": "The team's research followed the questions a new buyer brings from Instagram: what is available, how pre-order works, and what happens after choosing a product.",
-      "items": [
-        "Timing: ready stock, production, and arrival.",
-        "Trust: reviews, brand identity, and payment clarity.",
-        "Ordering: a clear next step toward WhatsApp."
+      "key": "The brief",
+      "title": "Make pre-order easier to understand.",
+      "eyebrow": "The brief",
+      "description": "Tari Cookies is a small cookies business using a pre-order model. The initial brief was to improve its Instagram catalogue and WhatsApp ordering journey, from finding information to the seller confirming an order.",
+      "paragraphs": [
+        "The main audience was a first-time buyer arriving from Instagram, shopping for themselves, their family, a gift, or an occasion. They needed to understand the products, prices, sizes, pre-order schedule, and how to order.",
+        "The original catalogue already contained product, price, and size information. The early gap was less visible pre-order timing and expected receipt. Repeated questions or delayed orders were a hypothesis to investigate, not a proven result at the briefing stage."
       ],
-      "foot": "Research scope: 6 interview participants and 8 questionnaire responses. Exploratory findings, not a representative market estimate."
-    },
-    {
-      "key": "My Contribution",
-      "title": "Connecting the team, design, and build.",
-      "eyebrow": "02 / MY CONTRIBUTION",
-      "description": "I coordinated task allocation and reviewed the team's work, then connected the design direction to the website people can explore.",
-      "items": [
-        "Created the Lo-Fi and Hi-Fi designs.",
-        "Built the website and final presentation.",
-        "Collected website feedback and implemented revisions."
-      ],
-      "foot": "Collaborative project · Group 3, Universitas Cakrawala. The research and wider coursework were team work."
-    },
-    {
-      "key": "Decisions",
-      "title": "Browse first. Start a clearer conversation.",
-      "eyebrow": "03 / DESIGN DECISIONS",
-      "description": "Give product selection its own space. Keep imagery, flavour, size, price, and the add-to-cart action together, then leave final scheduling and delivery confirmation to WhatsApp.",
-      "media": "catalog",
-      "caption": "Actual website · Product catalogue",
-      "foot": "The website prepares the order; the seller confirms it."
-    },
-    {
-      "key": "The Experience",
-      "title": "Make the gift feel personal.",
-      "eyebrow": "04 / HAMPER EXPERIENCE",
-      "description": "Choose an occasion, pick Duo or Trio, then select the cookies for each jar. Add an optional greeting before reviewing the order.",
-      "media": "hampers",
-      "caption": "Actual website · Hamper configuration",
-      "foot": "Hamper product imagery in the website uses AI-created illustrations."
-    },
-    {
-      "key": "Iteration",
-      "title": "Feedback becomes a working revision.",
-      "eyebrow": "05 / BUILD & ITERATION",
-      "description": "My contribution included gathering criticism of the website and putting revisions into the build. The result connects the visual design to product selection, hamper choices, and an editable cart.",
-      "items": [
-        "Lo-Fi and Hi-Fi as part of the design work.",
-        "Responsive HTML, CSS, and JavaScript implementation.",
-        "Order details visible before the WhatsApp handoff."
-      ],
-      "foot": "This case presents the design and implementation. It does not claim a measured conversion or usability improvement."
-    },
-    {
-      "key": "The Outcome",
-      "title": "An order you can review.",
-      "eyebrow": "06 / WORKING OUTPUT",
-      "description": "The live website brings together a product catalogue, configurable hampers, quantity controls, and a subtotal. Buyers can review their choices before continuing to the seller.",
-      "media": "cart",
-      "caption": "Actual website · Editable order summary",
-      "foot": "Production schedule and delivery fees are confirmed with the seller. The website is not a payment gateway."
-    },
-    {
-      "key": "Explore",
-      "title": "See the work in motion.",
-      "eyebrow": "07 / EXPLORE THE WEBSITE",
-      "description": "Explore the finished interface, browse the catalogue, or try configuring a hamper. These screenshots were captured from the live website on 25 October 2026.",
-      "links": [
+      "items": [],
+      "cards": [
         {
-          "label": "Open Tari Cookies",
-          "url": "https://taricookies.pages.dev/"
+          "title": "For the customer",
+          "text": "Understand the offer, cost, and timing; send an order with the information the seller needs."
         },
         {
-          "label": "Browse the catalogue",
-          "url": "https://taricookies.pages.dev/#cookies"
-        },
-        {
-          "label": "Explore hampers",
-          "url": "https://taricookies.pages.dev/#hampers"
+          "title": "For the business",
+          "text": "Receive clearer order details and reduce repeated questions about products, pre-order, and the next step."
         }
       ],
-      "foot": "The main lesson: connect the information a customer needs to the next decision they have to make."
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "Scope: customer research, catalogue and journey design, prototype, testing plans, and revisions. Automated inventory, production, delivery, and payment processing were outside the brief."
+    },
+    {
+      "key": "Research approach",
+      "title": "Test the assumption before choosing the interface.",
+      "eyebrow": "Research approach",
+      "description": "The research objective was to understand what a prospective buyer needed before feeling confident enough to order. Four questions guided it: what information they sought, what confused them, what created trust or doubt, and what would make the Instagram-to-WhatsApp transition clearer.",
+      "paragraphs": [
+        "The team combined six interviews with eight questionnaire responses. Interviews used open questions and a catalogue walkthrough to explore the reasons behind decisions. The digital questionnaire looked for patterns in information needs and ease of finding details.",
+        "Participants were selected for experience buying food or cookies online and using social media or marketplaces to find products. Interviews took place on 18 September 2026; documentation included interview notes, questionnaire recaps, and interview video."
+      ],
+      "items": [
+        "Describe the last time you bought food online. How did the process work?",
+        "What information do you need before deciding to buy?",
+        "Have you delayed or cancelled a purchase? What made you stop?",
+        "If you wanted to order Tari Cookies now, what would you do?"
+      ],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "This was small, exploratory research. It identifies issues worth designing for; it does not estimate the whole market or establish a causal effect."
+    },
+    {
+      "key": "What we found",
+      "title": "Visuals drew attention. Timing still raised questions.",
+      "eyebrow": "What we found",
+      "description": "All six interview participants first noticed photos, catalogue design, or packaging. The design did not need to start by assuming the existing catalogue was visually unsuccessful. The next priority was the information customers checked after their first impression.",
+      "paragraphs": [
+        "The questionnaire used a 1–5 scale for ease of finding information. Pre-order information had the lowest average, while the ordering instructions were already relatively easy to find. That pointed toward clarifying timing rather than replacing everything."
+      ],
+      "items": [],
+      "cards": [
+        {
+          "title": "Status & timing",
+          "text": "Is it ready stock or pre-order? When is it ready, and when might it arrive?"
+        },
+        {
+          "title": "Trust",
+          "text": "Reviews, an active contact, location, payment, and delivery information."
+        },
+        {
+          "title": "Product details",
+          "text": "Size and contents, ingredients, variants, and packaging."
+        }
+      ],
+      "table": {
+        "headers": [
+          "Information",
+          "Average ease of finding / 5"
+        ],
+        "rows": [
+          [
+            "How to order",
+            "4.75"
+          ],
+          [
+            "Price",
+            "4.63"
+          ],
+          [
+            "Products",
+            "4.50"
+          ],
+          [
+            "Size",
+            "4.50"
+          ],
+          [
+            "Pre-order period",
+            "3.50"
+          ]
+        ],
+        "caption": "Eight questionnaire responses · averages describe information findability in the original catalogue."
+      },
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "Research into design",
+      "title": "Give information and selection a shared home.",
+      "eyebrow": "Research into design",
+      "description": "The initial concept centred on improving Instagram and WhatsApp. The developed solution added a website between discovery and conversation, so customers could explore the products, configure a gift, and check their choices in one place.",
+      "paragraphs": [
+        "The catalogue keeps product imagery, flavour, size, price, and the selection control together. Ordering guidance and FAQs explain production estimates and make clear which details still need seller confirmation.",
+        "WhatsApp remains the confirmation channel. The website prepares the order summary; the customer reviews and sends it, and the seller confirms the production schedule and delivery fees."
+      ],
+      "items": [],
+      "cards": [],
+      "table": {
+        "headers": [
+          "Research need",
+          "Design response"
+        ],
+        "rows": [
+          [
+            "Clarify timing",
+            "Ordering guidance and FAQs explain pre-order and seller confirmation."
+          ],
+          [
+            "Reduce uncertainty about the product",
+            "A catalogue groups product details with selection controls."
+          ],
+          [
+            "Make the next action clear",
+            "An editable cart prepares a structured WhatsApp handoff."
+          ],
+          [
+            "Make gifts easier to specify",
+            "Occasion, Duo/Trio, cookie choices, and an optional greeting are explicit."
+          ]
+        ],
+        "caption": null
+      },
+      "media": {
+        "src": "assets/tari-cookies/catalog.webp",
+        "alt": "Tari Cookies catalogue with flavours, size, price, and add-to-cart controls.",
+        "caption": "The catalogue groups the information needed for a product decision.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      },
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": null
+    },
+    {
+      "key": "My contribution",
+      "title": "Carry the design through to a working experience.",
+      "eyebrow": "My contribution",
+      "description": "I allocated tasks, coordinated the group, and reviewed the work produced by the team. I created the Lo-Fi and Hi-Fi designs, built the website, and prepared the final presentation.",
+      "paragraphs": [
+        "I also collected criticism of the website and implemented revisions. The research and coursework were collaborative; my contribution connected that work to the design and implementation."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": {
+        "src": "assets/tari-cookies/hampers.webp",
+        "alt": "Hamper configurator showing occasions, Duo and Trio packages, and cookie selection.",
+        "caption": "Actual website · Hamper configuration. The product imagery uses AI-created illustrations.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      },
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "The website uses HTML, CSS, and JavaScript and is hosted on Cloudflare Pages."
+    },
+    {
+      "key": "What changed",
+      "title": "From a catalogue and chat to a guided order.",
+      "eyebrow": "What changed",
+      "description": "The change is visible in the journey: customers can review information and assemble their choices before opening WhatsApp. The owner’s response supports a qualitative improvement in information access and ordering clarity.",
+      "paragraphs": [],
+      "items": [],
+      "cards": [],
+      "table": {
+        "headers": [
+          "Before the website",
+          "With the website"
+        ],
+        "rows": [
+          [
+            "Information was found in the Instagram catalogue, with timing and other questions continuing in chat.",
+            "Products, ordering guidance, and FAQs can be explored in one place before the conversation."
+          ],
+          [
+            "The buyer described their product or gift choices through conversation.",
+            "Cookies and hampers can be selected and reviewed in a cart first."
+          ],
+          [
+            "The seller needed the buyer to communicate the order details.",
+            "The website prepares a structured summary for the buyer to review and send."
+          ],
+          [
+            "The initial design questions were based on a brief and exploratory research.",
+            "A working website and direct owner feedback provide concrete output and qualitative validation."
+          ]
+        ],
+        "caption": null
+      },
+      "media": {
+        "src": "assets/tari-cookies/cart.webp",
+        "alt": "Editable Tari Cookies order summary with quantity, subtotal, and a WhatsApp handoff.",
+        "caption": "Actual website · Review the selected items before continuing to the seller.",
+        "kind": "landscape",
+        "width": 1353,
+        "height": 929
+      },
+      "quote": null,
+      "stats": null,
+      "links": [],
+      "foot": "These are changes to the interface and workflow. No before-and-after sales, conversion, or timed task-completion study is available."
+    },
+    {
+      "key": "Owner response",
+      "title": "“Sangat membantu pemesanan.”",
+      "eyebrow": "Owner response",
+      "description": "Asked about the website’s appearance, satisfaction, and ordering workflow, the owner said it helped ordering, made information easier for customers to find, and presented the business with an aesthetic, elegant design.",
+      "paragraphs": [],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": {
+        "src": "assets/tari-cookies/owner-feedback.webp",
+        "alt": "Cropped WhatsApp exchange containing the question about the website and the Tari Cookies owner’s positive response.",
+        "caption": "Direct owner response · Cropped to retain the question and answer; contact header and unrelated messages omitted.",
+        "kind": "evidence",
+        "width": 668,
+        "height": 601
+      },
+      "quote": {
+        "text": "Untuk website yang di buat untuk tari cookies ini sangat membantu pemesanan, customer tidak susah untuk mencari informasi",
+        "by": "Tari Cookies owner · Direct feedback supplied by Arsafiqri"
+      },
+      "stats": null,
+      "links": [],
+      "foot": "The owner’s phrase “langsung memesan di website” describes the selection journey. The implemented flow still sends the prepared order to WhatsApp for seller confirmation."
+    },
+    {
+      "key": "What the evidence establishes",
+      "title": "A working solution, with a clear next test.",
+      "eyebrow": "What the evidence establishes",
+      "description": "The project establishes a research-informed design, a functioning website, and positive qualitative feedback from the owner. It also shows my work across coordination, design, implementation, and revision.",
+      "paragraphs": [
+        "The initial brief proposed targets: at least four of five participants completing each task without help, finding product details within 60 seconds, and an average ease score of at least four out of five. These were planned success criteria, not results achieved by the final website.",
+        "The next useful test would compare the old and new journeys on the same tasks: finding pre-order information, choosing a hamper, and preparing a complete order. Until then, the owner response should remain qualitative evidence, rather than a conversion claim."
+      ],
+      "items": [],
+      "cards": [],
+      "table": null,
+      "media": null,
+      "quote": null,
+      "stats": null,
+      "links": [
+        {
+          "label": "Explore Tari Cookies",
+          "url": "https://taricookies.pages.dev/"
+        }
+      ],
+      "foot": null
+    }
+  ],
+  "mediaAssets": [
+    {
+      "path": "assets/tari-cookies/cart.webp",
+      "sha256": "9ea09894ada13258ce2828f4c8dc56f6a82d45838092917b9238c5c8186f6110",
+      "bytes": 115066,
+      "width": 1353,
+      "height": 929
+    },
+    {
+      "path": "assets/tari-cookies/catalog.webp",
+      "sha256": "0fdc1fdfba01ef424a5a5b192362a6d04de05d34a44d2499e0928139fb0a2445",
+      "bytes": 108686,
+      "width": 1353,
+      "height": 929
+    },
+    {
+      "path": "assets/tari-cookies/hampers.webp",
+      "sha256": "cc6d15f1f5be003ad375e297d8547f775d3a545b3010f67b6c21861a1b19d8ab",
+      "bytes": 139220,
+      "width": 1353,
+      "height": 929
+    },
+    {
+      "path": "assets/tari-cookies/home.webp",
+      "sha256": "9bee05e45eccfd4dc802ee2c9d26f115039a8e8df5ac0b6db09a556e8e8589a7",
+      "bytes": 80266,
+      "width": 1363,
+      "height": 936
+    },
+    {
+      "path": "assets/tari-cookies/owner-feedback.webp",
+      "sha256": "14dae1c5cc26650e6fbb3c6ed96d9b6d3bf2eb46294deba2fb5e18f336eda76d",
+      "bytes": 247860,
+      "width": 668,
+      "height": 601
     }
   ],
   "screenshots": [
     {
-      "id": "home",
-      "path": "assets/tari-cookies/home.webp",
-      "sourceUrl": "https://taricookies.pages.dev/",
-      "capturedOn": "2026-10-25",
-      "kind": "live-browser-screenshot",
-      "sha256": "9bee05e45eccfd4dc802ee2c9d26f115039a8e8df5ac0b6db09a556e8e8589a7",
-      "bytes": 80266
+      "id": "cart",
+      "path": "assets/tari-cookies/cart.webp",
+      "sha256": "9ea09894ada13258ce2828f4c8dc56f6a82d45838092917b9238c5c8186f6110",
+      "bytes": 115066,
+      "width": 1353,
+      "height": 929
     },
     {
       "id": "catalog",
       "path": "assets/tari-cookies/catalog.webp",
-      "sourceUrl": "https://taricookies.pages.dev/",
-      "capturedOn": "2026-10-25",
-      "kind": "live-browser-screenshot",
       "sha256": "0fdc1fdfba01ef424a5a5b192362a6d04de05d34a44d2499e0928139fb0a2445",
-      "bytes": 108686
+      "bytes": 108686,
+      "width": 1353,
+      "height": 929
     },
     {
       "id": "hampers",
       "path": "assets/tari-cookies/hampers.webp",
-      "sourceUrl": "https://taricookies.pages.dev/",
-      "capturedOn": "2026-10-25",
-      "kind": "live-browser-screenshot",
       "sha256": "cc6d15f1f5be003ad375e297d8547f775d3a545b3010f67b6c21861a1b19d8ab",
-      "bytes": 139220
+      "bytes": 139220,
+      "width": 1353,
+      "height": 929
     },
     {
-      "id": "cart",
-      "path": "assets/tari-cookies/cart.webp",
-      "sourceUrl": "https://taricookies.pages.dev/",
-      "capturedOn": "2026-10-25",
-      "kind": "live-browser-screenshot",
-      "sha256": "9ea09894ada13258ce2828f4c8dc56f6a82d45838092917b9238c5c8186f6110",
-      "bytes": 115066
+      "id": "home",
+      "path": "assets/tari-cookies/home.webp",
+      "sha256": "9bee05e45eccfd4dc802ee2c9d26f115039a8e8df5ac0b6db09a556e8e8589a7",
+      "bytes": 80266,
+      "width": 1363,
+      "height": 936
     }
-  ],
-  "sourceNotes": {
-    "publication": "Owner explicitly requested this case study and website screenshots for the portfolio on 25 October 2026.",
-    "research": "Previously published Arsafiqri portfolio records 6 interviews and 8 questionnaire responses.",
-    "contribution": "Owner contribution review dated 30 September 2026: task allocation, team coordination, website, Lo-Fi and Hi-Fi, final presentation, feedback and revisions.",
-    "website": "Live Tari Cookies website inspected on 25 October 2026; original deployment ZIP README identifies hampers imagery as AI-created illustrations."
-  }
+  ]
 }
