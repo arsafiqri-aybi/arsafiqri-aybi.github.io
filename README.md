@@ -193,3 +193,10 @@ foundation as production-ready across platforms.
 Validation: current-source and original-media checks pass (43 assertions at this
 revision). The old broader navigation suite has three assertions already failing
 at the pre-change baseline; no legacy navigation behaviour was rewritten.
+
+ 
+## Editorial polish (2026-10-27)
+
+The Tari Cookies owner conversation remains verbatim in its original 668 x 601 screenshot. Both message bubbles are fully visible. The separate quotation now includes the entire owner reply; mobile retains the original screenshot before the explanation and avoids a duplicated quote. The asset itself was not modified.
+
+Public-facing generic em dashes were replaced with contextual punctuation. Home and reviewed cases use locally bundled DM Sans with calmer headline tracking, without changing colours, layout architecture, project metrics, navigation or motion.

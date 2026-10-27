@@ -3380,3 +3380,53 @@ body.home-site{
  .tari-live-link,.case-gallery-media>img{transition:none}
  .curated-work:hover .case-gallery-media>img{transform:none}
 }
+
+/* Editorial refinement: restrained typography and complete, unaltered owner feedback. */
+.home-site,.reviewed-case{font-family:"DM Sans",Arial,sans-serif}
+.home-site .preview-stage h1,
+.home-site .preview-stage h2,
+.reviewed-case .showcase-title h1,
+.reviewed-case .reading-section h2{font-weight:560;letter-spacing:-.028em}
+.reviewed-case .case-reading-copy>p,
+.reviewed-case .case-insight-grid p,
+.reviewed-case .case-note{letter-spacing:0}
+.tari-case #owner-feedback .case-quote{border-left:0;padding:0}
+.tari-case #owner-feedback .case-quote>p{
+ font-size:clamp(19px,2.25vw,25px);line-height:1.65;
+ letter-spacing:-.008em;font-weight:450
+}
+.tari-case #owner-feedback .case-figure--evidence{
+ width:min(100%,668px);max-width:668px;margin:28px auto 0
+}
+.tari-case #owner-feedback .case-figure--evidence img{
+ display:block;width:100%;height:auto;max-height:none;
+ aspect-ratio:auto;object-fit:contain;object-position:center;
+ border-radius:8px
+}
+@media(max-width:680px){
+ .reviewed-case .ars-case-heading{
+  font-family:"DM Sans",Arial,sans-serif;
+  font-weight:560;letter-spacing:-.028em
+ }
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"]{
+  gap:12px;padding:20px 18px 32px;align-items:stretch;
+  justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch
+ }
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"] .case-mobile-figure--evidence{
+  order:2;display:block;width:100%;max-width:668px;
+  margin:0 auto;flex:0 0 auto;min-height:0;overflow:visible
+ }
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"] .case-mobile-figure--evidence>a{
+  display:block;width:100%
+ }
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"] .case-mobile-figure--evidence img{
+  display:block;width:100%!important;max-width:100%!important;
+  height:auto!important;max-height:none!important;
+  aspect-ratio:auto!important;object-fit:contain!important;object-position:center
+ }
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"] .ars-case-description{
+  order:3;font-size:13px;line-height:1.65;margin:0
+ }
+ /* The screenshot already includes the entire answer, so omit duplicated mobile text. */
+ .tari-case .ars-case-slide[data-case-chapter="Owner response"] .case-quote{display:none}
+}
