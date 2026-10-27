@@ -3430,3 +3430,27 @@ body.home-site{
  /* The screenshot already includes the entire answer, so omit duplicated mobile text. */
  .tari-case .ars-case-slide[data-case-chapter="Owner response"] .case-quote{display:none}
 }
+
+
+/* Work gallery: keep waai.id's portrait media the same visual footprint as
+   SarafCare while preserving waai.id's alternating image-on-right layout. */
+.selected-work .curated-work[data-gallery-project="waai-id"] .curated-media{
+  grid-column:span 5;
+}
+.selected-work .curated-work[data-gallery-project="waai-id"] .curated-copy{
+  grid-column:span 7;
+}
+@media(max-width:1023px) and (min-width:681px){
+  .selected-work .curated-work[data-gallery-project="waai-id"] .curated-media{
+    grid-column:span 3;
+  }
+  .selected-work .curated-work[data-gallery-project="waai-id"] .curated-copy{
+    grid-column:span 5;
+  }
+}
+@media(max-width:680px){
+  .selected-work .curated-work[data-gallery-project="waai-id"] .curated-media,
+  .selected-work .curated-work[data-gallery-project="waai-id"] .curated-copy{
+    grid-column:1/-1;
+  }
+}
