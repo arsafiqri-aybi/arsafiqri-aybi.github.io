@@ -124,12 +124,12 @@ function animateSoftArc(now){
   if(t<1)softArcFrameId=requestAnimationFrame(animateSoftArc);
   else{softArcPosition=softArcTarget;softArcFrameId=0;}
 }
-function syncSoftArc(index){
+function syncSoftArc(index,instant=false){
   if(window.innerWidth<=MOBILE_BREAKPOINT||!choices.length)return;
   if(softArcFrameId)cancelAnimationFrame(softArcFrameId);
   softArcFrameId=0;
   const next=Math.max(0,Math.min(choices.length-1,index));
-  if(!root.classList.contains('is-enhanced')||matchMedia('(prefers-reduced-motion: reduce)').matches){
+  if(instant||!root.classList.contains('is-enhanced')||matchMedia('(prefers-reduced-motion: reduce)').matches){
     softArcPosition=next;
     softArcTarget=next;
     paintSoftArc(next);
@@ -166,8 +166,20 @@ function choose(idx,moveFocus=false,fromMobileScroll=false){
    c.classList.toggle('is-next',mobile&&i===selected+1);
    c.classList.toggle('is-prev',mobile&&i===selected-1);
  });
- previews.forEach((p,i)=>p.classList.toggle('is-selected',i===selected));
-  syncSoftArc(selected);
+ // Offscreen carousel content must not remain in the keyboard or reading order.
+ const activeIndex=mobile?mobileParent(selected):selected;
+ const activePreview=previews[activeIndex];
+ if(previews.some(p=>p!==activePreview&&p.contains(document.activeElement))){
+   const control=mobile
+     ?document.querySelector('[data-mobile-rail="'+names[activeIndex]+'"]')
+     :choices[selected];
+   control?.focus({preventScroll:true});
+ }
+ previews.forEach((p,i)=>{
+   p.classList.toggle('is-selected',i===selected);
+   p.inert=i!==activeIndex;
+ });
+  syncSoftArc(selected,moveFocus);
  root.dataset.context=[0,1,5].includes(selected)?'dark':'light';
  try{sessionStorage.setItem('ars-section',String(selected));}catch{}
  const target=choices[selected];
@@ -221,8 +233,10 @@ const open=names.includes(section)&&section!=='home'?section:null;
    choose(stored);
   }
   explorer?.classList.toggle('is-away',Boolean(open));
+  if(explorer)explorer.inert=Boolean(open);
   pages.forEach(p=>{
    const visible=p.dataset.page===open;
+   p.inert=!visible;
    if(visible)p.dataset.visible='';
    else {
     delete p.dataset.visible;
@@ -234,6 +248,9 @@ const open=names.includes(section)&&section!=='home'?section:null;
  }
 }
 // ARS v2 return-to-context enhancement: optional, no effect on plain anchor navigation.
+function isPlainNavigation(event){
+ return !event.defaultPrevented&&event.button===0&&!event.ctrlKey&&!event.metaKey&&!event.shiftKey&&!event.altKey;
+}
 const workOriginKey='ars-v2-work-origin', workReturnKey='ars-v2-work-return';
 function storeWorkOrigin(a,e){
  if(e&&((e.button!==undefined&&e.button!==0)||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey))return;
@@ -494,8 +511,25 @@ previewStage?.addEventListener('keydown',e=>{
  choose(mobileChapters[Math.max(0,Math.min(3,at+(e.key==='ArrowRight'?1:-1)))]);
 });
 
+let previousMobile=window.innerWidth<=MOBILE_BREAKPOINT;
 function arrangeMobileRail(){
  if(!rail)return;
+ const mobile=window.innerWidth<=MOBILE_BREAKPOINT;
+ if(mobile!==previousMobile){
+   previousMobile=mobile;
+   if(softArcFrameId)cancelAnimationFrame(softArcFrameId);
+   softArcFrameId=0;
+   // Desktop arc styles must not hide labels after changing to a mobile viewport.
+   choices.forEach(choice=>{
+     for(const property of ['transform','opacity','visibility','pointer-events','z-index'])
+       choice.style.removeProperty(property);
+   });
+   choose(selected,false,true);
+   if(mobile&&previewStage){
+     const pane=previews[mobileParent(selected)];
+     if(pane)previewStage.scrollTo({left:pane.offsetLeft,behavior:'instant'});
+   }
+ }
  requestAnimationFrame(centerMobileRail);
  rail.scrollLeft=0;
  const nav=rail.closest('.section-rail');
@@ -551,7 +585,7 @@ requestAnimationFrame(arrangeMobileRail);
 let wheelDistance=0, wheelLastAt=0, wheelLockUntil=0;
 const selectWithWheel=e=>{
   // Keep browser zoom, horizontal gestures, and mobile page scrolling native.
-  if(window.innerWidth<681||e.ctrlKey||e.metaKey||e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+  if(window.innerWidth<=MOBILE_BREAKPOINT||e.ctrlKey||e.metaKey||e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
   const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?window.innerHeight:1);
   if(Math.abs(delta)<1)return;
   const direction=Math.sign(delta);
@@ -590,8 +624,8 @@ window.addEventListener('hashchange',handleHistoryNavigation);
 window.addEventListener('popstate',handleHistoryNavigation);
 window.addEventListener('pageshow',e=>{if(e.persisted)restoreWorkContext()});
 document.querySelectorAll('.brand').forEach(a=>a.addEventListener('click',e=>{if(!choices.length||e.button!==0||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState(null,'',location.pathname+location.search+'#home');showFromLocation();focusLocationTarget();}));
- document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname+location.search);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
-document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'',location.pathname+location.search);showFromLocation();focusLocationTarget();}));}else{root.dataset.context='dark';}
+ document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{if(!isPlainNavigation(e))return;const dest=a.dataset.open;if(!names.includes(dest))return;e.preventDefault();if(dest==='home')history.pushState(null,'',location.pathname+location.search);else history.pushState(null,'','#'+dest);showFromLocation();focusLocationTarget();}));
+document.querySelectorAll('[data-back]').forEach(a=>a.addEventListener('click',e=>{if(!isPlainNavigation(e))return;e.preventDefault();history.pushState(null,'',location.pathname+location.search);showFromLocation();focusLocationTarget();}));}else{root.dataset.context='dark';}
 const reader=document.querySelector('[data-reader]');
 if(reader){const storyNav=[...document.querySelectorAll('.story-nav a')];const sections=[...document.querySelectorAll('.reading-section')];let requested=false;
 const refresh=()=>{requested=false;const reading=reader.getBoundingClientRect().top<=125;root.classList.toggle('reading',reading);root.dataset.context=reading?'light':'dark';let active=sections[0]?.id;for(const s of sections)if(s.getBoundingClientRect().top<180)active=s.id;storyNav.forEach(a=>a.setAttribute('aria-current',String(a.hash==='#'+active)));};const schedule=()=>{if(!requested){requested=true;requestAnimationFrame(refresh)}};window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh();
@@ -634,14 +668,23 @@ syncReducedMotion();
 const aboutTrack=document.querySelector('.ars-about-track');
 const aboutButtons=[...document.querySelectorAll('[data-about-step]')];
 const aboutPanels=[...document.querySelectorAll('.ars-about-page')];
-let aboutFrame=0;
+let aboutFrame=0,aboutCurrent=0;
 function syncAboutCarousel(){
  if(!aboutTrack||!aboutPanels.length)return;
+ if(window.innerWidth>MOBILE_BREAKPOINT){
+   aboutPanels.forEach(panel=>{panel.inert=false;});
+   return;
+ }
+ if(!aboutTrack.clientWidth)return;
  let current=0,closest=Infinity;
  aboutPanels.forEach((panel,index)=>{
    const gap=Math.abs(aboutTrack.scrollLeft-panel.offsetLeft);
    if(gap<closest){closest=gap;current=index;}
  });
+ aboutCurrent=current;
+ if(window.innerWidth<=MOBILE_BREAKPOINT&&aboutPanels.some((panel,index)=>index!==current&&panel.contains(document.activeElement)))
+   aboutButtons[current]?.focus({preventScroll:true});
+ aboutPanels.forEach((panel,index)=>{panel.inert=window.innerWidth<=MOBILE_BREAKPOINT&&index!==current;});
  aboutButtons.forEach((button,index)=>{
    if(index===current)button.setAttribute('aria-current','step');
    else button.removeAttribute('aria-current');
@@ -652,8 +695,8 @@ function syncAboutCarousel(){
  if(progress)progress.style.transform='scaleX('+((current+1)/aboutPanels.length)+')';
  const hint=document.querySelector('.ars-about-swipe-hint');
  if(hint)hint.textContent=current===aboutPanels.length-1
-   ?'← Swipe once more for Connect'
-   :current===0?'← Swipe to explore chapters':'← Swipe between chapters';
+   ?'Swipe left again for Connect'
+   :current===0?'Swipe left to explore chapters':'Swipe between chapters';
 }
 aboutButtons.forEach((button,index)=>button.addEventListener('click',()=>{
  const panel=aboutPanels[index];
@@ -694,7 +737,11 @@ aboutTrack?.addEventListener('touchend',event=>{
  else if(atEnd&&dx<0)choose(5);
 },{passive:true});
 aboutTrack?.addEventListener('touchcancel',()=>aboutBoundaryStart=null,{passive:true});
-window.addEventListener('resize',syncAboutCarousel,{passive:true});
+window.addEventListener('resize',()=>{
+ if(window.innerWidth<=MOBILE_BREAKPOINT&&aboutTrack&&aboutPanels[aboutCurrent])
+   aboutTrack.scrollTo({left:aboutPanels[aboutCurrent].offsetLeft,behavior:'instant'});
+ syncAboutCarousel();
+},{passive:true});
 syncAboutCarousel();
 
 // Compact mobile navigation preserves existing preview and swipe behavior.

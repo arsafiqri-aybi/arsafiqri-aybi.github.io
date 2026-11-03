@@ -200,3 +200,26 @@ at the pre-change baseline; no legacy navigation behaviour was rewritten.
 The Tari Cookies owner conversation remains verbatim in its original 668 x 601 screenshot. Both message bubbles are fully visible. The separate quotation now includes the entire owner reply; mobile retains the original screenshot before the explanation and avoids a duplicated quote. The asset itself was not modified.
 
 Public-facing generic em dashes were replaced with contextual punctuation. Home and reviewed cases use locally bundled DM Sans with calmer headline tracking, without changing colours, layout architecture, project metrics, navigation or motion.
+
+## Portfolio repair (2026-11-03)
+
+The desktop arc now explains how to discover its chapters. Keyboard Home/End
+selection immediately exposes its destination before moving focus. Offscreen
+portfolio previews, full destinations and About chapters become inert only after
+JavaScript enhancement, so keyboard focus cannot wander into invisible content.
+Desktop arc styles are cleared when crossing the mobile breakpoint. About and
+case-study carousels retain their current chapter when the viewport changes.
+The mobile case footer no longer creates document overflow that can scroll the
+All Work header offscreen. Modified route clicks retain native new-tab behavior. The no-script anchor menu
+remains available while inactive JavaScript controls are hidden.
+
+Mobile Home now uses the same professional identity and introduction as desktop.
+Education names Universitas Cakrawala, already documented on the desktop About
+page, instead of presenting a verification placeholder. Existing project records,
+media permissions and case-study evidence remain authoritative.
+
+Four obsolete source assertions were reconciled with the current shared history
+handler, motion preference toggle, scroll containment and verbatim owner feedback.
+The complete Node suite passes 128 tests. Browser checks use Chromium at controlled
+iframe widths; these are responsive checks rather than physical-device, Safari,
+Firefox or assistive-technology certification.
