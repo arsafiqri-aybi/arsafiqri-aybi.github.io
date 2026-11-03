@@ -1,38 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {dirname,resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
-const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
+import {root} from '../../scripts/build.mjs';
+import {resolve} from 'node:path';
+const home=readFileSync(resolve(root,'index.html'),'utf8');
+const css=readFileSync(resolve(root,'styles.css'),'utf8');
 const js=readFileSync(resolve(root,'app.js'),'utf8');
-
-test('focus moves to new section heading',()=>{
- assert.match(js,/function focusLocationTarget\(/);
- assert.match(js,/pages\.find\(p=>p\.dataset\.page===section\)\?\.querySelector\('h1'\)/);
- assert.match(js,/h\.setAttribute\('tabindex','-1'\)/);
- assert.match(js,/h\.focus\(\{preventScroll:true\}\)/);
+test('primary destinations are ordinary links to visible semantic sections',()=>{
+ for(const id of ['work','about','approach','connect']){
+  assert.ok(home.includes('href="#'+id+'"'));
+  assert.match(home,new RegExp('<section[^>]+id="'+id+'"[^>]+aria-labelledby='));
+ }
+ assert.doesNotMatch(home,/data-rail|data-mobile-rail|data-preview/);
 });
-test('user route clicks and history invoke focus',()=>{
- assert.match(js,/function handleHistoryNavigation\(\)\{showFromLocation\(\);focusLocationTarget\(\);restoreWorkContext\(\);\}/);
- for(const event of ['hashchange','popstate'])assert.ok(js.includes("window.addEventListener('"+event+"',handleHistoryNavigation)"));
- assert.match(js,/data-open[^\n]*focusLocationTarget\(\)/);
- assert.match(js,/data-back[^\n]*focusLocationTarget\(\)/);
+test('media enlargement uses a native dialog and retains original image links',()=>{
+ assert.match(home,/<dialog[^>]+aria-label="Full image"/);
+ assert.match(home,/<button[^>]+aria-label="Close image"/);
+ assert.match(js,/typeof dialog.showModal==='function'/);
+ assert.match(js,/dialog.addEventListener\('close'/);
+ assert.match(js,/opener\?\.focus/);
 });
-test('return origin records the exact duplicate link index',()=>{
- assert.match(js,/const linkIndex=\[\.\.\.document\.querySelectorAll\('a\[data-gallery-project\]'\)\]\.indexOf\(a\)/);
- assert.match(js,/JSON\.stringify\(\{path:location\.pathname,id,linkIndex,scrollY:window\.scrollY\}\)/);
-});
-test('recorded index is validated and falls back safely to matching id',()=>{
- assert.match(js,/Number\.isSafeInteger\(recorded\.linkIndex\)/);
- assert.match(js,/recorded\.linkIndex>=0/);
- assert.match(js,/exact\?\.getAttribute\('data-gallery-project'\)===recorded\.id/);
-});
-test('native document scroll remains and exact work link is focused',()=>{
- assert.match(js,/Math\.min\(recorded\.scrollY,maxY\)/);
- assert.match(js,/target\?\.focus\(\{preventScroll:true\}\)/);
- assert.match(js,/for\(const surface of \[rail,previewStage\]\)/);
-});
-test('motion and reduced-motion controls remain intact',()=>{
- assert.match(js,/cover\.addEventListener\('click'/);
- assert.match(js,/root\.classList\.toggle\('no-motion',reduced\.matches\)/);
+test('focus, motion reduction, forced colors and print have explicit presentation',()=>{
+ assert.match(css,/:focus-visible/);assert.match(css,/@media\(prefers-reduced-motion:reduce\)/);
+ assert.match(css,/@media\(forced-colors:active\)/);assert.match(css,/@media print/);
+ assert.doesNotMatch(js,/history\.pushState|touchmove|wheel'/);
 });

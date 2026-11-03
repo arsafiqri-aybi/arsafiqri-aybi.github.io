@@ -1,225 +1,49 @@
-# ARS — Business Strategist × Digital Builder
+# ARS — Arsafiqri Ummati Aybi
 
-Live website: https://arsafiqri-aybi.github.io/  
-Source branch: `main` (GitHub Pages, repository root).
+A personal portfolio connecting business strategy, creative work and digital craft.
 
-## Published experience
+Live: https://arsafiqri-aybi.github.io/
 
-- Static, frontend-only personal portfolio. No runtime backend or paid service is required.
-- Six desktop destinations: Home, Work, Expertise, Approach, About and Connect.
-- Dedicated mobile Home, Work, About and Connect presentations, with horizontal/vertical navigation and a four-chapter About carousel.
-- Three featured work entries (Tari Cookies, waai.id, and SarafCare); held third-party artwork stays absent. Tari Cookies has a full, owner-authorized case study with actual live-website screenshots and a direct website link.
-- Four legacy technical case-study routes remain available alongside the Tari Cookies, waai.id and SarafCare case studies. Hey by Ars, Personal Browser Operator and Motion Render Video are unpublished from the portfolio.
-- Original portrait on Home/About and source-derived illustrations for the remaining featured work. The former motion film is no longer publicly showcased.
-- Real GitHub, LinkedIn (linkedin.com/in/arsafiqri-ua) and Instagram links. No invented performance metrics, third-party screenshots, or unsupported contact details.
+## Design
 
-## Portfolio content revision (2026-10-25)
+An original editorial direction built from a blank layout: warm paper, ink and cobalt; expressive sans-serif headings paired with restrained serif emphasis; authentic project imagery; and natural page scrolling on every screen. The former arc navigation, full-screen chapter system and mobile case carousels have been removed.
 
-Removed the Hey by Ars, Personal Browser Operator and Motion Render Video public cards, archive entries, linked expertise/approach references, and dedicated published HTML routes. Their research and source records are retained under `content/*` for provenance rather than displayed as portfolio projects. Removed the three URLs from the sitemap and added the Tari Cookies preview route. The mobile Work collection and desktop featured work each show Tari Cookies, waai.id and SarafCare, with released/pending labels matching each project. Arsafiqri's documented LinkedIn URL is linked in mobile/desktop Connect, About and the footer.
+The homepage introduces Arsafiqri, presents three selected projects, provides an index of four independent explorations, explains his background and approach, and leads to verified social profiles. Seven individual project pages use a shared reading system with real evidence, contextual results, in-page navigation and progressive image enlargement.
 
-## Files serving the live site
+## Canonical source
 
-`index.html`, `work/*/index.html`, `404.html`, `styles.css`, `assets/illustrations.css`, `fonts.css`, `app.js`, `ars-story.js`, referenced `assets/*`, and the metadata files (`favicon.svg`, `social.svg`, `robots.txt`, `sitemap.xml`).
-
-`content/*` and `v2/content/*` hold project and approved-media data. Keep these, related source provenance, license files, and the release-gate modules intact: they are development and evidence dependencies even when not requested by the browser directly.
-
-## Canonical maintenance rule — edit in place
-
-The repository maintains **one canonical file for each responsibility**. All future fixes, UI/UX adjustments, refactors, copy changes, and optimizations must modify the existing file directly, preserving the current working behavior. Do not create parallel versioned copies, `v2`/`v3` replacements, `final`/`final-new` variants, temporary `backup` source files, or legacy duplicate implementations. When superseded code is proven unused, delete it from the current tree rather than keeping it beside the active implementation.
-
-Use Git commits as the change history and rollback mechanism; never retain outdated code or files solely to remember earlier designs. A new file is appropriate **only if a genuinely new responsibility requires a separate module, asset, page, data source, or test**, not to store a revision of an existing feature. Keep supporting data, licenses, evidence, tests, and publishing safety rules when still required; "not browser-loaded" does not automatically mean "unused".
-
-For every change: verify the current `main` state, edit canonical files in place, check dependent pages/modules and responsive behavior, test to the extent available, then commit the final working state to `main` without force pushing or creating duplicate versions. Avoid unrelated deletions. The existing build safety guard remains effective until the generator is synchronized with published markup.
-
-## Engineering architecture and reference foundation
-
-**Canonical production rule:** the currently published HTML is the source of
-truth for the visible UI. The existing generator's templates have drifted;
-neither its output nor archived reports can replace live pages or certify QA.
-Keep one file per responsibility and refactor in place, not into duplicates.
-
-| Responsibility | Canonical files and contract |
+| Responsibility | Source |
 | --- | --- |
-| Page content and structure | `index.html`, `work/*/index.html`, `404.html`: preserve content, URLs, semantics and mobile/desktop chapter structure |
-| Design tokens, components, breakpoints and motion | `styles.css`: consolidate CSS safely without changing the cascade's rendered result |
-| Illustrations and fonts | `assets/illustrations.css`, `fonts.css`, referenced approved assets: maintain licensing and ownership |
-| Navigation and interaction state | `app.js`: preserve gestures, history, focus, scroll restoration and accessible fallback |
-| Case-page storytelling | `ars-story.js`: one shared implementation, no parallel carousel versions |
-| Data and publication gates | `content/*`, `v2/content/*`, `v2/scripts/*`: keep rights and evidence checks distinct from public presentation |
-| Generator safety | `scripts/build.mjs`: block writing on template drift until source is reconciled |
-| Published source tests | `v2/tests/current-site-contract.test.mjs`: verify current page structure, paths, assets, semantics and runtime hooks |
+| Identity, social destinations and public selection | `content/profile.json` |
+| Reviewed case content and media provenance | `content/tari-cookies.json`, `content/waai-id.json`, `content/sarafcare.json` |
+| Independent project records | `content/projects.json` |
+| All public page structure | `scripts/build.mjs` |
+| Visual tokens, layouts, states and adaptations | `styles.css` |
+| Optional interactions and active navigation | `app.js` |
+| Visual decisions and verification | `Visual.md` |
 
-### Official open-source references studied
+Edit the canonical source in place. Regenerate pages instead of editing generated HTML independently. Git keeps earlier designs; do not add duplicate or versioned source implementations.
 
-- [WebKit/WebKit](https://github.com/WebKit/WebKit/blob/main/Introduction.md):
-  layout regression testing, platform behavior and browser compatibility.
-- [swiftlang/swift-docc-render](https://github.com/swiftlang/swift-docc-render):
-  structured content and rendering responsibilities. An Apple-origin
-  open-source documentation renderer, **not** Apple's private website source.
-- [primer/primitives](https://github.com/primer/primitives/blob/main/DESIGN_TOKENS_GUIDE.md):
-  semantic spacing, colors, typography, motion, focus and contrast tokens.
-- [microsoft/fluentui](https://github.com/microsoft/fluentui/blob/master/docs/architecture/component-patterns.md):
-  separate state, presentation, styling and accessibility contracts.
-- [adobe/spectrum-web-components](https://github.com/adobe/spectrum-web-components/tree/main/CONTRIBUTOR-DOCS):
-  accessible focus behavior and maintainable component ownership.
-- [microsoft/playwright](https://github.com/microsoft/playwright):
-  behavior-focused mobile, desktop and cross-browser regression tests.
-- [GoogleChrome/lighthouse-ci](https://github.com/GoogleChrome/lighthouse-ci):
-  measurable performance and accessibility regression budgets.
+```bash
+node scripts/build.mjs
+node scripts/build.mjs --check
+node --test v2/tests/*.test.mjs
+```
 
-### Safe modernization order
+Node 20+ is sufficient. No package installation or runtime backend is required. GitHub Pages serves the committed HTML directly from `main`. `--check` compares the current output with its sources without writing. The public selection is explicit; archived projects cannot silently reappear. The former generator drift guard has been replaced by this shared, reproducible renderer.
 
-1. Pin the current public routes, imagery and balanced Android Home as a
-   regression baseline; validate relative URLs, id references and JS syntax.
-2. Consolidate the multiple historic `@media` and `!important` overrides
-   under consistent semantic tokens **only after computed-style comparison**.
-3. Clarify navigation and gesture state boundaries in the current `app.js`;
-   verify keyboard, scroll, history, screen readers and reduced motion.
-4. Reconcile the generator with published HTML before any regeneration.
-5. Check small Android, tablet and desktop in Chromium, Firefox and WebKit;
-   measure performance before claiming readiness.
+## Content integrity
 
-The patterns above are research references, not copied source code or evidence
-that all browser tests have already passed.
+Tari Cookies, waai.id and SarafCare retain their reviewed paragraphs, research context, tables, quotations, media and limitations. Asset hashes are checked during generation. Portrait usage retains its approved Home scope. No invented customer endorsements, contact information or performance claims have been added. Historical account metrics and owner-reported campaign results retain their original qualifications.
 
-### In-place CSS and navigation refactor
+The older source records and independent publication-planning modules under `v2/` remain for provenance and reusable release-contract checks. They do not define the active visual system or authorize archived projects for publication. `inspect/` remains an opt-in same-origin diagnostic route and is excluded from indexing.
 
-The seven identical CSS rules found in the same media/scope contexts were
-removed while preserving their later counterparts. The canonical mobile width
-(680px) is now referenced by one JavaScript constant rather than repeated
-magic numbers. Route selection logic was reformatted without changing tokens;
-hash and popstate share their restoration handler, and an unused DOM query
-was removed. This is a source-level preservation pass; full browser visual
-and gesture regression checks are still outstanding.
+## Interaction and resilience
 
-The adjacent identical Android media-query wrappers have also been merged only where directly neighboring. A before/after lexical comparison confirmed the same CSS leaf rules, declaration bodies, ancestry and order; this is **not** a replacement for computed-style or screenshot testing.
+Navigation uses real links and browser history. All essential content is in HTML and remains available without JavaScript. Optional JavaScript adds a native image dialog, accurate active-section indicators, keyboard focus after anchor navigation and graceful missing-image presentation. The original image link remains the fallback.
 
+The CSS includes continuous responsive sizing, readable article measures, responsive tables, reduced motion, visible keyboard focus, forced-color adaptations and print styles. No analytics, tracking, account system or unimplemented contact form is introduced.
 
-## Regeneration safety
+## Verification
 
-`scripts/build.mjs` is **not yet synchronized with the current published mobile markup**. As a safeguard, it now checks generated output against existing files **before writing anything**, and refuses to replace files on drift. Do not use it to overwrite the current production design. Synchronize its templates with the current HTML first. `--allow-layout-overwrite` is a deliberate override that can discard current interface work; it must not be used casually.
-
-The live site is committed static HTML/CSS/JS and does not require a build on GitHub Pages.
-
-## DSARS and code-driven motion adaptation (2026-10-25)
-
-The portfolio consumes the independent `arsafiqri-aybi/dsars` ARS Interface System Foundation Candidate's semantic light/dark palette, and its 120/180ms feedback/settle motion tokens, through the existing canonical `styles.css`. The design system itself remains a **foundation candidate**; this is a scoped portfolio mapping, not a production certification or an import of the web component adapter.
-
-[Code-Driven Motion](https://github.com/arsafiqri-aybi/motion)'s web interaction track informs chapter transitions and interruption handling. Rich chapter travel retains its measured 460ms pacing. Reduced-motion preference changes stop movement without removing transforms needed for layout. Forced-color mode keeps a visible focus indicator and selection cue.
-
-Source-contract checks now cover these changes. Actual Android, desktop, forced-colors, assistive technology, and screenshot regressions are **not yet verified**. Project evidence, authentic imagery, routes and responsive chapter architecture stay unchanged.
-
-## Testing and boundaries
-
-`node --test v2/tests/current-site-contract.test.mjs` checks the published source's static contracts. The remaining `v2/tests/*.test.mjs` cover reusable release/media/navigation logic and require review when the design changes. Browser automation, physical Android/iOS, Safari/Firefox and screen-reader tests are separate checks; no old release's QA results are evidence of the present layout.
-
-The historical source commits remain in Git history. Inactive debugging layers, superseded reports/checkpoints and obsolete QA harnesses have been removed from the current tree without altering published pages. 
-
-## Mobile visual inspector (isolated route)
-
-Open **https://arsafiqri-aybi.github.io/inspect/** on Chrome Android.
-This is an opt-in developer utility, **not part of the public homepage**.
-It renders the real production site inside a same-origin full-viewport iframe,
-then draws selectable rectangles over the DOM. The **Struktur / Semua** control
-switches between major sections and all visible HTML elements; **Pilih** freezes
-ordinary click navigation for inspection and **Kotak** turns outlines on/off.
-Tapping a node shows its DOM selector, HTML, dimensions, computed CSS, and
-matching same-origin CSS selectors, with copy controls. Turn **Pilih** OFF to
-navigate between live portfolio chapters, then turn it on again.
-
-Inspector overlay refinement: `main#main` and `section#home` remain
-present in production HTML but have **no inspector outline or selectable
-wrapper label** in either density mode; inspecting their descendants continues
-normally. The inspector also avoids drawing an extra upper border around the
-mobile header/menu. The original website header divider and active-tab underline
-remain unchanged.
-
-The inspector uses one dedicated \`inspect/index.html\` for an actual new
-responsibility, with no second copy of the portfolio, no injected script on the
-main domain's normal page, no dependencies, and no changes to \`app.js\` or
-\`styles.css\`. It intentionally has \`noindex,nofollow\` and a
-\`robots.txt\` exclusion. This is a diagnostic overlay: labels identify
-HTML/CSS objects, not the source file line number, and screenshots taken while
-the inspector is open will contain the overlay. A website that blocks
-same-origin framing or cross-origin pages cannot be inspected by this route.
-
-
-## Tari Cookies case study (2026-10-25)
-
-The owner requested completion of the Work entry and use of screenshots from the
-original website, https://taricookies.pages.dev/. The canonical case page now
-covers customer questions, team/individual responsibilities, catalogue decisions,
-hamper configuration, order review, and the working website output. Home/Work
-previews show a screenshot and lead to the case. Other projects stay unchanged.
-
-`content/tari-cookies.json` owns the eight mobile story chapters and screenshot
-provenance. `ars-story.js` presents those chapters using the existing swipe
-interaction; the static desktop page remains the accessible fallback. Four
-compressed WebP captures live under `assets/tari-cookies/`. They are actual
-browser captures, not generated mockups. The hamper imagery inside the original
-website uses AI-created illustrations, noted beside its screenshot.
-
-Research scope (6 interviews, 8 questionnaire responses) comes from the previous
-portfolio record. Individual contributions come from the owner's 30 September
-review. The case makes no measured usability or conversion claim. The shared
-legacy generator still refuses to overwrite divergent published markup.
-
-## Research-led case publication (2026-10-26)
-
-Tari Cookies now connects its original brief, participant criteria, interview
-method/date, questionnaire averages and design decisions to the implemented
-journey. The owner confirmed the WhatsApp response is directly from the business
-owner. Its crop preserves both question and answer and removes the contact
-header and unrelated messages. The impact is described as workflow changes and
-qualitative owner feedback; planned task-test targets are not claimed as results.
-
-waai.id and SarafCare are published with their own approved source assets and
-detailed records under `content/waai-id.json` and `content/sarafcare.json`. waai.id
-separates its August content evaluation from its September historical account
-snapshot. SarafCare separates planned budget, spend, platform conversations,
-owner-reported customers, and received revenue; no medical efficacy claim is
-made by the case. Future work is distinguished from delivered work.
-
-The three JSON records own desktop and mobile case content. Run
-`node scripts/build.mjs --reviewed-cases-only` to regenerate only those reviewed
-pages; the general legacy generator's overwrite guard stays active. Embedded
-JSON lets the mobile story load without a content fetch. Chapter buttons use
-text labels, meaningful result figures remain visible, and decorative project
-numbers and repeated arrows were removed from Work. DSARS semantic palette,
-8/16 px edge roles, measured spacing, 120/180ms feedback, and reduced-motion
-fallbacks guide this scoped implementation. It does not certify the DSARS
-foundation as production-ready across platforms.
-
-Validation: current-source and original-media checks pass (43 assertions at this
-revision). The old broader navigation suite has three assertions already failing
-at the pre-change baseline; no legacy navigation behaviour was rewritten.
-
- 
-## Editorial polish (2026-10-27)
-
-The Tari Cookies owner conversation remains verbatim in its original 668 x 601 screenshot. Both message bubbles are fully visible. The separate quotation now includes the entire owner reply; mobile retains the original screenshot before the explanation and avoids a duplicated quote. The asset itself was not modified.
-
-Public-facing generic em dashes were replaced with contextual punctuation. Home and reviewed cases use locally bundled DM Sans with calmer headline tracking, without changing colours, layout architecture, project metrics, navigation or motion.
-
-## Portfolio repair (2026-11-03)
-
-The desktop arc now explains how to discover its chapters. Keyboard Home/End
-selection immediately exposes its destination before moving focus. Offscreen
-portfolio previews, full destinations and About chapters become inert only after
-JavaScript enhancement, so keyboard focus cannot wander into invisible content.
-Desktop arc styles are cleared when crossing the mobile breakpoint. About and
-case-study carousels retain their current chapter when the viewport changes.
-The mobile case footer no longer creates document overflow that can scroll the
-All Work header offscreen. Modified route clicks retain native new-tab behavior. The no-script anchor menu
-remains available while inactive JavaScript controls are hidden.
-
-Mobile Home now uses the same professional identity and introduction as desktop.
-Education names Universitas Cakrawala, already documented on the desktop About
-page, instead of presenting a verification placeholder. Existing project records,
-media permissions and case-study evidence remain authoritative.
-
-Four obsolete source assertions were reconciled with the current shared history
-handler, motion preference toggle, scroll containment and verbatim owner feedback.
-The complete Node suite passes 128 tests. Browser checks use Chromium at controlled
-iframe widths; these are responsive checks rather than physical-device, Safari,
-Firefox or assistive-technology certification.
+See `Visual.md` for the current observed results and remaining verification limits. Automated source, publication and provenance checks supplement browser inspection; they do not certify every device, browser or assistive technology.
