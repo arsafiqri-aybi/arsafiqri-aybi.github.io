@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {resolveApprovedMedia} from '../v2/scripts/media-plan.mjs';
 export const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const host='https://arsafiqri-aybi.github.io';
-const release='editorial-20261103';
+const release='editorial-20261103-2';
 export const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const read=name=>JSON.parse(readFileSync(resolve(root,name),'utf8'));
 export function safeURL(value){

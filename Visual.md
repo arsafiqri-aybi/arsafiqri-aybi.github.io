@@ -62,4 +62,6 @@ These measurements concern text pairs, not a claim of complete accessibility con
 - The image-failure state was exercised through the isolated QA surface; its description remained visible and the portrait frame retained its geometry.
 - The Home tablet composition and the long Scale & Governor title were visually inspected. Header controls remained directly visible with no page-level horizontal overflow.
 
+- Post-publication keyboard review found and corrected a main-anchor focus issue: Back to top and Skip to content now focus the main landmark, while section links focus their own headings.
+
 Remaining limits: Physical devices, Safari, Firefox, screen-reader behavior, forced-color rendering and browser text zoom require separate verification. There is no claim that every item in the visual inventory has been empirically tested.

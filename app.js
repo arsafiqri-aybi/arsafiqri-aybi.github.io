@@ -27,7 +27,7 @@
   if(event.button!==0||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
   const target=document.getElementById(anchor.hash.slice(1));
   if(!target)return;
-  const focusTarget=target.querySelector('h2')??target;
+  const focusTarget=target.matches('section')?(target.querySelector('h2')??target):target;
   focusTarget.setAttribute('tabindex','-1');
   // No preventDefault: focus follows the browser's normal anchor navigation.
   requestAnimationFrame(()=>focusTarget.focus({preventScroll:true}));
