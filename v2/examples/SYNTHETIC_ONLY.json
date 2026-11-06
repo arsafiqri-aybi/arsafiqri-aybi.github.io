@@ -1,0 +1,66 @@
+{
+  "_warning": "SYNTHETIC TEST FIXTURE ONLY — not real ARS projects, media, approvals or source",
+  "baseline": {
+    "commit": "FAKE_COMMIT_FOR_TEST",
+    "legacyRoutes": [
+      "/work/existing-example/"
+    ]
+  },
+  "projects": [
+    {
+      "id": "existing-example",
+      "route": "/work/existing-example/",
+      "kind": "legacy",
+      "ownerProjectApproved": false,
+      "gates": {
+        "editorial": "PASS",
+        "evidence": "HOLD",
+        "attribution": "HOLD",
+        "rights": "HOLD",
+        "privacy": "PASS",
+        "media": "HOLD"
+      }
+    },
+    {
+      "id": "pending-example",
+      "route": "/work/pending-example/",
+      "kind": "candidate",
+      "ownerProjectApproved": false,
+      "gates": {
+        "editorial": "PASS",
+        "evidence": "HOLD",
+        "attribution": "HOLD",
+        "rights": "HOLD",
+        "privacy": "HOLD",
+        "media": "HOLD"
+      }
+    }
+  ],
+  "selectedOrder": [
+    "pending-example",
+    "existing-example"
+  ],
+  "claims": [
+    {
+      "id": "fake-claim",
+      "projectId": "pending-example",
+      "evidenceStatus": "NOT_SUPPORTED",
+      "publicUse": "REJECT",
+      "sourceRef": null
+    }
+  ],
+  "assets": [
+    {
+      "id": "fake-artwork",
+      "projectId": "pending-example",
+      "provenance": "SYNTHETIC",
+      "distribution": "HOLD"
+    }
+  ],
+  "release": {
+    "approvedProjectIds": [],
+    "exactCandidateApproved": false,
+    "publicationState": "DRAFT",
+    "intendedHomeFeature": "pending-example"
+  }
+}

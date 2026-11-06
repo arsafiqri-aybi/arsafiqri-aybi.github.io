@@ -1,0 +1,51 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {resolve,dirname} from 'node:path';
+import {validateMediaRegistry,resolveApprovedMedia} from '../scripts/media-plan.mjs';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
+const real=JSON.parse(readFileSync(resolve(root,'v2/content/approved-media.json'),'utf8'));
+const copy=()=>structuredClone(real);
+const bad=fn=>{const c=copy();fn(c);return validateMediaRegistry(c)};
+test('registry structurally valid',()=>assert.deepEqual(validateMediaRegistry(real),[]));
+test('portrait is HOME-scoped',()=>assert.equal(resolveApprovedMedia(real,'ars-portrait','home').path,'assets/ars-portrait-800.webp'));
+test('portrait is ABOUT-scoped',()=>assert.equal(resolveApprovedMedia(real,'ars-portrait','about').scope.length,2));
+test('portrait NOT for social or OG',()=>assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','og'),/SLOT_NOT_APPROVED/));
+test('portrait NOT for case study',()=>assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','motion-case'),/SLOT_NOT_APPROVED/));
+test('motion only for original case',()=>assert.equal(resolveApprovedMedia(real,'motion-original-demo','motion-case').durationSeconds,6));
+test('motion forbidden Home',()=>assert.throws(()=>resolveApprovedMedia(real,'motion-original-demo','home'),/SLOT_NOT_APPROVED/));
+test('unlisted Tari media rejected',()=>assert.throws(()=>resolveApprovedMedia(real,'tari-cookies-hifi','home'),/ASSET_NOT_REGISTERED/));
+test('unlisted WAAI media rejected',()=>assert.throws(()=>resolveApprovedMedia(real,'waai-video','motion-case'),/ASSET_NOT_REGISTERED/));
+test('unlisted campaign assets rejected',()=>assert.throws(()=>resolveApprovedMedia(real,'sarafcare-ads','home'),/ASSET_NOT_REGISTERED/));
+test('extra OG scope cannot be sneaked in',()=>assert.match(bad(x=>x.items[0].scope.push('og')).join(','),/INVALID_SCOPE/));
+test('portrait rights change invalidates manifest',()=>assert.match(bad(x=>x.items[0].rights='UNLIMITED').join(','),/RIGHTS_SCOPE_MISMATCH/));
+test('remote unpinned motion URL blocked',()=>assert.match(bad(x=>x.items[1].url=x.items[1].url.replace(/\/[a-f0-9]{40}\//,'/main/')).join(','),/INVALID_MOTION/));
+test('portrait arbitrary URL blocked',()=>assert.match(bad(x=>x.items[0].url='https://example.com/x.webp').join(','),/INVALID_PORTRAIT/));
+test('portrait path traversal blocked',()=>assert.match(bad(x=>x.items[0].path='../private/photo.webp').join(','),/INVALID_PORTRAIT/));
+test('missing hash blocked',()=>assert.match(bad(x=>x.items[0].sha256='').join(','),/INVALID_PROVENANCE/));
+test('duplicate media id rejected',()=>assert.match(bad(x=>x.items.push(structuredClone(x.items[0]))).join(','),/DUPLICATE_ID/));
+test('missing media id rejected',()=>assert.match(bad(x=>x.items.pop()).join(','),/MISSING_ASSET/));
+test('media plan returns independent copy',()=>{const x=resolveApprovedMedia(real,'ars-portrait','home');x.scope.push('og');assert.deepEqual(real.items[0].scope,['home','about'])});
+
+test('800 px portrait has byte-verified SHA-256 and Git object SHA',()=>{
+ const p=real.items.find(x=>x.id==='ars-portrait');
+ const bytes=readFileSync(resolve(root,p.path));
+ assert.equal(bytes.length,9888);
+ assert.equal(p.width,800);assert.equal(p.height,800);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),p.sha256);
+ assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex'),p.gitBlobSha);
+});
+test('old low-resolution or altered portrait registry must fail closed',()=>{
+ assert.match(bad(x=>{x.items[0].width=360;x.items[0].height=360}).join(','),/INVALID_PORTRAIT/);
+ assert.match(bad(x=>{x.items[0].gitBlobSha='0'.repeat(40)}).join(','),/INVALID_PORTRAIT/);
+});
+
+test('original motion supports the approved gallery placement without portrait scope expansion',()=>{
+ assert.equal(resolveApprovedMedia(real,'motion-original-demo','motion-gallery').durationSeconds,6);
+ assert.throws(()=>resolveApprovedMedia(real,'ars-portrait','motion-gallery'),/SLOT_NOT_APPROVED/);
+});
+test('changing embedded poster bytes fails closed even when claimed metadata is unchanged',()=>{
+ assert.match(bad(x=>{const p=x.items.find(i=>i.id==='motion-original-poster');p.dataUrl='data:image/webp;base64,ZmFrZQ=='}).join(','),/POSTER_BYTES_MISMATCH/);
+});

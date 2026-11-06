@@ -1,0 +1,235 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {existsSync,readFileSync} from 'node:fs';
+import {resolve,dirname,sep} from 'node:path';
+import {fileURLToPath} from 'node:url';
+
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
+const text=path=>readFileSync(resolve(root,path),'utf8');
+const home=text('index.html'),css=text('styles.css'),js=text('app.js');
+const caseIds=['tari-cookies','waai-id','sarafcare','scale-governor','skill-builder','copywriting','website-builder'];
+const unpublishedCaseIds=['hey','personal-browser-operator','motion'];
+
+test('published mobile navigation and Home remain intact',()=>{
+ for(const marker of ['ars-mobile-header','ars-mobile-menu','ars-work-mobile','ars-about-deck','ars-role-mobile','ars-main-swipe-cue','data-explore-work']){
+  assert.ok(home.includes(marker),'missing '+marker);
+ }
+ assert.match(js,/function choose\(/);
+ assert.match(js,/function mobileVerticalStep\(/);
+ assert.match(js,/function syncBalancedMobileMenu\(/);
+});
+test('five public work pages retain scripts and live styles',()=>{
+ for(const id of caseIds){
+  const path='work/'+id+'/index.html';
+  assert.ok(existsSync(resolve(root,path)),path);
+  const page=text(path);
+  assert.match(page,/<main\b/);
+  assert.match(page,/styles\.css\?/);
+  assert.match(page,/ars-story\.js\?/);
+ }
+});
+test('active portrait/media assets still exist; obsolete thumbnail is gone',()=>{
+ for(const path of ['assets/ars-portrait-800.webp','assets/core.svg','assets/motion-captions.vtt','assets/motion-original-contact-sheet.png'])assert.ok(existsSync(resolve(root,path)),path);
+ assert.equal(existsSync(resolve(root,'assets/ars-portrait.webp')),false);
+});
+test('unused opt-in layout diagnosis no longer ships',()=>{
+ assert.doesNotMatch(js,/grid-review|grid-inspect|grid-review-controls/);
+ assert.doesNotMatch(css,/\.grid-review|\.ars-grid-guides|\.ars-guide/);
+});
+test('generator refuses to overwrite a diverged published page by default',()=>{
+ const generator=text('scripts/build.mjs');
+ assert.match(generator,/const drift=generatedFiles\.filter/);
+ assert.match(generator,/Refusing to overwrite published markup/);
+ assert.match(generator,/--allow-layout-overwrite/);
+});
+test('sitemap includes only the five published cases',()=>{
+ const sitemap=text('sitemap.xml');
+ for(const id of caseIds)assert.ok(sitemap.includes('/work/'+id+'/'),id);
+ for(const id of unpublishedCaseIds)assert.ok(!sitemap.includes('/work/'+id+'/'),id);
+});
+
+test('retired featured projects are absent from the published portfolio',()=>{
+ const featured=['Hey by Ars','Personal Browser Operator','Motion Render Video'];
+ for(const name of featured)assert.ok(!home.includes(name),'unpublished project visible: '+name);
+ for(const id of unpublishedCaseIds){
+  assert.ok(!home.includes('./work/'+id+'/'),'unpublished project link '+id);
+  assert.ok(!existsSync(resolve(root,'work/'+id+'/index.html')),'retired public page '+id);
+ }
+ assert.match(home,/https:\/\/www\.linkedin\.com\/in\/arsafiqri-ua/);
+ assert.doesNotMatch(home,/Personal profile link pending/);
+ assert.doesNotMatch(home,/01 — 03|class="ars-work-no"/);
+});
+
+const publishedPages=['index.html','404.html',...caseIds.map(id=>'work/'+id+'/index.html')];
+
+test('published pages have unique ids and valid local anchor references',()=>{
+ for(const path of publishedPages){
+  const page=text(path);
+  const ids=[...page.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
+  assert.equal(ids.length,new Set(ids).size,path+': duplicate id');
+  const idSet=new Set(ids);
+  for(const [,fragment] of page.matchAll(/\bhref="#([^"]+)"/g)){
+   assert.ok(idSet.has(decodeURIComponent(fragment)),path+': missing #'+fragment);
+  }
+  for(const [,values] of page.matchAll(/\baria-(?:controls|labelledby|describedby)="([^"]+)"/g)){
+   for(const id of values.split(/\s+/).filter(Boolean)){
+    assert.ok(idSet.has(id),path+': missing aria reference '+id);
+   }
+  }
+ }
+});
+
+test('all local published link, media and script URLs resolve within repository',()=>{
+ for(const path of publishedPages){
+  const page=text(path);
+  for(const [tag] of page.matchAll(/<(?:a|link|img|script|source|video|track)\b[^>]*>/gi)){
+   for(const [,url] of tag.matchAll(/\b(?:href|src|poster)="([^"]+)"/gi)){
+    if(/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(url))continue;
+    const targetUrl=url.split(/[?#]/)[0];
+    if(!targetUrl)continue;
+    const destination=targetUrl.startsWith('/')?
+     resolve(root,'.'+targetUrl):resolve(root,dirname(path),targetUrl);
+    assert.ok(destination===root||destination.startsWith(root+sep),path+': outside repository '+url);
+    assert.ok(existsSync(destination),path+': missing local resource '+url);
+   }
+  }
+ }
+});
+
+test('published styles keep focus-visible and reduced-motion fallbacks',()=>{
+ assert.match(css,/:focus-visible/);
+ assert.match(css,/prefers-reduced-motion/);
+ assert.match(home,/class="skip"/);
+ assert.match(home,/name="viewport"/);
+});
+
+test('published JavaScript parses correctly',()=>{
+ assert.doesNotThrow(()=>new Function(js));
+});
+
+test('responsive navigation uses one synchronized mobile breakpoint',()=>{
+ assert.match(js,/const MOBILE_BREAKPOINT=680/);
+ assert.doesNotMatch(js,/window\.innerWidth(?:<=|>)680/);
+ assert.match(css,/@media\s*\(\s*max-width:\s*680px\s*\)/);
+});
+test('hash and popstate reuse the same navigation handler',()=>{
+ assert.match(js,/function handleHistoryNavigation\(\)/);
+ assert.match(js,/addEventListener\('hashchange',handleHistoryNavigation\)/);
+ assert.match(js,/addEventListener\('popstate',handleHistoryNavigation\)/);
+});
+
+test('refined Home has a single accessible Work CTA with one direction',()=>{
+ const match=home.match(/<button[^>]*data-explore-work\b[^>]*>([\s\S]*?)<\/button>/);
+ assert.ok(match,'Home Work CTA missing');
+ assert.match(match[1],/Explore Work/);
+ assert.match(match[1],/ars-cue-arrow-right/);
+ assert.doesNotMatch(match[1],/ars-cue-down|ars-cue-left/);
+ assert.match(home,/assets\/ars-portrait-800\.webp/);
+ assert.match(home,/Scroll down · Swipe left/);
+ assert.match(js,/addEventListener\('click',\(\)=>choose\(1\)\)/);
+});
+test('Android Home portrait fits the viewport and CTA respects reduced motion',()=>{
+ assert.match(css,/max-height:min\(38svh,calc\(\(100vw - 44px\)\/1\.16\),360px\)!important/);
+ assert.match(css,/\.ars-main-swipe-cue \.ars-home-explore-action\{[\s\S]*?border-radius:999px/);
+ assert.doesNotMatch(css,/\.ars-cue-down|\.ars-cue-left|@keyframes ars-hint-down/);
+ assert.match(css,/\.ars-main-swipe-cue \.ars-home-explore-action\{transition:none\}/);
+});
+
+test('isolated mobile visual inspector has live same-origin page and DOM selection',()=>{
+ const inspectorPath=resolve(root,'inspect/index.html');
+ assert.ok(existsSync(inspectorPath),'Inspector endpoint missing');
+ const source=readFileSync(inspectorPath,'utf8');
+ assert.match(source,/name="robots" content="noindex,nofollow,noarchive"/);
+ assert.match(source,/<iframe[^>]+src="\/"/);
+ assert.match(source,/id="boxes"/);
+ assert.match(source,/id="pick"/);
+ assert.match(source,/id="density"/);
+ assert.match(source,/id="properties"/);
+ assert.match(source,/function matchedRules\(/);
+ assert.match(source,/function clickPage\(/);
+ assert.match(source,/function attach\(/);
+ assert.match(source,/page\.addEventListener\('click',clickPage,true\)/);
+ assert.match(source,/prefers-reduced-motion:reduce/);
+ const jsSource=source.match(/<script>([\s\S]*?)<\/script>/);
+ assert.ok(jsSource,'Inspector JavaScript missing');
+ assert.doesNotThrow(()=>new Function(jsSource[1]));
+ assert.doesNotMatch(home,/\/inspect\//);
+});
+
+test('visual inspector omits main and home wrapper while keeping header aligned',()=>{
+ const source=readFileSync(resolve(root,'inspect/index.html'),'utf8');
+ assert.match(source,/function isExcluded\(el\)\{return el\.matches\('main#main,section#home'\);\}/);
+ assert.match(source,/for\(const el of elements\)\{\s*if\(isExcluded\(el\)\)continue;/);
+ assert.match(source,/if\(!el\|\|!el\.tagName\|\|isExcluded\(el\)\)return;/);
+ assert.match(source,/selected&&!isExcluded\(selected\)/);
+ assert.match(source,/\.outline\.header,\.outline\.header\.active\{border-top:0\}/);
+ assert.match(source,/if\(el\.matches\('header,\.ars-mobile-header,\.ars-mobile-menu'\)\)return 'layout header'/);
+ assert.match(home,/id="home"/);
+ assert.match(home,/class="ars-mobile-header"/);
+});
+
+// Scoped DSARS adoption, not a claim of browser/visual acceptance.
+test('DSARS semantic appearances and accessible motion are wired',()=>{
+ for(const role of ['--ars-color-canvas-dark','--ars-color-canvas-light',
+   '--ars-color-text-dark','--ars-color-text-light',
+   '--ars-color-accent-dark','--ars-color-accent-light',
+   '--ars-motion-feedback','--ars-motion-settle','--ars-motion-ease']){
+  assert.ok(css.includes(role),'missing DSARS role '+role);
+ }
+ assert.match(css,/@media\(forced-colors:active\)/);
+ assert.doesNotMatch(css,/\*,\*:before,\*:after\{[^}]*transform:none!important/);
+ assert.match(js,/reduced\.addEventListener\?\.\('change',syncReducedMotion\)/);
+ assert.match(js,/if\(reduced\.matches\)\{softArcPosition=softArcTarget/);
+ assert.match(home,/styles\.css\?build=[a-z0-9-]+/);
+ assert.match(home,/app\.js\?v=[a-z0-9-]+/);
+});
+
+// A public case must keep its actual screenshots available and unaltered.
+test('Tari website screenshots match provenance and the released story has destinations',async()=>{
+ const {createHash}=await import('node:crypto');
+ const project=JSON.parse(text('content/tari-cookies.json'));
+ const page=text('work/tari-cookies/index.html');
+ assert.equal(project.website,'https://taricookies.pages.dev/');
+ assert.equal(project.chapters.length,project.sections.length+1);
+ for(const image of project.screenshots){
+  const bytes=readFileSync(resolve(root,image.path));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),image.sha256);
+  assert.equal(bytes.length,image.bytes);
+  assert.ok(page.includes('../../'+image.path));
+ }
+ assert.equal(project.screenshots.length,4);
+ assert.ok(project.chapters.every(ch=>!ch.media||project.mediaAssets.some(image=>image.path===ch.media.src)));
+ assert.ok(home.includes('data-gallery-project="tari-cookies"'));
+ assert.match(page,/href="https:\/\/taricookies\.pages\.dev\/"/);
+ assert.doesNotMatch(page,/Case Preview|visuals in preparation|pending publication/);
+});
+
+// Publishing a case must not conceal missing media or turn reported results into live data.
+test('all reviewed cases publish complete sections and exact project assets',async()=>{
+ const {createHash}=await import('node:crypto');
+ for(const id of ['tari-cookies','waai-id','sarafcare']){
+  const record=JSON.parse(text('content/'+id+'.json'));
+  const page=text('work/'+id+'/index.html');
+  assert.ok(record.sections.length>=7);
+  assert.ok(page.includes('id="reviewed-case-data"'));
+  assert.ok(page.includes('class="project-page reviewed-case'));
+  for(const section of record.sections)assert.ok(page.includes('id="'+section.id+'"'));
+  for(const asset of record.mediaAssets){
+   const bytes=readFileSync(resolve(root,asset.path));
+   assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.sha256);
+   assert.ok(page.includes('../../'+asset.path));
+  }
+  assert.ok(home.includes('href="./work/'+id+'/"'));
+ }
+ const tari=text('work/tari-cookies/index.html');
+ const owner=JSON.parse(text('content/tari-cookies.json')).sections.find(section=>section.id==='owner-feedback');
+ assert.ok(tari.includes(owner.media.caption));
+ assert.ok(tari.includes(owner.quote.text));
+ assert.ok(tari.includes('3.50'));
+ const waai=text('work/waai-id/index.html');
+ assert.ok(waai.includes('Historical'));
+ assert.ok(waai.includes('23 August 2026'));
+ const saraf=text('work/sarafcare/index.html');
+ assert.ok(saraf.includes('not calculated profit'));
+ assert.ok(saraf.includes('Planned budget'));
+});
