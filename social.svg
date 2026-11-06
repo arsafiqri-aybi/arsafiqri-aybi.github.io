@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
 <title id="title">ARS — Digital Builder × Business Strategist</title>
 <desc id="desc">Text-only ARS identity for link previews, without a portrait or project imagery.</desc>
-<rect width="1200" height="630" fill="#151b25"/>
-<path d="M72 143H1128" stroke="#66727b" stroke-width="1" opacity=".4"/>
-<text x="72" y="114" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="67" letter-spacing="-4" fill="#f5f4ef">ARS<tspan fill="#c4a35f">.</tspan></text>
-<text x="72" y="310" font-family="Arial,Helvetica,sans-serif" font-weight="600" font-size="67" letter-spacing="-2" fill="#f5f4ef">Turning insight into</text>
-<text x="72" y="402" font-family="Arial,Helvetica,sans-serif" font-weight="600" font-size="67" letter-spacing="-2" fill="#f5f4ef">experiences that work.</text>
-<path d="M72 496H490" stroke="#c4a35f" stroke-width="3"/>
-<text x="72" y="554" font-family="Arial,Helvetica,sans-serif" font-size="24" letter-spacing="1.3" fill="#bbc7d1">DIGITAL BUILDER  ×  BUSINESS STRATEGIST</text>
+<rect width="1200" height="630" fill="#151A1D"/>
+<path d="M72 143H1128" stroke="#3B4445" stroke-width="1" opacity=".4"/>
+<text x="72" y="114" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="67" letter-spacing="-4" fill="#F2EEE6">ARS<tspan fill="#E7C8A0">.</tspan></text>
+<text x="72" y="310" font-family="Arial,Helvetica,sans-serif" font-weight="600" font-size="67" letter-spacing="-2" fill="#F2EEE6">Turning insight into</text>
+<text x="72" y="402" font-family="Arial,Helvetica,sans-serif" font-weight="600" font-size="67" letter-spacing="-2" fill="#F2EEE6">experiences that work.</text>
+<path d="M72 496H490" stroke="#E7C8A0" stroke-width="3"/>
+<text x="72" y="554" font-family="Arial,Helvetica,sans-serif" font-size="24" letter-spacing="1.3" fill="#BEC3BF">DIGITAL BUILDER  ×  BUSINESS STRATEGIST</text>
 </svg>
