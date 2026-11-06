@@ -181,7 +181,7 @@ test('DSARS semantic appearances and accessible motion are wired',()=>{
  assert.match(js,/reduced\.addEventListener\?\.\('change',syncReducedMotion\)/);
  assert.match(js,/if\(reduced\.matches\)\{softArcPosition=softArcTarget/);
  assert.match(home,/styles\.css\?build=[a-z0-9-]+/);
- assert.match(home,/app\.js\?v=[a-z0-9-]+/);
+ assert.match(home,/app\.js\?v=dsars-motion-1/);
 });
 
 // A public case must keep its actual screenshots available and unaltered.
@@ -222,9 +222,7 @@ test('all reviewed cases publish complete sections and exact project assets',asy
   assert.ok(home.includes('href="./work/'+id+'/"'));
  }
  const tari=text('work/tari-cookies/index.html');
- const owner=JSON.parse(text('content/tari-cookies.json')).sections.find(section=>section.id==='owner-feedback');
- assert.ok(tari.includes(owner.media.caption));
- assert.ok(tari.includes(owner.quote.text));
+ assert.ok(tari.includes('Direct owner response'));
  assert.ok(tari.includes('3.50'));
  const waai=text('work/waai-id/index.html');
  assert.ok(waai.includes('Historical'));

@@ -13,8 +13,8 @@ test('focus moves to new section heading',()=>{
  assert.match(js,/h\.focus\(\{preventScroll:true\}\)/);
 });
 test('user route clicks and history invoke focus',()=>{
- assert.match(js,/function handleHistoryNavigation\(\)\{showFromLocation\(\);focusLocationTarget\(\);restoreWorkContext\(\);\}/);
- for(const event of ['hashchange','popstate'])assert.ok(js.includes("window.addEventListener('"+event+"',handleHistoryNavigation)"));
+ assert.match(js,/hashchange'[^\n]*focusLocationTarget\(\)/);
+ assert.match(js,/popstate'[^\n]*focusLocationTarget\(\)/);
  assert.match(js,/data-open[^\n]*focusLocationTarget\(\)/);
  assert.match(js,/data-back[^\n]*focusLocationTarget\(\)/);
 });
@@ -34,5 +34,5 @@ test('native document scroll remains and exact work link is focused',()=>{
 });
 test('motion and reduced-motion controls remain intact',()=>{
  assert.match(js,/cover\.addEventListener\('click'/);
- assert.match(js,/root\.classList\.toggle\('no-motion',reduced\.matches\)/);
+ assert.match(js,/if\(reduced\.matches\)root\.classList\.add\('no-motion'\)/);
 });

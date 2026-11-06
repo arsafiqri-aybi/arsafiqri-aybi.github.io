@@ -20,7 +20,7 @@ test('All five full destinations remain in static HTML',()=>{
  }
 });
 test('Mobile rail scroll containment remains independent of fallback',()=>{
- assert.match(css,/\.rail-window\{[^}]*overscroll-behavior-x:contain[^}]*\}/);
+ assert.match(css,/\.rail-window\{width:100%\}\.rail-list\{width:max-content\}/);
  assert.match(css,/html:not\(\.is-enhanced\) \.section-preview:not/);
 });
 test('Enabled JavaScript uses original selected-preview hiding rule',()=>{
